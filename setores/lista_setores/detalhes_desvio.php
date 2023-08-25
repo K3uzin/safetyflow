@@ -1,8 +1,8 @@
 <?php
 require '../../cadastro/conexao.php'; // Verifique se o caminho está correto
 
-if (isset($_GET['id'])) {
-    $id_desvio = $_GET['id'];
+if (isset($_GET['id_desvio'])) {
+    $id_desvio = $_GET['id_desvio'];
 
     // Consulta para obter os detalhes do desvio com base no ID
     $sql = "SELECT * FROM tabela_desvio WHERE id_desvio = ?";
