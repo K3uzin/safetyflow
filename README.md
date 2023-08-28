@@ -45,7 +45,6 @@ Para acompanhar o progresso do projeto e ficar informado sobre as atualizações
 
 Este projeto é parte integrante do Trabalho de Conclusão de Curso (TCC) dos estudantes Cleiton Almeida, Natan Santos, Luan Rodrigues e Jobson Souza, realizado no Serviço Nacional de Aprendizagem Industrial (SENAI). Agradecemos a todos que contribuem para tornar esta plataforma mais eficiente e útil para empresas que lidam com desvios corporativos.
 
-[Inclua quaisquer outros detalhes ou informações adicionais relevantes aqui.]
 
 **Equipe SafetyFlow**
 
