@@ -1,5 +1,5 @@
 <?php
-require './../cadastro/conexao.php'; // Verifique se o caminho está correto
+require '../cadastro/conexao.php'; // Verifique se o caminho está correto
 
 // Consulta para obter informações sobre o último desvio no Setor "Administrativa"
 $sql_ultimo_desvio = "SELECT user_nome, data_identificacao, local_desvio FROM tabela_desvio WHERE setor = 1 ORDER BY id_desvio DESC LIMIT 1";
