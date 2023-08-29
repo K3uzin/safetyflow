@@ -35,16 +35,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $descricao_desvio = $_POST["descricao_desvio"];
     $tipo_desvio = $_POST["tipo_desvio"];
     $gravidade = $_POST["gravidade"];
-    $observacoes = $_POST["observacoes"];
+    $area_responsavel = $_POST["area_responsavel"];
 
     // Realize as validações necessárias aqui
 
-    // Inserção dos dados na tabela de Desvio, associando à matrícula do usuário
-    $sql = "INSERT INTO tabela_desvio (user_matricula, user_nome, data_identificacao, turno, setor, local_desvio, descricao_desvio, tipo_desvio, gravidade, observacoes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    // Verifica se o arquivo de imagem foi enviado e atende aos requisitos
+    if ($_FILES["foto_desvio"]["error"] == 0) {
+        $imagem_nome = $_FILES["foto_desvio"]["name"];
+        $imagem_tmp = $_FILES["foto_desvio"]["tmp_name"];
+        $imagem_tamanho = $_FILES["foto_desvio"]["size"];
+        $imagem_tipo = $_FILES["foto_desvio"]["type"];
+        $pasta_destino = 'setores/listas_setores/fotos_desvio/';
+
+        // Verifica se o diretório de destino existe, senão cria
+        if (!is_dir($pasta_destino)) {
+            mkdir($pasta_destino, 0777, true);
+        }
+
+        // Verifica o tamanho máximo (8 MB) e formatos permitidos
+        if ($imagem_tamanho <= 8 * 1024 * 1024) {
+            $formatos_permitidos = array("image/jpeg", "image/jpg", "image/heic");
+            if (in_array($imagem_tipo, $formatos_permitidos)) {
+                // Move o arquivo para o diretório de destino
+                move_uploaded_file($imagem_tmp, $pasta_destino . $imagem_nome);
+            } else {
+                echo "Formato de imagem não permitido. Apenas JPG, JPEG e HEIC são permitidos.";
+            }
+        } else {
+            echo "Tamanho de imagem excede 8 MB.";
+        }
+    } else {
+        $imagem_nome = null; // Define como nulo caso não haja imagem
+    }
+
+    // Inserção dos dados na tabela de Desvio, incluindo o caminho da imagem (opcional)
+    $sql = "INSERT INTO tabela_desvio (user_matricula, user_nome, data_identificacao, turno, setor, local_desvio, descricao_desvio, tipo_desvio, gravidade, foto_desvio, area_responsavel) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $mysqli->prepare($sql);
 
     if ($stmt) {
-        $stmt->bind_param("ssssssssss", $user_matricula, $nome_usuario, $data_identificacao, $turno, $setor, $local_desvio, $descricao_desvio, $tipo_desvio, $gravidade, $observacoes);
+        $stmt->bind_param("sssssssssss", $user_matricula, $nome_usuario, $data_identificacao, $turno, $setor, $local_desvio, $descricao_desvio, $tipo_desvio, $gravidade, $imagem_nome, $area_responsavel);
         $stmt->execute();
 
         if ($stmt->affected_rows > 0) {
@@ -63,5 +93,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 } else {
     echo "O formulário não foi submetido corretamente.";
 }
-
 ?>
