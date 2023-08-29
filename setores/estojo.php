@@ -1,5 +1,5 @@
 <?php
-require 'cadastro/conexao.php';
+require '../cadastro/conexao.php';
 
 // Consulta para obter informações sobre o último desvio no Setor "Estojo"
 $sql_ultimo_desvio_estojo = "SELECT user_nome, data_identificacao, local_desvio FROM tabela_desvio WHERE setor = 4 ORDER BY id_desvio DESC LIMIT 1";
