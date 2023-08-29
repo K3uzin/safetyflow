@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 24-Ago-2023 às 21:18
+-- Tempo de geração: 29-Ago-2023 às 20:15
 -- Versão do servidor: 10.4.27-MariaDB
 -- versão do PHP: 8.2.0
 
@@ -99,7 +99,12 @@ INSERT INTO `tabela_desvio` (`id_desvio`, `user_nome`, `user_matricula`, `data_i
 (7, 'Natan', 0, '0000-00-00', 'Manhã', 2, 'estacionamento', 'sgff]s', '2', 'Moderado', NULL, ''),
 (10, 'Natan', 0, '2023-08-16', 'Noite', 1, 'fronte', 'barril', '1', 'Leve', NULL, ''),
 (11, 'Natan', 0, '2023-08-09', 'Tarde', 2, 'area1 1', '', '2', 'Grave', NULL, ''),
-(12, 'Natan', 0, '2023-08-30', 'Tarde', 4, 'area1 1', '', '2', 'Grave', NULL, '');
+(12, 'Natan', 0, '2023-08-30', 'Tarde', 4, 'area1 1', '', '2', 'Grave', NULL, ''),
+(13, 'Natan', 0, '2023-08-30', 'Tarde', 1, 'area1 1', '', '2', 'Grave', NULL, ''),
+(14, 'Natan', 0, '2023-08-30', 'Tarde', 1, 'area1 1', '', '2', 'Grave', NULL, ''),
+(15, 'Natan', 0, '2023-08-30', 'Tarde', 6, 'area1 1', '', '2', 'Grave', NULL, ''),
+(16, 'Natan', 0, '2023-08-13', 'Noite', 6, 'a', 'aa', 'aaa', 'Moderado', NULL, ''),
+(17, 'Natan', 0, '2023-08-13', 'Noite', 5, 'a', 'aa', 'aaa', 'Moderado', NULL, '');
 
 --
 -- Índices para tabelas despejadas
@@ -135,7 +140,7 @@ ALTER TABLE `tabela_desvio`
 -- AUTO_INCREMENT de tabela `tabela_desvio`
 --
 ALTER TABLE `tabela_desvio`
-  MODIFY `id_desvio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_desvio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Restrições para despejos de tabelas
