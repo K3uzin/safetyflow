@@ -76,18 +76,17 @@ if ($stmt_nome) {
         <label for="grave">Grave</label><br>
         <input type="radio" id="gravissimo" name="gravidade" value="Gravíssimo">
         <label for="gravissimo">Gravíssimo</label><br><br>
-
-
-        <label for="area_responsavel">Informe área responsável pela solução:</label>
-        <select id="setor" name="setor" required>
-            <option value="1">Administrativa</option>
-            <option value="2">Hidro</option>
-            <option value="3">Cremes</option>
-            <option value="4">Estojo</option>
-            <option value="5">Qualidade</option>
-            <option value="6">Logística</option>
-        <label for="observacoes">Observações (opcional):</label>
-        <textarea id="observacoes" name="observacoes" rows="4"></textarea><br><br>
+        
+        <label for="area_responsavel">Informe área responsável pela solução:</label><br>
+        <select id="area_responsavel" name="area_responsavel" required>
+            <option value="1">Manutenção</option>
+            <option value="2">Engenharia</option>
+            <option value="3">Produção</option>
+            <option value="4">Qualidade</option>
+            <option value="5">Recursos Humanos</option>
+            <option value="6">Segurança do Trabalho</option>
+            <option value="7">Meio Ambiente</option>
+        </select>
 
         <label for="foto_desvio">Insira uma foto do local do desvio, caso necessário:</label>
         <input type="file" id="foto_desvio" name="foto_desvio"><br><br>
