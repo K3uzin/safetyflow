@@ -28,6 +28,15 @@ if (isset($_GET['id_desvio'])) {
             echo "<br>Tipo de Desvio: " . $desvio['tipo_desvio'];
             echo "<br>Gravidade: " . $desvio['gravidade'];
             echo "<br>Observações: " . $desvio['observacoes'];
+
+            // Exibir a imagem, se existir
+            if ($desvio['foto_desvio']) {
+                $imagem_url = $desvio['foto_desvio'];
+                echo "<br>Imagem do Desvio: <br><img src=\"$imagem_url\" alt=\"Imagem do desvio\">";
+            } else {
+                echo "<br>Imagem do Desvio: Nenhuma imagem disponível";
+            }
+            
             // Exibir mais campos conforme necessário
         } else {
             echo "Desvio não encontrado.";
