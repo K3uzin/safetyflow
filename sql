@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 29-Ago-2023 às 23:08
+-- Tempo de geração: 30-Ago-2023 às 22:44
 -- Versão do servidor: 10.4.27-MariaDB
 -- versão do PHP: 8.2.0
 
@@ -107,7 +107,7 @@ CREATE TABLE `tabela_desvio` (
   `tipo_desvio` varchar(255) DEFAULT NULL,
   `gravidade` varchar(20) DEFAULT NULL,
   `observacoes` text DEFAULT NULL,
-  `foto_desvio` blob DEFAULT NULL,
+  `foto_desvio` varchar(255) DEFAULT NULL,
   `area_responsavel` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -138,13 +138,17 @@ INSERT INTO `tabela_desvio` (`id_desvio`, `user_nome`, `user_matricula`, `data_i
 (23, 'Natan', 0, '2023-08-02', 'Noite', 6, 'a', 'aaaaaaaaa', 'a', 'Gravíssimo', '', NULL, NULL),
 (24, 'Natan', 0, '2023-08-02', 'Noite', 6, 'a', 'aaaaaaaaa', 'a', 'Gravíssimo', '', NULL, NULL),
 (25, 'Natan', 0, '2023-08-02', 'Noite', 6, 'a', 'aaaaaaaaa', 'a', 'Gravíssimo', '', NULL, NULL),
-(26, 'Natan', 0, '2023-08-02', 'Noite', 6, 'a', 'aaaaaaaaa', 'a', 'Gravíssimo', '', 0x536e6170696e7374612e6170705f3131373231323238315f323339303931363537373836383534335f35383139393732373938373836333739335f6e5f313038302e6a7067, NULL),
-(27, 'Natan', 0, '2023-08-02', 'Noite', 6, 'a', 'aaaaaaaaa', 'a', 'Gravíssimo', NULL, 0x536e6170696e7374612e6170705f3131373231323238315f323339303931363537373836383534335f35383139393732373938373836333739335f6e5f313038302e6a7067, NULL),
-(28, 'Natan', 0, '2023-08-06', 'Noite', 2, 'aaa', 'aaa', 'aaa', 'Gravíssimo', NULL, 0x536e6170696e7374612e6170705f3334343632313232395f323735363039363634313139353739385f343736373937323135313337313936373637385f6e5f313038302e6a7067, 6),
-(29, 'Natan', 0, '2023-08-06', 'Noite', 2, 'aaa', 'aaa', 'aaa', 'Gravíssimo', NULL, 0x536e6170696e7374612e6170705f3334343632313232395f323735363039363634313139353739385f343736373937323135313337313936373637385f6e5f313038302e6a7067, 0),
-(30, 'Natan', 0, '2023-08-06', 'Noite', 2, 'aaa', 'aaa', 'aaa', 'Gravíssimo', NULL, 0x536e6170696e7374612e6170705f3334343632313232395f323735363039363634313139353739385f343736373937323135313337313936373637385f6e5f313038302e6a7067, 0),
-(31, 'Natan', 0, '2023-08-06', 'Noite', 2, 'aaa', 'aaasassss', 'aaa', 'Gravíssimo', NULL, 0x536e6170696e7374612e6170705f3334343632313232395f323735363039363634313139353739385f343736373937323135313337313936373637385f6e5f313038302e6a7067, 0),
-(32, 'Natan', 0, '2023-08-01', 'Tarde', 1, 'aaa', 'daw 53235', '353', 'Gravíssimo', NULL, NULL, 0);
+(26, 'Natan', 0, '2023-08-02', 'Noite', 6, 'a', 'aaaaaaaaa', 'a', 'Gravíssimo', '', 'Snapinsta.app_117212281_2390916577868543_58199727987863793_n_1080.jpg', NULL),
+(27, 'Natan', 0, '2023-08-02', 'Noite', 6, 'a', 'aaaaaaaaa', 'a', 'Gravíssimo', NULL, 'Snapinsta.app_117212281_2390916577868543_58199727987863793_n_1080.jpg', NULL),
+(28, 'Natan', 0, '2023-08-06', 'Noite', 2, 'aaa', 'aaa', 'aaa', 'Gravíssimo', NULL, 'Snapinsta.app_344621229_2756096641195798_4767972151371967678_n_1080.jpg', 6),
+(29, 'Natan', 0, '2023-08-06', 'Noite', 2, 'aaa', 'aaa', 'aaa', 'Gravíssimo', NULL, 'Snapinsta.app_344621229_2756096641195798_4767972151371967678_n_1080.jpg', 0),
+(30, 'Natan', 0, '2023-08-06', 'Noite', 2, 'aaa', 'aaa', 'aaa', 'Gravíssimo', NULL, 'Snapinsta.app_344621229_2756096641195798_4767972151371967678_n_1080.jpg', 0),
+(31, 'Natan', 0, '2023-08-06', 'Noite', 2, 'aaa', 'aaasassss', 'aaa', 'Gravíssimo', NULL, 'Snapinsta.app_344621229_2756096641195798_4767972151371967678_n_1080.jpg', 0),
+(32, 'Natan', 0, '2023-08-01', 'Tarde', 1, 'aaa', 'daw 53235', '353', 'Gravíssimo', NULL, NULL, 0),
+(33, 'Natan', 0, '2023-08-06', 'Noite', 4, 'a', 'a', 'a', 'Leve', NULL, 'setores/listas_setores/fotos_desvio/Snapinsta.app_318928285_713968859876951_9061158292914759457_n_1080 (1).jpg', 2),
+(34, 'Natan', 0, '2023-08-06', 'Tarde', 4, 'a', 'aaaaa', 'a', 'Leve', NULL, 'setores/listas_setores/fotos_desvio/Snapinsta.app_318928285_713968859876951_9061158292914759457_n_1080 (1).jpg', 2),
+(35, 'Natan', 0, '2023-08-06', 'Tarde', 4, 'a', 'aaaaa', 'a', 'Leve', NULL, 'Snapinsta.app_318928285_713968859876951_9061158292914759457_n_1080 (1).jpg', 2),
+(36, 'Natan', 0, '2023-08-06', 'Tarde', 4, 'a', 'aaaaa', 'a', 'Leve', NULL, 'Snapinsta.app_318928285_713968859876951_9061158292914759457_n_1080 (1).jpg', 2);
 
 --
 -- Índices para tabelas despejadas
@@ -179,7 +183,7 @@ ALTER TABLE `tabela_desvio`
 -- AUTO_INCREMENT de tabela `tabela_desvio`
 --
 ALTER TABLE `tabela_desvio`
-  MODIFY `id_desvio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id_desvio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- Restrições para despejos de tabelas
