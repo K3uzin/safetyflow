@@ -9,8 +9,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Realize as validações necessárias aqui
 
-    // Inserção dos dados na tabela Cadastro
-    $sql = "INSERT INTO cadastro (nome, email, senha, setor_id) VALUES ('$nome', '$email', '$senha', '$setor')";
+    // Inserção dos dados na tabela usuario
+    $sql = "INSERT INTO usuario (nome, email, senha, setor_id) VALUES ('$nome', '$email', '$senha', '$setor')";
 
     if ($mysqli->query($sql) === TRUE) {
         echo "Cadastro realizado com sucesso!";
