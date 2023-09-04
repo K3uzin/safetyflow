@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 04-Set-2023 às 05:27
+-- Tempo de geração: 04-Set-2023 às 05:37
 -- Versão do servidor: 10.4.27-MariaDB
 -- versão do PHP: 8.2.0
 
@@ -75,27 +75,26 @@ INSERT INTO `areas_responsaveis` (`id_area`, `nome_area`) VALUES
 
 CREATE TABLE `desvios` (
   `id_desvio` int(11) NOT NULL,
-  `user_nome` varchar(255) DEFAULT NULL,
-  `user_matricula` int(11) DEFAULT NULL,
-  `data_identificacao` date DEFAULT NULL,
-  `turno` varchar(20) DEFAULT NULL,
-  `setor` int(11) DEFAULT NULL,
-  `local_desvio` varchar(255) DEFAULT NULL,
-  `descricao_desvio` text DEFAULT NULL,
-  `tipo_desvio` varchar(255) DEFAULT NULL,
-  `gravidade` varchar(20) DEFAULT NULL,
-  `observacoes` text DEFAULT NULL,
+  `user_nome` varchar(255) NOT NULL,
+  `user_matricula` int(11) NOT NULL,
+  `data_identificacao` date NOT NULL,
+  `turno` varchar(20) NOT NULL,
+  `setor` int(11) NOT NULL,
+  `local_desvio` varchar(255) NOT NULL,
+  `descricao_desvio` text NOT NULL,
+  `tipo_desvio` int(1) NOT NULL,
+  `gravidade` varchar(20) NOT NULL,
   `foto_desvio` varchar(255) DEFAULT NULL,
-  `area_responsavel` int(11) DEFAULT NULL
+  `area_responsavel` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `desvios`
 --
 
-INSERT INTO `desvios` (`id_desvio`, `user_nome`, `user_matricula`, `data_identificacao`, `turno`, `setor`, `local_desvio`, `descricao_desvio`, `tipo_desvio`, `gravidade`, `observacoes`, `foto_desvio`, `area_responsavel`) VALUES
-(0, 'Natan', 0, '2023-08-29', 'Manhã', 3, 'xs', 'aae', 'ada', 'Moderado', NULL, 'setores/listas_setores/fotos_desvio/Snapinsta.app_318928285_713968859876951_9061158292914759457_n_1080 (1).jpg', 5),
-(0, 'Natan', 0, '2023-08-29', 'Manhã', 1, 'xs', 'aae', 'ada', 'Moderado', NULL, 'setores/listas_setores/fotos_desvio/Snapinsta.app_318928285_713968859876951_9061158292914759457_n_1080 (1).jpg', 5);
+INSERT INTO `desvios` (`id_desvio`, `user_nome`, `user_matricula`, `data_identificacao`, `turno`, `setor`, `local_desvio`, `descricao_desvio`, `tipo_desvio`, `gravidade`, `foto_desvio`, `area_responsavel`) VALUES
+(0, 'Natan', 0, '2023-08-29', 'Manhã', 3, 'xs', 'aae', 0, 'Moderado', 'setores/listas_setores/fotos_desvio/Snapinsta.app_318928285_713968859876951_9061158292914759457_n_1080 (1).jpg', 5),
+(0, 'Natan', 0, '2023-08-29', 'Manhã', 1, 'xs', 'aae', 0, 'Moderado', 'setores/listas_setores/fotos_desvio/Snapinsta.app_318928285_713968859876951_9061158292914759457_n_1080 (1).jpg', 5);
 
 -- --------------------------------------------------------
 
