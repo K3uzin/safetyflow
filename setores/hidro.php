@@ -2,7 +2,7 @@
 require '../cadastro/conexao.php';
 
 // Consulta para obter informações sobre o último desvio no Setor "Hidro"
-$sql_ultimo_desvio_hidro = "SELECT user_nome, data_identificacao, local_desvio FROM tabela_desvio WHERE setor = 2 ORDER BY id_desvio DESC LIMIT 1";
+$sql_ultimo_desvio_hidro = "SELECT user_nome, data_identificacao, local_desvio FROM desvios WHERE setor = 2 ORDER BY id_desvio DESC LIMIT 1";
 $result_ultimo_desvio_hidro = $mysqli->query($sql_ultimo_desvio_hidro);
 
 if ($result_ultimo_desvio_hidro) {
@@ -18,7 +18,7 @@ if ($result_ultimo_desvio_hidro) {
 }
 
 // Consulta para contar os desvios no Setor "Hidro"
-$sql_total_desvios_hidro = "SELECT COUNT(*) AS total_desvios_hidro FROM tabela_desvio WHERE setor = 2";
+$sql_total_desvios_hidro = "SELECT COUNT(*) AS total_desvios_hidro FROM desvios WHERE setor = 2";
 $result_total_desvios_hidro = $mysqli->query($sql_total_desvios_hidro);
 
 if ($result_total_desvios_hidro) {
