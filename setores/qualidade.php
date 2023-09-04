@@ -2,7 +2,7 @@
 require '../cadastro/conexao.php';
 
 // Consulta para obter informações sobre o último desvio no Setor "Qualidade"
-$sql_ultimo_desvio_qualidade = "SELECT user_nome, data_identificacao, local_desvio FROM tabela_desvio WHERE setor = 5 ORDER BY id_desvio DESC LIMIT 1";
+$sql_ultimo_desvio_qualidade = "SELECT user_nome, data_identificacao, local_desvio FROM desvios WHERE setor = 5 ORDER BY id_desvio DESC LIMIT 1";
 $result_ultimo_desvio_qualidade = $mysqli->query($sql_ultimo_desvio_qualidade);
 
 if ($result_ultimo_desvio_qualidade) {
@@ -18,7 +18,7 @@ if ($result_ultimo_desvio_qualidade) {
 }
 
 // Consulta para contar os desvios no Setor "Qualidade"
-$sql_total_desvios_qualidade = "SELECT COUNT(*) AS total_desvios_qualidade FROM tabela_desvio WHERE setor = 5";
+$sql_total_desvios_qualidade = "SELECT COUNT(*) AS total_desvios_qualidade FROM desvios WHERE setor = 5";
 $result_total_desvios_qualidade = $mysqli->query($sql_total_desvios_qualidade);
 
 if ($result_total_desvios_qualidade) {
