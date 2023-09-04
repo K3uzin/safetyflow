@@ -2,7 +2,7 @@
 require '../../cadastro/conexao.php'; // Verifique se o caminho está correto
 
 // Consulta para obter todos os desvios no Setor "Administrativa"
-$sql_desvios_setor_administrativa = "SELECT id_desvio, tipo_desvio, gravidade, setor FROM tabela_desvio WHERE setor = 1"; // Aqui usei o ID do setor Administrativa (1) para a consulta
+$sql_desvios_setor_administrativa = "SELECT id_desvio, tipo_desvio, gravidade, setor FROM desvios WHERE setor = 1"; // Aqui usei o ID do setor Administrativa (1) para a consulta
 $result_desvios_setor_administrativa = $mysqli->query($sql_desvios_setor_administrativa);
 
 $desvios_setor_administrativa = [];
