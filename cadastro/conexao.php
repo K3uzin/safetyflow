@@ -1,7 +1,7 @@
 <?php
     ini_set("display_errors", 1);
 
-    $mysqli = new mysqli("localhost", "root", "", "sflow");
+    $mysqli = new mysqli("localhost", "root", "", "safetyflow");
 
     if ($mysqli->connect_error){
         echo "erro ao conectar <br>";
