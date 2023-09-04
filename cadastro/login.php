@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $senha = $_POST["senha"];
 
         // Consultar o banco de dados para verificar o ID ou e-mail e a senha
-        $sql = "SELECT matricula FROM cadastro WHERE (matricula = ? OR email = ?) AND senha = ?";
+        $sql = "SELECT matricula FROM usuario WHERE (matricula = ? OR email = ?) AND senha = ?";
         $stmt = $mysqli->prepare($sql);
 
         if ($stmt) {
