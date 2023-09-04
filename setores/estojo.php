@@ -2,7 +2,7 @@
 require '../cadastro/conexao.php';
 
 // Consulta para obter informações sobre o último desvio no Setor "Estojo"
-$sql_ultimo_desvio_estojo = "SELECT user_nome, data_identificacao, local_desvio FROM tabela_desvio WHERE setor = 4 ORDER BY id_desvio DESC LIMIT 1";
+$sql_ultimo_desvio_estojo = "SELECT user_nome, data_identificacao, local_desvio FROM desvios WHERE setor = 4 ORDER BY id_desvio DESC LIMIT 1";
 $result_ultimo_desvio_estojo = $mysqli->query($sql_ultimo_desvio_estojo);
 
 if ($result_ultimo_desvio_estojo) {
@@ -18,7 +18,7 @@ if ($result_ultimo_desvio_estojo) {
 }
 
 // Consulta para contar os desvios no Setor "Estojo"
-$sql_total_desvios_estojo = "SELECT COUNT(*) AS total_desvios_estojo FROM tabela_desvio WHERE setor = 4";
+$sql_total_desvios_estojo = "SELECT COUNT(*) AS total_desvios_estojo FROM desvios WHERE setor = 4";
 $result_total_desvios_estojo = $mysqli->query($sql_total_desvios_estojo);
 
 if ($result_total_desvios_estojo) {
