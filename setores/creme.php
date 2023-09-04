@@ -18,7 +18,7 @@ if ($result_ultimo_desvio_cremes) {
 }
 
 // Consulta para contar os desvios no Setor "Cremes"
-$sql_total_desvios_cremes = "SELECT COUNT(*) AS total_desvios_cremes FROM tabela_desvio WHERE setor = 3";
+$sql_total_desvios_cremes = "SELECT COUNT(*) AS total_desvios_cremes FROM desvios WHERE setor = 3";
 $result_total_desvios_cremes = $mysqli->query($sql_total_desvios_cremes);
 
 if ($result_total_desvios_cremes) {
