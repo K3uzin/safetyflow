@@ -2,7 +2,7 @@
 require '../cadastro/conexao.php';
 
 // Consulta para obter informações sobre o último desvio no Setor "Cremes"
-$sql_ultimo_desvio_cremes = "SELECT user_nome, data_identificacao, local_desvio FROM tabela_desvio WHERE setor = 3 ORDER BY id_desvio DESC LIMIT 1";
+$sql_ultimo_desvio_cremes = "SELECT user_nome, data_identificacao, local_desvio FROM desvios WHERE setor = 3 ORDER BY id_desvio DESC LIMIT 1";
 $result_ultimo_desvio_cremes = $mysqli->query($sql_ultimo_desvio_cremes);
 
 if ($result_ultimo_desvio_cremes) {
