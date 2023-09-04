@@ -2,7 +2,7 @@
 require '../../cadastro/conexao.php'; // Verifique se o caminho está correto
 
 // Consulta para obter todos os desvios no Setor "Qualidade"
-$sql_desvios_setor_qualidade = "SELECT id_desvio, tipo_desvio, gravidade, setor FROM tabela_desvio WHERE setor = 5"; // Aqui usei o ID do setor Qualidade (5) para a consulta
+$sql_desvios_setor_qualidade = "SELECT id_desvio, tipo_desvio, gravidade, setor FROM desvios WHERE setor = 5"; // Aqui usei o ID do setor Qualidade (5) para a consulta
 $result_desvios_setor_qualidade = $mysqli->query($sql_desvios_setor_qualidade);
 
 $desvios_setor_qualidade = [];
