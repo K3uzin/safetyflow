@@ -2,7 +2,7 @@
 require '../cadastro/conexao.php';
 
 // Consulta para obter informações sobre o último desvio no Setor "Logística"
-$sql_ultimo_desvio_logistica = "SELECT user_nome, data_identificacao, local_desvio FROM tabela_desvio WHERE setor = 6 ORDER BY id_desvio DESC LIMIT 1";
+$sql_ultimo_desvio_logistica = "SELECT user_nome, data_identificacao, local_desvio FROM desvios WHERE setor = 6 ORDER BY id_desvio DESC LIMIT 1";
 $result_ultimo_desvio_logistica = $mysqli->query($sql_ultimo_desvio_logistica);
 
 if ($result_ultimo_desvio_logistica) {
@@ -18,7 +18,7 @@ if ($result_ultimo_desvio_logistica) {
 }
 
 // Consulta para contar os desvios no Setor "Logística"
-$sql_total_desvios_logistica = "SELECT COUNT(*) AS total_desvios_logistica FROM tabela_desvio WHERE setor = 6";
+$sql_total_desvios_logistica = "SELECT COUNT(*) AS total_desvios_logistica FROM desvios WHERE setor = 6";
 $result_total_desvios_logistica = $mysqli->query($sql_total_desvios_logistica);
 
 if ($result_total_desvios_logistica) {
