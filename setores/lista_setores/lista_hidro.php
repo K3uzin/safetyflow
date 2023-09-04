@@ -2,7 +2,7 @@
 require '../../cadastro/conexao.php'; // Verifique se o caminho está correto
 
 // Consulta para obter todos os desvios no Setor "Hidro"
-$sql_desvios_setor_hidro = "SELECT id_desvio, tipo_desvio, gravidade, setor FROM tabela_desvio WHERE setor = 2"; // Aqui usei o ID do setor Hidro (2) para a consulta
+$sql_desvios_setor_hidro = "SELECT id_desvio, tipo_desvio, gravidade, setor FROM desvios WHERE setor = 2"; // Aqui usei o ID do setor Hidro (2) para a consulta
 $result_desvios_setor_hidro = $mysqli->query($sql_desvios_setor_hidro);
 
 $desvios_setor_hidro = [];
