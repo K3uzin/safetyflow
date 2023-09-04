@@ -5,7 +5,7 @@ if (isset($_GET['id_desvio'])) {
     $id_desvio = $_GET['id_desvio'];
 
     // Consulta para obter os detalhes do desvio com base no ID
-    $sql = "SELECT * FROM tabela_desvio WHERE id_desvio = ?";
+    $sql = "SELECT * FROM desvios WHERE id_desvio = ?";
     $stmt = $mysqli->prepare($sql);
 
     if ($stmt) {
@@ -27,7 +27,6 @@ if (isset($_GET['id_desvio'])) {
             echo "<br>Descrição do Desvio: " . $desvio['descricao_desvio'];
             echo "<br>Tipo de Desvio: " . $desvio['tipo_desvio'];
             echo "<br>Gravidade: " . $desvio['gravidade'];
-            echo "<br>Observações: " . $desvio['observacoes'];
 
             // Exibir a imagem, se existir
             if ($desvio['foto_desvio']) {
