@@ -1,103 +1,90 @@
 <?php
-require 'cadastro/conexao.php'; // Verifique se o caminho está correto
+require 'cadastro/conexao.php';
 
 session_start();
 
 if (!isset($_SESSION["user_matricula"])) {
-    // Se o usuário não estiver logado, redirecione para a página de login
     header("Location: login.php");
     exit();
 }
 
 $user_matricula = $_SESSION["user_matricula"];
 
-// Consulta para obter o nome do usuário com base na matrícula
-$sql_nome = "SELECT nome FROM cadastro WHERE matricula = ?";
+$sql_nome = "SELECT nome FROM usuario WHERE matricula = ?";
 $stmt_nome = $mysqli->prepare($sql_nome);
 
 if ($stmt_nome) {
     $stmt_nome->bind_param("s", $user_matricula);
     $stmt_nome->execute();
-    $stmt_nome->bind_result($nome);
-
-    // Armazene o nome em uma variável para exibição posterior
+    $stmt_nome->bind_result($nome_usuario);
     $stmt_nome->fetch();
     $stmt_nome->close();
 } else {
     echo "Erro na preparação do statement: " . $mysqli->error;
 }
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $data_identificacao = $_POST["data_identificacao"];
+    $turno = $_POST["turno"];
+    $setor = $_POST["setor"];
+    $local_desvio = $_POST["local_desvio"];
+    $descricao_desvio = $_POST["descricao_desvio"];
+    $tipo_desvio = $_POST["tipo_desvio"];
+    $gravidade = $_POST["gravidade"];
+    $area_responsavel = $_POST["area_responsavel"];
+
+    $imagem_url = null; // Inicializa a variável para o URL da imagem
+
+    // Verifica se o arquivo de imagem foi enviado e atende aos requisitos
+    if ($_FILES["foto_desvio"]["error"] == 0) {
+        $imagem_tmp = $_FILES["foto_desvio"]["tmp_name"];
+        $imagem_tipo = $_FILES["foto_desvio"]["type"];
+        $pasta_destino = 'setores/listas_setores/fotos_desvio'; // Diretório acessível pelo servidor
+    
+        // Verifica o tamanho máximo (8 MB) e formatos permitidos
+        if ($_FILES["foto_desvio"]["size"] <= 8 * 1024 * 1024) {
+            $formatos_permitidos = array("image/jpeg", "image/jpg", "image/heic");
+            if (in_array($imagem_tipo, $formatos_permitidos)) {
+                // Gere um nome de arquivo único baseado no horário atual
+                $nome_unico = time() . '.' . pathinfo($_FILES["foto_desvio"]["name"], PATHINFO_EXTENSION);
+    
+                // Move o arquivo para o diretório de destino com o novo nome
+                move_uploaded_file($imagem_tmp, $pasta_destino . '/' . $nome_unico);
+    
+                // URL da imagem no servidor
+                $imagem_url = $pasta_destino . '/' . $nome_unico;
+            } else {
+                echo "Formato de imagem não permitido. Apenas JPG, JPEG e HEIC são permitidos.";
+            }
+        } else {
+            echo "Tamanho de imagem excede 8 MB.";
+        }
+    }
+    
+
+    // Inserção dos dados em Desvio, incluindo o URL da imagem
+    $sql = "INSERT INTO desvios (user_matricula, user_nome, data_identificacao, turno, setor, local_desvio, descricao_desvio, tipo_desvio, gravidade, foto_desvio, area_responsavel) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $mysqli->prepare($sql);
+
+    if ($stmt) {
+        $stmt->bind_param("sssssssssss", $user_matricula, $nome_usuario, $data_identificacao, $turno, $setor, $local_desvio, $descricao_desvio, $tipo_desvio, $gravidade, $imagem_url, $area_responsavel);
+        $stmt->execute();
+
+        if ($stmt->affected_rows > 0) {
+            echo "Cadastro de desvio realizado com sucesso!";
+        } else {
+            echo "Erro ao cadastrar desvio.";
+        }
+
+        $stmt->close();
+    } else {
+        echo "Erro na preparação do statement: " . $mysqli->error;
+    }
+
+    // Fechamento da conexão com o banco de dados
+    $mysqli->close();
+} else {
+    echo "O formulário não foi submetido corretamente.";
+}
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Formulário de Desvio</title>
-</head>
-<body>
-    <h2>Formulário de Desvio</h2>
-    <form action="recebe_desvio.php" method="post" enctype="multipart/form-data">
-
-        <label for="data_identificacao">Data que o desvio foi identificado:</label>
-        <input type="date" id="data_identificacao" name="data_identificacao"><br><br>
-
-        <label>Turno que o desvio foi identificado:</label><br>
-        <input type="radio" id="turno_manha" name="turno" value="Manhã">
-        <label for="turno_manha">Manhã</label><br>
-        <input type="radio" id="turno_tarde" name="turno" value="Tarde">
-        <label for="turno_tarde">Tarde</label><br>
-        <input type="radio" id="turno_noite" name="turno" value="Noite">
-        <label for="turno_noite">Noite</label><br><br>
-
-        <label for="setor_desvio">Setor em que o desvio foi identificado</label><br>
-        <select id="setor" name="setor" required>
-            <option value="1">Administrativa</option>
-            <option value="2">Hidro</option>
-            <option value="3">Cremes</option>
-            <option value="4">Estojo</option>
-            <option value="5">Qualidade</option>
-            <option value="6">Logística</option>
-            <!-- adiciona setores -->
-        </select><br><br>
-
-        <label for="local_desvio">Local exato onde o Desvio foi identificado:</label>
-        <input type="text" id="local_desvio" name="local_desvio"><br><br>
-
-        <label for="descricao_desvio">Descrição do Desvio:</label>
-        <textarea id="descricao_desvio" name="descricao_desvio" rows="4"></textarea><br><br>
-
-        <label for="tipo_desvio">Tipo de Desvio:</label>
-        <input type="text" id="tipo_desvio" name="tipo_desvio"><br><br>
-
-        <label for="gravidade">Potencial de Gravidade:</label><br>
-        <input type="radio" id="leve" name="gravidade" value="Leve">
-        <label for="leve">Leve</label><br>
-        <input type="radio" id="moderado" name="gravidade" value="Moderado">
-        <label for="moderado">Moderado</label><br>
-        <input type="radio" id="grave" name="gravidade" value="Grave">
-        <label for="grave">Grave</label><br>
-        <input type="radio" id="gravissimo" name="gravidade" value="Gravíssimo">
-        <label for="gravissimo">Gravíssimo</label><br><br>
-        
-        <label for="area_responsavel">Informe área responsável pela solução:</label><br>
-        <select id="area_responsavel" name="area_responsavel" required>
-            <option value="1">Manutenção</option>
-            <option value="2">Engenharia</option>
-            <option value="3">Produção</option>
-            <option value="4">Qualidade</option>
-            <option value="5">Recursos Humanos</option>
-            <option value="6">Segurança do Trabalho</option>
-            <option value="7">Meio Ambiente</option>
-        </select>
-
-        <label for="foto_desvio">Insira uma foto do local do desvio, caso necessário:</label>
-        <input type="file" id="foto_desvio" name="foto_desvio"><br><br>
-
-        <input type="submit" value="Enviar">
-    </form>
-</body>
-,
-
-
-
-
-
-,
