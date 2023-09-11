@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 04-Set-2023 às 05:37
+-- Tempo de geração: 11-Set-2023 às 23:09
 -- Versão do servidor: 10.4.27-MariaDB
 -- versão do PHP: 8.2.0
 
@@ -74,7 +74,6 @@ INSERT INTO `areas_responsaveis` (`id_area`, `nome_area`) VALUES
 --
 
 CREATE TABLE `desvios` (
-  `id_desvio` int(11) NOT NULL,
   `user_nome` varchar(255) NOT NULL,
   `user_matricula` int(11) NOT NULL,
   `data_identificacao` date NOT NULL,
@@ -82,19 +81,30 @@ CREATE TABLE `desvios` (
   `setor` int(11) NOT NULL,
   `local_desvio` varchar(255) NOT NULL,
   `descricao_desvio` text NOT NULL,
-  `tipo_desvio` int(1) NOT NULL,
+  `tipo_desvio` varchar(20) DEFAULT NULL,
   `gravidade` varchar(20) NOT NULL,
   `foto_desvio` varchar(255) DEFAULT NULL,
-  `area_responsavel` int(11) NOT NULL
+  `area_responsavel` int(11) NOT NULL,
+  `id_desvio` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `desvios`
 --
 
-INSERT INTO `desvios` (`id_desvio`, `user_nome`, `user_matricula`, `data_identificacao`, `turno`, `setor`, `local_desvio`, `descricao_desvio`, `tipo_desvio`, `gravidade`, `foto_desvio`, `area_responsavel`) VALUES
-(0, 'Natan', 0, '2023-08-29', 'Manhã', 3, 'xs', 'aae', 0, 'Moderado', 'setores/listas_setores/fotos_desvio/Snapinsta.app_318928285_713968859876951_9061158292914759457_n_1080 (1).jpg', 5),
-(0, 'Natan', 0, '2023-08-29', 'Manhã', 1, 'xs', 'aae', 0, 'Moderado', 'setores/listas_setores/fotos_desvio/Snapinsta.app_318928285_713968859876951_9061158292914759457_n_1080 (1).jpg', 5);
+INSERT INTO `desvios` (`user_nome`, `user_matricula`, `data_identificacao`, `turno`, `setor`, `local_desvio`, `descricao_desvio`, `tipo_desvio`, `gravidade`, `foto_desvio`, `area_responsavel`, `id_desvio`) VALUES
+('Natan', 0, '2023-08-30', 'Noite', 1, 'a', 'aaa', 'Desvio de Qualidade', 'Moderado', 'setores/listas_setores/fotos_desvio/1693860480.jpg', 5, 0),
+('Natan', 0, '2023-08-29', 'Manhã', 3, 'xs', 'aae', '0', 'Moderado', 'setores/listas_setores/fotos_desvio/Snapinsta.app_318928285_713968859876951_9061158292914759457_n_1080 (1).jpg', 5, 1),
+('Natan', 0, '2023-08-29', 'Manhã', 1, 'xs', 'aae', '0', 'Moderado', 'setores/listas_setores/fotos_desvio/Snapinsta.app_318928285_713968859876951_9061158292914759457_n_1080 (1).jpg', 5, 2),
+('Natan', 0, '0000-00-00', 'Manhã', 4, 'aaa', 's', '0', 'Moderado', NULL, 1, 3),
+('Natan', 0, '0000-00-00', 'Noite', 1, 'aa', 'aaa', '0', 'Moderado', NULL, 1, 4),
+('Natan', 0, '0000-00-00', 'Noite', 1, 'aa', 'aaa', 'Desvio de Segurança', 'Moderado', NULL, 1, 5),
+('Natan', 0, '2023-09-11', 'Noite', 4, 'a', 'aa', 'Desvio de Segurança', 'Gravíssimo', 'setores/listas_setores/fotos_desvio/Snapinsta.app_120138998_189769495939898_664015494098558591_n_1080.jpg', 1, 6),
+('Natan', 0, '0000-00-00', 'Tarde', 4, 'aaa', 'aaa', 'Desvio Ergonômico', 'Moderado', 'setores/listas_setores/fotos_desvio/129719633_919117488829759_4706500427372535772_n.jpg', 7, 7),
+('Natan', 0, '2023-08-30', 'Noite', 1, 'a', 'aaa', 'Desvio de Qualidade', 'Moderado', 'setores/listas_setores/fotos_desvio/1693858361.jpg', 5, 8),
+('Natan', 0, '2023-08-30', 'Noite', 1, 'a', 'aaa', 'Desvio de Qualidade', 'Moderado', 'setores/listas_setores/fotos_desvio/1693859055.jfif', 5, 9),
+('Natan', 0, '2023-08-30', 'Noite', 1, 'a', 'aaa', 'Desvio de Qualidade', 'Moderado', NULL, 5, 10),
+('Natan', 0, '2023-08-30', 'Noite', 1, 'a', 'aaa', 'Desvio de Qualidade', 'Moderado', 'setores/listas_setores/fotos_desvio/1693860221.jpg', 5, 11);
 
 -- --------------------------------------------------------
 
@@ -150,6 +160,12 @@ INSERT INTO `usuario` (`matricula`, `nome`, `email`, `senha`, `setor_id`) VALUES
 ALTER TABLE `administradores`
   ADD PRIMARY KEY (`matricula_admin`),
   ADD KEY `setor_id` (`setor_id`);
+
+--
+-- Índices para tabela `desvios`
+--
+ALTER TABLE `desvios`
+  ADD PRIMARY KEY (`id_desvio`);
 
 --
 -- Índices para tabela `setores`
