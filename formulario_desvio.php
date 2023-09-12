@@ -104,10 +104,3 @@ if ($stmt_nome) {
         <input type="submit" value="Enviar">
     </form>
 </body>
-,
-
-
-
-
-
-,
