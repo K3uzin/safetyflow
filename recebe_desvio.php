@@ -10,7 +10,7 @@ if (!isset($_SESSION["user_matricula"])) {
 
 $user_matricula = $_SESSION["user_matricula"];
 
-$sql_nome = "SELECT nome FROM cadastro WHERE matricula = ?";
+$sql_nome = "SELECT nome FROM usuario WHERE matricula = ?";
 $stmt_nome = $mysqli->prepare($sql_nome);
 
 if ($stmt_nome) {
@@ -37,22 +37,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Verifica se o arquivo de imagem foi enviado e atende aos requisitos
     if ($_FILES["foto_desvio"]["error"] == 0) {
-        $imagem_nome = $_FILES["foto_desvio"]["name"];
         $imagem_tmp = $_FILES["foto_desvio"]["tmp_name"];
-        $imagem_tamanho = $_FILES["foto_desvio"]["size"];
         $imagem_tipo = $_FILES["foto_desvio"]["type"];
         $pasta_destino = 'setores/listas_setores/fotos_desvio'; // Diretório acessível pelo servidor
-
+    
         // Verifica o tamanho máximo (8 MB) e formatos permitidos
-        if ($imagem_tamanho <= 8 * 1024 * 1024) {
+        if ($_FILES["foto_desvio"]["size"] <= 8 * 1024 * 1024) {
             $formatos_permitidos = array("image/jpeg", "image/jpg", "image/heic");
             if (in_array($imagem_tipo, $formatos_permitidos)) {
-                // Move o arquivo para o diretório de destino
-                    move_uploaded_file($imagem_tmp, $pasta_destino . '/' . $imagem_nome);
-
+                // Gere um nome de arquivo único baseado no horário atual
+                $nome_unico = time() . '.' . pathinfo($_FILES["foto_desvio"]["name"], PATHINFO_EXTENSION);
+    
+                // Move o arquivo para o diretório de destino com o novo nome
+                move_uploaded_file($imagem_tmp, $pasta_destino . '/' . $nome_unico);
+    
                 // URL da imagem no servidor
-                    $imagem_url = $pasta_destino . '/' . $imagem_nome;
-
+                $imagem_url = $pasta_destino . '/' . $nome_unico;
             } else {
                 echo "Formato de imagem não permitido. Apenas JPG, JPEG e HEIC são permitidos.";
             }
@@ -60,9 +60,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "Tamanho de imagem excede 8 MB.";
         }
     }
+    
 
-    // Inserção dos dados na tabela de Desvio, incluindo o URL da imagem
-    $sql = "INSERT INTO tabela_desvio (user_matricula, user_nome, data_identificacao, turno, setor, local_desvio, descricao_desvio, tipo_desvio, gravidade, foto_desvio, area_responsavel) 
+    // Inserção dos dados em Desvio, incluindo o URL da imagem
+    $sql = "INSERT INTO desvios (user_matricula, user_nome, data_identificacao, turno, setor, local_desvio, descricao_desvio, tipo_desvio, gravidade, foto_desvio, area_responsavel) 
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $mysqli->prepare($sql);
 
