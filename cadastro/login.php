@@ -39,24 +39,62 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $mysqli->close();
 ?>
 
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="pt-br">
+
 <head>
-    <title>Login</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>Acessar desvios</title>
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="bootstrap/css/sign-in.css">
+    <link rel="icon" href="img/logo.ico" type="image/x-icon">
 </head>
-<body>
 
-<h2>Login</h2>
+<body class="text-center">
+    <main class="form-signin">
+        <form>
+            <img class="mb-4" src="img/logo.png" alt="" width="150" height="150">
+            <h1 class="h3 mb-3 fw-normal">Acessar conta</h1>
 
-<form method="POST" action="login.php">
-    <label for="matricula_or_email">Matrícula ou E-mail:</label>
-    <input type="text" id="matricula_or_email" name="matricula_or_email"><br><br>
-    
-    <label for="senha">Senha:</label>
-    <input type="password" id="senha" name="senha"><br><br>
-    
-    <input type="submit" value="Entrar">
-</form>
+            <label for="inputEmail" class="visually-hidden">Matrícula</label>
+            <input type="text" id="inputEmail" class="form-control" placeholder="Matrícula" required="" autofocus="">
 
+            <label for="inputPassword" class="visually-hidden">Senha</label>
+            <input type="password" id="inputPassword" class="form-control" placeholder="Senha" required="">
+
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" value="remember-me"> Manter-me conectado
+                </label>
+            </div>
+
+            <button class="w-100 btn btn-lg btn-primary" type="submit"
+                style="background-color: #003884;">Acessar</button>
+
+            <p class="mt-5 mb-3 text-muted">&copy; 2023</p>
+        </form>
+
+    </main>
+    <!-- Scripts -->
+    <script src="assets/js/popper.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script>
+        // Função que executa após o carregamento do DOM
+        document.addEventListener("DOMContentLoaded", function () {
+            // Captura o input da matrícula
+            const matriculaInput = document.getElementById("inputEmail");
+
+            // Event listener para cada vez que o valor do input for alterado
+            matriculaInput.addEventListener("input", function () {
+                // Remove tudo exceto dígitos do valor do input
+                const value = matriculaInput.value.replace(/[^\d]/g, "");
+            });
+        });
+    </script>
 </body>
+
 </html>
