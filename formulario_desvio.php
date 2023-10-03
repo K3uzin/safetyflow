@@ -1,3 +1,4 @@
+<!-- Possível caminho View/form.php -->
 <?php
 require 'cadastro/conexao.php'; // Verifique se o caminho está correto
 
@@ -27,80 +28,186 @@ if ($stmt_nome) {
     echo "Erro na preparação do statement: " . $mysqli->error;
 }
 ?>
+
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
+
 <head>
-    <title>Formulário de Desvio</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>Checklist Desvios Corporativos</title>
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="bootstrap/css/form-validation.css" rel="stylesheet">
+    <link rel="icon" href="img/logo.ico" type="image/x-icon">
 </head>
-<body>
-    <h2>Formulário de Desvio</h2>
-    <form action="recebe_desvio.php" method="post" enctype="multipart/form-data">
 
-        <label for="data_identificacao">Data que o desvio foi identificado:</label>
-        <input type="date" id="data_identificacao" name="data_identificacao"><br><br>
-
-        <label>Turno que o desvio foi identificado:</label><br>
-        <input type="radio" id="turno_manha" name="turno" value="Manhã">
-        <label for="turno_manha">Manhã</label><br>
-        <input type="radio" id="turno_tarde" name="turno" value="Tarde">
-        <label for="turno_tarde">Tarde</label><br>
-        <input type="radio" id="turno_noite" name="turno" value="Noite">
-        <label for="turno_noite">Noite</label><br><br>
-
-        <label for="setor_desvio">Setor em que o desvio foi identificado</label><br>
-        <select id="setor" name="setor" required>
-            <option value="1">Administrativa</option>
-            <option value="2">Hidro</option>
-            <option value="3">Cremes</option>
-            <option value="4">Estojo</option>
-            <option value="5">Qualidade</option>
-            <option value="6">Logística</option>
-            <!-- adiciona setores -->
-        </select><br><br>
-
-        <label for="local_desvio">Local exato onde o Desvio foi identificado:</label>
-        <input type="text" id="local_desvio" name="local_desvio"><br><br>
-
-        <label for="descricao_desvio">Descrição do Desvio:</label>
-        <textarea id="descricao_desvio" name="descricao_desvio" rows="4"></textarea><br><br>
-
-        <label for="tipo_desvio">Tipo de Desvio:</label>
-        <select id="tipo_desvio" name="tipo_desvio" required>
-        <option value="">Escolha...</option>
-        <option value="Desvio Comportamental">Desvio Comportamental</option>
-        <option value="Desvio Ergonômico">Desvio Ergonômico</option>
-        <option value="Desvio de Segurança">Desvio de Segurança</option>
-        <option value="Desvio de Qualidade">Desvio de Qualidade</option>
-        <option value="Desvio de Processo">Desvio de Processo</option>
-        <option value="Desvio Ambiental">Desvio Ambiental</option>
-        <option value="Desvio de Manutenção">Desvio de Manutenção</option>
-        </select><br><br>
-
-        <label for="gravidade">Potencial de Gravidade:</label><br>
-        <input type="radio" id="leve" name="gravidade" value="Leve">
-        <label for="leve">Leve</label><br>
-        <input type="radio" id="moderado" name="gravidade" value="Moderado">
-        <label for="moderado">Moderado</label><br>
-        <input type="radio" id="grave" name="gravidade" value="Grave">
-        <label for="grave">Grave</label><br>
-        <input type="radio" id="gravissimo" name="gravidade" value="Gravíssimo">
-        <label for="gravissimo">Gravíssimo</label><br><br>
-
-
-        <label for="area_responsavel">Informe área responsável pela solução:</label>
-        <select id="area_responsavel" name="area_responsavel" required>
-            <option value="1">Manutenção</option>
-            <option value="2">Engenharia</option>
-            <option value="3">Produção</option>
-            <option value="4">Qualidade</option>
-            <option value="5">Recursos Humanos</option>
-            <option value="6">Segurança do Trabalho</option>
-            <option value="7">Meio Ambiente</option>
-        </select>
-
-        <label for="foto_desvio">Insira uma foto do local do desvio, caso necessário:</label>
-        <input type="file" id="foto_desvio" name="foto_desvio"><br><br>
-
-        <input type="submit" value="Enviar">
-    </form>
+<body class="bg-light">
+    <div class="container">
+        <main>
+            <div class="py-5 text-center">
+                <img class="d-block mx-auto mb-4" src="img/logo.png" alt="" width="150" height="150">
+                <h2>Desvios Corporativos</h2>
+                <p class="lead">Abrir um desvio é como ter um superpoder empresarial: você aponta riscos e melhorias
+                    essenciais. Seja parte da mudança para um ambiente mais seguro e eficiente!</p>
+            </div>
+            <div class="row g-3" style="text-align: left; align-items: center; justify-content: center;">
+                <div class="col-md-7 col-lg-8">
+                    <h4 class="mb-3">Faça a diferença!</h4>
+                    <form action="recebe_desvio.php" method="post" style="text-align: left;">
+                        <div class="row g-3 mt-3">
+                            <!-- Data de identificação do desvio -->
+                            <div class="col-12">
+                                <label for="data_identificacao" class="form-label">Data que o desvio foi
+                                    identificado</label>
+                                <input type="date" class="form-control" id="data_identificacao" name="data_identificacao"
+                                    required="">
+                                <div class="invalid-feedback">
+                                    Data do desvio é obrigatória.
+                                </div>
+                            </div>
+                            <!-- Turno -->
+                            <div class="col-12 mt-3">
+                                <label for="turno" class="form-label">Turno</label>
+                                <select class="form-select" id="turno" name="turno" required="">
+                                    <option value="">Escolha...</option>
+                                    <option value="Manhã">Manhã</option>
+                                    <option value="Tarde">Tarde</option>
+                                    <option value="Noite">Noite</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Turno é obrigatório.
+                                </div>
+                            </div>
+                            <!-- Setor -->
+                            <div class="col-12 mt-3">
+                                <label for="setor_desvio" class="form-label">Setor</label>
+                                <select class="form-select" id="setor" name="setor" required="">
+                                    <option value="">Escolha...</option>
+                                    <option value="1">Administrativa</option>
+                                    <option value="2">Hidro</option>
+                                    <option value="3">Cremes</option>
+                                    <option value="4">Estojo</option>
+                                    <option value="5">Qualidade</option>
+                                    <option value="6">Logística</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Setor é obrigatório.
+                                </div>
+                            </div>
+                            <!-- Local Exato -->
+                            <div class="col-12 mt-3">
+                                <label for="local_desvio" class="form-label">Local Exato</label>
+                                <input type="text" class="form-control" id="local_desvio" name="local_desvio"
+                                    required="">
+                                <div class="invalid-feedback">
+                                    Local exato é obrigatório.
+                                </div>
+                            </div>
+                            <!-- Descrição do Desvio -->
+                            <div class="col-12 mt-3">
+                                <label for="descricao_desvio" class="form-label">Descrição do Desvio</label>
+                                <textarea class="form-control" id="descricao_desvio" name="descricao_desvio" rows="5"
+                                    required=""></textarea>
+                                <div class="invalid-feedback">
+                                    Descrição do desvio é obrigatória.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 mt-3">
+                            <!-- Tipo do Desvio -->
+                            <label for="tipo_desvio" class="form-label">Tipo do Desvio</label>
+                            <select class="form-select" id="tipo_desvio" name="tipo_desvio" required="">
+                                <option value="">Escolha...</option>
+                                <option value="Desvio Comportamental">Desvio Comportamental</option>
+                                <option value="Desvio Ergonômico">Desvio Ergonômico</option>
+                                <option value="Desvio de Segurança">Desvio de Segurança</option>
+                                <option value="Desvio de Qualidade">Desvio de Qualidade</option>
+                                <option value="Desvio de Processo">Desvio de Processo</option>
+                                <option value="Desvio Ambiental">Desvio Ambiental</option>
+                                <option value="Desvio de Manutenção">Desvio de Manutenção</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Tipo do desvio é obrigatório.
+                            </div>
+                        </div>
+                        <!-- Potencial de Gravidade -->
+                        <div class="col-12 mt-3">
+                            <label for="gravidade" class="form-label">Potencial de Gravidade</label>
+                            <select class="form-select" id="gravidade" name="gravidade" required="">
+                                <option value="">Escolha...</option>
+                                <option value="Leve">Leve</option>
+                                <option value="Moderado">Moderado</option>
+                                <option value="Grave">Grave</option>
+                                <option value="Gravissimo">Gravíssimo</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Potencial de gravidade é obrigatório.
+                            </div>
+                        </div>
+                        <!-- Área Responsável -->
+                        <div class="col-12 mt-3">
+                            <label for="area_responsavel" class="form-label">Área Responsável pela Solução</label>
+                            <select class="form-select" id="area_responsavel" name="area_responsavel" required="">
+                                <option value="">Escolha...</option>
+                                <option value="1">Manutenção</option>
+                                <option value="2">Engenharia</option>
+                                <option value="3">Produção</option>
+                                <option value="4">Qualidade</option>
+                                <option value="5">Recursos Humanos</option>
+                                <option value="6">Segurança do Trabalho</option>
+                                <option value="7">Meio Ambiente</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Área responsável é obrigatória.
+                            </div>
+                        </div>
+                        <!-- Foto do Desvio -->
+                        <div class="col-12 mt-3">
+                            <label for="foto_desvio" class="form-label">Insira uma foto do desvio, caso
+                                necessário</label>
+                            <input type="file" class="form-control" id="foto_desvio" name="foto_desvio" accept="image/*, video/*">
+                        </div>
+                        <!-- Botão de Envio -->
+                        <div class="col-12 mt-4 text-center">
+                            <button class="btn btn-primary btn-lg" type="submit"
+                                style="padding-left: 30px; padding-right: 30px; background-color: #003884;">Abrir
+                                desvio</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+    <!-- Rodapé -->
+    <footer class="my-5 pt-5 text-muted text-center text-small">
+        <p class="mb-1">&copy; 2023 SENAI</p>
+        <ul class="list-inline">
+            <li class="list-inline-item"><a href="#">Privacidade</a></li>
+            <li class="list-inline-item"><a href="#">Termos</a></li>
+            <li class="list-inline-item"><a href="#">Suporte</a></li>
+        </ul>
+    </footer>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script>
+        // Exemplo de JavaScript inicial para desativar o envio do formulário se houver campos inválidos
+        (function () {
+            'use strict';
+            var forms = document.querySelectorAll('.needs-validation');
+            Array.prototype.slice.call(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+    </script>
 </body>
+
+</html>
