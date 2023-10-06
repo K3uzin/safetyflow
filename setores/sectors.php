@@ -19,15 +19,15 @@
                 </div>                 
                 <div class="row g-3"> 
                     <div class="col-md-4"> 
-                        <div class="setor-card" style="background: #003884;"> <a href="pagina-administrativo.html" style="color: #ffffff;">Administrativo</a> 
+                        <div class="setor-card" style="background: #003884;"> <a href="administrativa.php" style="color: #ffffff;">Administrativo</a> 
                         </div>                         
                     </div>                     
                     <div class="col-md-4"> 
-                        <div class="setor-card" style="background: #003884;"> <a href="pagina-hidro.html" style="color: #ffffff;">Hidro</a> 
+                        <div class="setor-card" style="background: #003884;"> <a href="hidro.php" style="color: #ffffff;">Hidro</a> 
                         </div>                         
                     </div>                     
                     <div class="col-md-4"> 
-                        <div class="setor-card" style="background: #003884;"> <a href="pagina-cremes.html" style="color: #ffffff;">Cremes</a> 
+                        <div class="setor-card" style="background: #003884;"> <a href="cremes.php" style="color: #ffffff;">Cremes</a> 
                         </div>                         
                     </div>                     
                     <div class="col-md-4"> 
@@ -35,11 +35,11 @@
                         </div>                         
                     </div>                     
                     <div class="col-md-4"> 
-                        <div class="setor-card" style="background: #003884;"> <a href="pagina-qualidade.html" style="color: #ffffff;">Qualidade</a> 
+                        <div class="setor-card" style="background: #003884;"> <a href="qualidade.php" style="color: #ffffff;">Qualidade</a> 
                         </div>                         
                     </div>                     
                     <div class="col-md-4"> 
-                        <div class="setor-card" style="background: #003884;"> <a href="pagina-logistica.html" style="color: #ffffff;">Logística</a> 
+                        <div class="setor-card" style="background: #003884;"> <a href="logistica.php" style="color: #ffffff;">Logística</a> 
                         </div>                         
                     </div>                     
                 </div>                 
