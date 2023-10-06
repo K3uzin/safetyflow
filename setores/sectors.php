@@ -31,7 +31,7 @@
                         </div>                         
                     </div>                     
                     <div class="col-md-4"> 
-                        <div class="setor-card" style="background: #003884;"> <a href="pagina-estojos.html" style="color: #ffffff;">Estojos</a> 
+                        <div class="setor-card" style="background: #003884;"> <a href="estojos.php" style="color: #ffffff;">Estojos</a> 
                         </div>                         
                     </div>                     
                     <div class="col-md-4"> 
