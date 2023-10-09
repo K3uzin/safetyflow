@@ -23,11 +23,11 @@
 
                 exit('tipo de caracter errado(nome)');
 
-            }/*else if ( strlen($matricula) != 11){
+            }else if ( strlen($matricula) != 8){
 
                 exit('matricula invalida por numeros de caracteres');
             
-            }*/else if (is_int($matricula)){
+            }else if (is_int($matricula)){
 
                 exit('tipo de carcter errado');
 
@@ -59,19 +59,36 @@
 
                 exit('tipo de caracter errado(adm)');
            
-            }else if (strlen($setor) > 1){
-
-                exit('setor muito grande');
-
             }else if (!is_int($setor)){
 
                 exit('tipo de caracter errado(setor)');
             
-            }/*else if ($setor != 1 or $setor != 2 or $setor != 3 or $setor != 4 or $setor != 5 or $setor != 6 or $setor != 7){
-
-                exit('input invalido(setor)');
+            }
             
-            }*/else{
+            $result = $conexao->query("SELECT id_setor from setor where id_setor = '$setor'");
+            $row = $result->num_rows;
+
+            if ( $row == 0){
+                
+                exit('setor inexistente');
+            }
+            
+            $result = $conexao->query("SELECT email from usuario where email = '$email'");
+            $row = $result->num_rows;
+
+            if ( $row != 0){
+               
+                exit('email ja existe');
+            } 
+            
+            $result = $conexao->query("SELECT matricula from usuario where matricula = '$matricula'");
+            $row = $result->num_rows;
+
+            if ($row != 0){
+
+                exit('matricula ja cadastrada');
+            }
+            else{
 
                 $this->nome = $nome;
                 $this->matricula = $matricula;
@@ -93,14 +110,15 @@
                 $adm,
                 $setor)";
                 $conexao->query($query);
+                
             }
             
         }
-        public function get_usuario($matricula,$conexao){
+        public function fetch_usuario($matricula,$conexao){
 
             $query = "SELECT * FROM usuario WHERE matricula = $matricula";
             $result = $conexao->query($query);
-            if ($result == null){
+            if ($result->num_rows == 0){
 
                 exit('usuario não encontrado');
 
@@ -115,12 +133,27 @@
                 $this->setor = $data['setor_id_setor']; 
             }
         }
+        public function get_matricula(){
+            return $this->matricula;
+        }
+        public function get_nome(){
+            return $this->nome;
+        }
+        public function get_email(){
+            return $this->email;
+        }
+        public function get_adm(){
+            return $this->adm;
+        }
+        public function get_setor(){
+            return $this->setor;
+        }
         public function change_senha($matricula,$senha_A,$senha_B,$email,$conexao){
 
             
             $query = "SELECT senha FROM usuario WHERE matricula = $matricula";
             $result = $conexao->query($query);
-            if ($result == null){
+            if ($result->num_rows == 0){
 
                 exit('usuario não encontrado');
 
@@ -148,7 +181,7 @@
             }
 
         }
-        public function turn_adm_on($matricula){
+        public function turn_adm_on($matricula,$conexao){
 
             if ($this->adm == 1){
 
@@ -165,7 +198,7 @@
                 }else{
 
                     $usuario = new usuario;
-                    $usuario->get_usuario($matricula);
+                    $usuario->get_usuario($matricula,$conexao);
                     $usuario->adm = 2;
                     $query = "UPDATE usuario SET isAdmin = $usuario->adm WHERE matricula = $matricula";
                     $conexao->query($query);
@@ -174,7 +207,7 @@
             }
             
         }
-        public function turn_adm_off($matricula){
+        public function turn_adm_off($matricula,$conexao){
 
             if ($this->adm == 1){
 
@@ -191,7 +224,7 @@
                 }else{
 
                     $usuario = new usuario;
-                    $usuario->get_usuario($matricula);
+                    $usuario->get_usuario($matricula,$conexao);
                     $usuario->adm = 1;
                     $query = "UPDATE usuario SET isAdmin = $usuario->adm WHERE matricula = $matricula";
                     $conexao->query($query);

@@ -2,118 +2,209 @@
 
 class desvio{
 
-    desvio class{
+    
+    private $usuario_matricula;//int exat11
+    private $data_identificacao;//date
+    private $turno;//varchar max20
+    private $setor;//int espec(1...7)
+    private $local;//varchar max255
+    private $descricao_desvio;//text
+    private $tipo_desvio;//int espec(a ser delimitado)
+    private $gravidade;//int espec(a ser delimitado)
+    private $area_responsavel;//int espec(a ser delimitado)
+    private $img;//varchar max255
+    private $status;
 
-        private $usuario_matricula;//int exat11
-        private $data_identificacao;//date
-        private $turno;//varchar max20
-        private $setor;//int espec(1...7)
-        private $local;//varchar max255
-        private $descricao_desvio;//text
-        private $tipo_desvio;//int espec(a ser delimitado)
-        private $gravidade;//int espec(a ser delimitado)
-        private $area_responsavel;//int espec(a ser delimitado)
-        private $img//varchar max255
-        private $status
+    // função responsavel por da set em novos desvios, os armazenado diretamente no banco de dados.
+    public function set_desvio($usuario_matricula,$data_i,$turno,$setor,$local,$descricao_desvio,$tipo_desvio,$gravidade,$area_responsavel,$img,$conexao){
 
-        public function set_desvio($usuario_matricula,$data_i,$turno,$setor,$local,$descricao_desvio,$tipo_desvio,$gravidade,$area_responsavel){
+        $query = "SELECT matricula from usuario where matricula = '$usuario_matricula'";
+        $result = $conexao->query($query);
+        if($result->num_rows == 0){
 
+            exit('usuario nao cadastrado');
+        }
+        $query = "SELECT id_setor from setor where id_setor = '$setor'";
+        $result = $conexao->query($query);
+        if($result->num_rows == 0){
             
-            $user_matricula = $this->user_matricula = $user->matricula;
-            $data_idententificacao = $this->data_identificacao = $data_i;
-            $turno = $this->turno = $turno;
-            $setor = $this->setor = $setor;
-            $local = $this->local = $local;
-            $descricao = $this->descricao_desvio = $descricao_desvio;
-            $tipo_desvio =$this->tipo_desvio = $tipo_desvio;
-            $gravidade = $this->gravidade = $gravidade;
-            $area_responsavel =$this->area_responsavel = $area_responsavel;
-            $img = $this->img = $img;
-
-            $conexao->query("INSERT INTO desvio(
-            usuario_matricula,
-            data_identificacao,
-            turno,
-            setor,
-            local_desvio,
-            descricao_desvio,
-            tipo_desvio,
-            gravidade,
-            area_responsavel,
-            img,
-            status) 
-            VALUES(
-            '$usuario_matricula',
-            '$data_i',
-            '$turno',
-            '$setor',
-            '$local',
-            '$descricao',
-            '$tipo_desvio',
-            '$gravidade',
-            '$area_responsavel',
-            '$img')");
+            exit('setor invalido');
         }
-        public function get_last_desvio_usuario($matricula){
+        $query = "SELECT idtipo_desvio from tipo_descio where idtipo_desvio = '$tipo_desvio'";
+        $result = $conexao->query($query);
+        if($result->num_rows == 0){
 
-            $query = "SELECT * from desvio where usuario_matricula = $matricula";
-            $result = $conexao->query($query);
-            if ($result == null){
-                exit('desvio de usuario nao encontrado');
-            }else{
-               
-                $this->usuario_matricula = $resuslt['usuario_matricula'];
-                $this->data_identificacao = $result['data_identificacao'];
-                $this->turno = $result['turno'];
-                $this->setor = $result['setor'];
-                $this->local = $result['local_desvio'];
-                $this->descricao = $result['descricao'];
-                $this->tipo_desvio = $result['tipo_desvio'];
-                $this->gravidade = $result['gravidade'];
-                $this->area_responsavel = $result['area_responsavel'];
-                $this->img = $result['img'];
+            exit('tipo de descio invalido');
+        }
+        $query = "SELECT idgravidade from gravidade where idgravidade = '$gravidade'";
+        $result = $conexao->query($query);
+        if($result->num_rows == 0){
+
+            exit('gravidade do desvio invalida');
+        }   
+        $this->usuario_matricula = $usuario_matricula;
+        $this->data_identificacao = $data_i;
+        $this->turno = $turno;
+        $this->setor = $setor;
+        $this->local = $local;
+        $this->descricao_desvio = $descricao_desvio;
+        $this->tipo_desvio = $tipo_desvio;
+        $this->gravidade = $gravidade;
+        $this->area_responsavel = $area_responsavel;
+        $this->img = $img;
+
+        $conexao->query("INSERT INTO desvio(
+        usuario_matricula,
+        data_identificacao,
+        turno,
+        setor,
+        local_desvio,
+        descricao_desvio,
+        tipo_desvio,
+        gravidade,
+        area_responsavel,
+        foto_desvio) 
+        VALUES(
+        '$usuario_matricula',
+        '$data_i',
+        '$turno',
+        '$setor',
+        '$local',
+        '$descricao_desvio',
+        '$tipo_desvio',
+        '$gravidade',
+        '$area_responsavel',
+        '$img')");
+    }
+    //função responsavel por extrair o conteudo do atributo usuario_matricula da classe de desvio.
+    public function get_usuario_matricula(){
+        return $this->usuario_matricula;
+    }
+    //função responsavel por extrair o conteudo do atributo data_identificação da classe de desvio.
+    public function get_data_identificacao(){
+        return $this->data_identificacao;
+    }
+    //função responsavel por extrair o conteudo do atributo turno da classe de desvio.
+    public function get_turno(){
+        return $this->turno;
+    }
+    //função responsavel por extrair o conteudo do atributo setor da classe de desvio.
+    public function get_setor(){
+        return $this->setor;
+    }
+    //função responsavel por extrair o conteudo do atributo local da classe de desvio.
+    public function get_local(){
+        return $this->local;
+    }
+    //função responsavel por extrair o conteudo do atributo descricao da classe de desvio.
+    public function get_descricao(){
+        return $this->descricao;
+    }
+    //função responsavel por extrair o conteudo do atributo tipo_desvio da classe de desvio.
+    public function get_tipo_desvio(){
+        return $this->tipo_desvio;
+    }
+    //função responsavel por extrair o conteudo do atributo gravidade da classe de desvio.
+    public function get_gravidade(){
+        return $this->gravidade;
+    }
+    //função responsavel por extrair o conteudo do atributo area_responsavel da classe de desvio.
+    public function get_area_responsavel(){
+        return $this->area_responsavel;
+    }
+    //função responsavel por extrair o conteudo do atributo img da classe de desvio.
+    public function get_img(){
+        return $this->img;
+    }
+    //função responsavel por da fetch no banco de dados e trazer o ultimo desvio feito por um determinado usuario, 
+    //sendo somente necessario uma matricula de um usuario valido e a conexão com o banco de dados.
+    public function fetch_last_desvio_usuario($matricula,$conexao){
+
+        $query = "SELECT matricula from usuario where matricula = '$matricula'";
+        $result = $conexao->query($query);
+
+        if ($result->num_rows == 0 ){
+            exit('usuario inexistente');
+        }
+       
+        $query = "SELECT * from desvio 
+        where usuario_matricula = $matricula and data_identificacao = (SELECT MAX(data_identificacao) from desvio where usuario_matricula = $matricula)";
+        $result = $conexao->query($query);
+
+        if ($result->num_rows == 0){
+            exit('nenhun desvio encontrado');
+        }else{
+            
+            $data = mysqli_fetch_assoc($result);
+            $this->usuario_matricula = $data['usuario_matricula'];
+            $this->data_identificacao = $data['data_identificacao'];
+            $this->turno = $data['turno'];
+            $this->setor = $data['setor'];
+            $this->local = $data['local_desvio'];
+            $this->descricao = $data['descricao_desvio'];
+            $this->tipo_desvio = $data['tipo_desvio'];
+            $this->gravidade = $data['gravidade'];
+            $this->area_responsavel = $data['area_responsavel'];
+            $this->img = $data['foto_desvio'];
+        }
+    }
+    //função responavel por da fetch no devio mais recente, precisando somente da conexão com o banco para funcionar
+    public function fetch_last_desvio($conexao){
+
+        $query = "SELECT * from desvio where data_identificacao = (SELECT max(data_identificacao) from desvio)";
+        $result = $conexao->query($query);
+        
+        if ($result->num_rows == 0){
+            exit('nenhum desvio encontrado');
+        }else{
+             
+            $data = mysqli_fetch_assoc($result);
+            $this->usuario_matricula = $data['usuario_matricula'];
+            $this->data_identificacao = $data['data_identificacao'];
+            $this->turno = $data['turno'];
+            $this->setor = $data['setor'];
+            $this->local = $data['local_desvio'];
+            $this->descricao = $data['descricao_desvio'];
+            $this->tipo_desvio = $data['tipo_desvio'];
+            $this->gravidade = $data['gravidade'];
+            $this->area_responsavel = $data['area_responsavel'];
+            $this->img = $data['foto_desvio'];
+        }
+    }
+    // função responsavel em dar fetch em TODOS os devios dentro do espectro do filtro,
+    // os armazenandos dentro de um array e retornado o mesmo, para que seu conteudo possa ser manipulado .
+    public function fetch_desvio_by_filter($turno,$setor,$tipo_desvio,$gravidade,$data_i,$data_f,$conexao){
+      
+        $query = "SELECT * from desvio where 1";
+        if($turno !== null){
+            $query .= " AND turno = '$turno'";
+        }
+        if($setor !== null){
+            $query .= " AND setor = '$setor'";
+        }
+        if($tipo_desvio !== null){
+            $query .= " AND tipo_desvio = '$tipo_desvio'";
+        }
+        if($gravidade !== null){
+            $query .= " AND gravidade = '$gravidade'";
+        }
+        if($data_i !== null && $data_f == null){
+            $query .= " AND data_identificacao = '$data_i'";
+        }
+        if($data_i !== null && $data_f !== null){
+            $query .= " AND data_identificacao >= '$data_i' AND data_identificacao <= '$data_f'";
+        }
+        $result = $conexao->query($query);
+        if ($result && $result->num_rows > 0) {
+            
+            $desvio_data = array();
+    
+            while ($data = mysqli_fetch_assoc($result)) {
+                $desvioData[] = $data;
             }
-        }
-        public function get_last_desvio(){
-
-            $query = "SELECT * from desvio where max(data_identificacao)";
-            $result = $conexao->query($query);
-            if ($result == null){
-                exit('desvio de usuario nao encontrado');
-            }else{
-               
-                $this->usuario_matricula = $resuslt['usuario_matricula'];
-                $this->data_identificacao = $result['data_identificacao'];
-                $this->turno = $result['turno'];
-                $this->setor = $result['setor'];
-                $this->local = $result['local_desvio'];
-                $this->descricao = $result['descricao'];
-                $this->tipo_desvio = $result['tipo_desvio'];
-                $this->gravidade = $result['gravidade'];
-                $this->area_responsavel = $result['area_responsavel'];
-                $this->img = $result['img'];
+            return $desvio_data;
             }
-        }
-        public function get_desvio_by_filter($turno,$setor,$tipo_desvio,$gravidade,$data_i,$data_F){
-
-            if ($turno == null AND $setor == null AND $tipo_desvio == null AND $gravidade == null AND $data_i == null AND $data_f == null){
-
-                $query = "SELECT * from desvio";
-                $result = $conexao->query($query);
-                While( $row = $result->fatch_assoc){
-                
-                    $this->usuario_matricula = $row['usuario_matricula'];
-                    $this->data_identificacao = $row['data_identificacao'];
-                    $this->turno = $row['turno'];
-                    $this->setor = $row['setor'];
-                    $this->local = $row['local_desvio'];
-                    $this->descricao = $row['descricao'];
-                    $this->tipo_desvio = $row['tipo_desvio'];
-                    $this->gravidade = $row['gravidade'];
-                    $this->area_responsavel = $row['area_responsavel'];
-                    $this->img = $row['img'];
-                }
-            }
-        }
+            
+     
     }
 }
