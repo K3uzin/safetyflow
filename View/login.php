@@ -56,15 +56,15 @@ $mysqli->close();
 
 <body class="text-center">
     <main class="form-signin">
-        <form>
+        <form method="POST" action="login.php">
             <img class="mb-4" src="img/logo.png" alt="" width="150" height="150">
             <h1 class="h3 mb-3 fw-normal">Acessar conta</h1>
 
-            <label for="inputEmail" class="visually-hidden">Matrícula</label>
-            <input type="text" id="inputEmail" class="form-control" placeholder="Matrícula" required="" autofocus="">
+            <label for="matricula_or_email" class="visually-hidden">Matrícula ou E-mail</label>
+            <input type="text" id="matricula_or_email" name="matricula_or_email" class="form-control" placeholder="Matrícula ou E-mail" required="" autofocus="">
 
-            <label for="inputPassword" class="visually-hidden">Senha</label>
-            <input type="password" id="inputPassword" class="form-control" placeholder="Senha" required="">
+            <label for="senha" class="visually-hidden">Senha</label>
+            <input type="password" id="senha" name="senha" class="form-control" placeholder="Senha" required="">
 
             <div class="checkbox mb-3">
                 <label>
@@ -86,7 +86,7 @@ $mysqli->close();
         // Função que executa após o carregamento do DOM
         document.addEventListener("DOMContentLoaded", function () {
             // Captura o input da matrícula
-            const matriculaInput = document.getElementById("inputEmail");
+            const matriculaInput = document.getElementById("matricula_or_email");
 
             // Event listener para cada vez que o valor do input for alterado
             matriculaInput.addEventListener("input", function () {
