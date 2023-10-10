@@ -1,184 +1,294 @@
--- MySQL Workbench Forward Engineering
+-- phpMyAdmin SQL Dump
+-- version 5.2.0
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Tempo de geração: 11-Out-2023 às 01:19
+-- Versão do servidor: 10.4.25-MariaDB
+-- versão do PHP: 8.1.10
 
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
-
-
-
-CREATE SCHEMA IF NOT EXISTS `safetyflow` DEFAULT CHARACTER SET utf8 ;
-USE `safetyflow` ;
-
--- -----------------------------------------------------
--- Table `safetyflow`.`setor`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `safetyflow`.`setor` (
-  `id_setor` INT(11) NOT NULL,
-  `nome_setor` VARCHAR(100) NOT NULL,
-  PRIMARY KEY (`id_setor`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4;
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
 
 
--- -----------------------------------------------------
--- Table `safetyflow`.`usuario`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `safetyflow`.`usuario` (
-  `matricula` INT(11) NOT NULL,
-  `nome` VARCHAR(255) NOT NULL,
-  `email` VARCHAR(255) NOT NULL,
-  `senha` VARCHAR(6) NOT NULL,
-  `isAdmin` TINYINT(1) NOT NULL,
-  `setor_id_setor` INT(11) NOT NULL,
-  PRIMARY KEY (`matricula`, `setor_id_setor`),
-  INDEX `fk_usuario_setor1_idx` (`setor_id_setor` ASC),
-  CONSTRAINT `fk_usuario_setor1`
-    FOREIGN KEY (`setor_id_setor`)
-    REFERENCES `safetyflow`.`setor` (`id_setor`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4;
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
+--
+-- Banco de dados: `safetyflow`
+--
 
--- -----------------------------------------------------
--- Table `safetyflow`.`feedback`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `safetyflow`.`feedback` (
-  `nota` INT(1) NOT NULL,
-  `comentario` LONGTEXT NULL,
-  `usuario_matricula` INT(11) NOT NULL,
-  PRIMARY KEY (`usuario_matricula`),
-  CONSTRAINT `fk_feedback_usuario1`
-    FOREIGN KEY (`usuario_matricula`)
-    REFERENCES `safetyflow`.`usuario` (`matricula`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+-- --------------------------------------------------------
 
+--
+-- Estrutura da tabela `area_responsavel`
+--
 
--- -----------------------------------------------------
--- Table `safetyflow`.`tipo_desvio`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `safetyflow`.`tipo_desvio` (
-  `idtipo_desvio` INT NOT NULL,
-  `descricao` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idtipo_desvio`))
-ENGINE = InnoDB;
+CREATE TABLE `area_responsavel` (
+  `id_area` int(11) NOT NULL,
+  `nome_area` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Extraindo dados da tabela `area_responsavel`
+--
 
--- -----------------------------------------------------
--- Table `safetyflow`.`gravidade`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `safetyflow`.`gravidade` (
-  `idgravidade` INT NOT NULL,
-  `descricao` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idgravidade`))
-ENGINE = InnoDB;
+INSERT INTO `area_responsavel` (`id_area`, `nome_area`) VALUES
+(1, 'Manutenção'),
+(2, 'Engenharia'),
+(3, 'Produção'),
+(4, 'Qualidade'),
+(5, 'Recursos Humanos'),
+(6, 'Segurança do Trabalho'),
+(7, 'Meio Ambiente');
 
+-- --------------------------------------------------------
 
--- -----------------------------------------------------
--- Table `safetyflow`.`area_responsavel`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `safetyflow`.`area_responsavel` (
-  `id_area` INT(11) NOT NULL,
-  `nome_area` VARCHAR(100) NOT NULL,
-  PRIMARY KEY (`id_area`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4;
+--
+-- Estrutura da tabela `desvio`
+--
 
+CREATE TABLE `desvio` (
+  `id_desvio` int(11) NOT NULL,
+  `data_identificacao` date NOT NULL,
+  `turno` varchar(20) NOT NULL,
+  `local_desvio` varchar(255) NOT NULL,
+  `descricao_desvio` text NOT NULL,
+  `foto_desvio` varchar(255) DEFAULT NULL,
+  `tipo_desvio_idtipo_desvio` int(11) NOT NULL,
+  `gravidade_idgravidade` int(11) NOT NULL,
+  `area_responsavel_id_area` int(11) NOT NULL,
+  `setor_id_setor` int(11) NOT NULL,
+  `usuario_matricula` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- -----------------------------------------------------
--- Table `safetyflow`.`desvio`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `safetyflow`.`desvio` (
-  `id_desvio` INT(11) NOT NULL AUTO_INCREMENT,
-  `data_identificacao` DATE NOT NULL,
-  `turno` VARCHAR(20) NOT NULL,
-  `local_desvio` VARCHAR(255) NOT NULL,
-  `descricao_desvio` TEXT NOT NULL,
-  `foto_desvio` VARCHAR(255) NULL DEFAULT NULL,
-  `tipo_desvio_idtipo_desvio` INT NOT NULL,
-  `gravidade_idgravidade` INT NOT NULL,
-  `area_responsavel_id_area` INT(11) NOT NULL,
-  `setor_id_setor` INT(11) NOT NULL,
-  `usuario_matricula` INT(11) NOT NULL,
-  PRIMARY KEY (`id_desvio`, `tipo_desvio_idtipo_desvio`, `gravidade_idgravidade`, `area_responsavel_id_area`, `setor_id_setor`, `usuario_matricula`),
-  INDEX `fk_desvio_tipo_desvio1_idx` (`tipo_desvio_idtipo_desvio` ASC) ,
-  INDEX `fk_desvio_gravidade1_idx` (`gravidade_idgravidade` ASC) ,
-  INDEX `fk_desvio_area_responsavel1_idx` (`area_responsavel_id_area` ASC),
-  INDEX `fk_desvio_setor1_idx` (`setor_id_setor` ASC),
-  INDEX `fk_desvio_usuario1_idx` (`usuario_matricula` ASC) ,
-  CONSTRAINT `fk_desvio_tipo_desvio1`
-    FOREIGN KEY (`tipo_desvio_idtipo_desvio`)
-    REFERENCES `safetyflow`.`tipo_desvio` (`idtipo_desvio`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_desvio_gravidade1`
-    FOREIGN KEY (`gravidade_idgravidade`)
-    REFERENCES `safetyflow`.`gravidade` (`idgravidade`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_desvio_area_responsavel1`
-    FOREIGN KEY (`area_responsavel_id_area`)
-    REFERENCES `safetyflow`.`area_responsavel` (`id_area`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_desvio_setor1`
-    FOREIGN KEY (`setor_id_setor`)
-    REFERENCES `safetyflow`.`setor` (`id_setor`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_desvio_usuario1`
-    FOREIGN KEY (`usuario_matricula`)
-    REFERENCES `safetyflow`.`usuario` (`matricula`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-AUTO_INCREMENT = 27
-DEFAULT CHARACTER SET = utf8mb4;
+-- --------------------------------------------------------
 
+--
+-- Estrutura da tabela `feedback`
+--
 
--- -----------------------------------------------------
--- Table `safetyflow`.`resolucao`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `safetyflow`.`resolucao` (
-  `idresolucao` INT NOT NULL,
-  `status` INT(1) NOT NULL,
-  `descricao` VARCHAR(255) NULL,
-  `acoes` VARCHAR(255) NULL,
-  `data_resolucao` DATE NOT NULL,
-  `usuario_matricula` INT(11) NOT NULL,
-  `usuario_setor_id_setor` INT(11) NOT NULL,
-  `desvio_id_desvio` INT(11) NOT NULL,
-  `desvio_tipo_desvio_idtipo_desvio` INT NOT NULL,
-  `desvio_gravidade_idgravidade` INT NOT NULL,
-  `desvio_area_responsavel_id_area` INT(11) NOT NULL,
-  `desvio_setor_id_setor` INT(11) NOT NULL,
-  `desvio_usuario_matricula` INT(11) NOT NULL,
-  `area_responsavel_id_area` INT(11) NOT NULL,
-  PRIMARY KEY (`idresolucao`, `usuario_matricula`, `usuario_setor_id_setor`, `desvio_id_desvio`, `desvio_tipo_desvio_idtipo_desvio`, `desvio_gravidade_idgravidade`, `desvio_area_responsavel_id_area`, `desvio_setor_id_setor`, `desvio_usuario_matricula`, `area_responsavel_id_area`),
-  INDEX `fk_resolucao_usuario1_idx` (`usuario_matricula` ASC, `usuario_setor_id_setor` ASC) ,
-  INDEX `fk_resolucao_desvio1_idx` (`desvio_id_desvio` ASC, `desvio_tipo_desvio_idtipo_desvio` ASC, `desvio_gravidade_idgravidade` ASC, `desvio_area_responsavel_id_area` ASC, `desvio_setor_id_setor` ASC, `desvio_usuario_matricula` ASC),
-  INDEX `fk_resolucao_area_responsavel1_idx` (`area_responsavel_id_area` ASC),
-  CONSTRAINT `fk_resolucao_usuario1`
-    FOREIGN KEY (`usuario_matricula` , `usuario_setor_id_setor`)
-    REFERENCES `safetyflow`.`usuario` (`matricula` , `setor_id_setor`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_resolucao_desvio1`
-    FOREIGN KEY (`desvio_id_desvio` , `desvio_tipo_desvio_idtipo_desvio` , `desvio_gravidade_idgravidade` , `desvio_area_responsavel_id_area` , `desvio_setor_id_setor` , `desvio_usuario_matricula`)
-    REFERENCES `safetyflow`.`desvio` (`id_desvio` , `tipo_desvio_idtipo_desvio` , `gravidade_idgravidade` , `area_responsavel_id_area` , `setor_id_setor` , `usuario_matricula`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_resolucao_area_responsavel1`
-    FOREIGN KEY (`area_responsavel_id_area`)
-    REFERENCES `safetyflow`.`area_responsavel` (`id_area`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-USE `safetyflow` ;
+CREATE TABLE `feedback` (
+  `nota` int(1) NOT NULL,
+  `comentario` longtext DEFAULT NULL,
+  `usuario_matricula` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `gravidade`
+--
+
+CREATE TABLE `gravidade` (
+  `idgravidade` int(11) NOT NULL,
+  `descricao` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `gravidade`
+--
+
+INSERT INTO `gravidade` (`idgravidade`, `descricao`) VALUES
+(1, 'Leve'),
+(2, 'Moderado'),
+(3, 'Grave'),
+(4, 'Gravissimo');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `resolucao`
+--
+
+CREATE TABLE `resolucao` (
+  `idresolucao` int(11) NOT NULL,
+  `status` int(1) NOT NULL,
+  `descricao` varchar(255) DEFAULT NULL,
+  `acoes` varchar(255) DEFAULT NULL,
+  `data_resolucao` date NOT NULL,
+  `usuario_matricula` int(11) NOT NULL,
+  `usuario_setor_id_setor` int(11) NOT NULL,
+  `desvio_id_desvio` int(11) NOT NULL,
+  `desvio_tipo_desvio_idtipo_desvio` int(11) NOT NULL,
+  `desvio_gravidade_idgravidade` int(11) NOT NULL,
+  `desvio_area_responsavel_id_area` int(11) NOT NULL,
+  `desvio_setor_id_setor` int(11) NOT NULL,
+  `desvio_usuario_matricula` int(11) NOT NULL,
+  `area_responsavel_id_area` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `setor`
+--
+
+CREATE TABLE `setor` (
+  `id_setor` int(11) NOT NULL,
+  `nome_setor` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `setor`
+--
+
+INSERT INTO `setor` (`id_setor`, `nome_setor`) VALUES
+(1, 'Administrativo'),
+(2, 'Hidro'),
+(3, 'Cremes'),
+(4, 'Estojo'),
+(5, 'Qualidade'),
+(6, 'Logística');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tipo_desvio`
+--
+
+CREATE TABLE `tipo_desvio` (
+  `idtipo_desvio` int(11) NOT NULL,
+  `descricao` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `tipo_desvio`
+--
+
+INSERT INTO `tipo_desvio` (`idtipo_desvio`, `descricao`) VALUES
+(1, 'Desvio Comportamental'),
+(2, 'Desvio Ergonômico'),
+(3, 'Desvio Segurança'),
+(4, 'Desvio Qualidade'),
+(5, 'Desvio Processo'),
+(6, 'Desvio Ambiental'),
+(7, 'Desvio Manutenção');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `usuario`
+--
+
+CREATE TABLE `usuario` (
+  `matricula` int(11) NOT NULL,
+  `nome` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `senha` varchar(6) NOT NULL,
+  `isAdmin` tinyint(1) NOT NULL,
+  `setor_id_setor` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Índices para tabelas despejadas
+--
+
+--
+-- Índices para tabela `area_responsavel`
+--
+ALTER TABLE `area_responsavel`
+  ADD PRIMARY KEY (`id_area`);
+
+--
+-- Índices para tabela `desvio`
+--
+ALTER TABLE `desvio`
+  ADD PRIMARY KEY (`id_desvio`,`tipo_desvio_idtipo_desvio`,`gravidade_idgravidade`,`area_responsavel_id_area`,`setor_id_setor`,`usuario_matricula`),
+  ADD KEY `fk_desvio_tipo_desvio1_idx` (`tipo_desvio_idtipo_desvio`),
+  ADD KEY `fk_desvio_gravidade1_idx` (`gravidade_idgravidade`),
+  ADD KEY `fk_desvio_area_responsavel1_idx` (`area_responsavel_id_area`),
+  ADD KEY `fk_desvio_setor1_idx` (`setor_id_setor`),
+  ADD KEY `fk_desvio_usuario1_idx` (`usuario_matricula`);
+
+--
+-- Índices para tabela `feedback`
+--
+ALTER TABLE `feedback`
+  ADD PRIMARY KEY (`usuario_matricula`);
+
+--
+-- Índices para tabela `gravidade`
+--
+ALTER TABLE `gravidade`
+  ADD PRIMARY KEY (`idgravidade`);
+
+--
+-- Índices para tabela `resolucao`
+--
+ALTER TABLE `resolucao`
+  ADD PRIMARY KEY (`idresolucao`,`usuario_matricula`,`usuario_setor_id_setor`,`desvio_id_desvio`,`desvio_tipo_desvio_idtipo_desvio`,`desvio_gravidade_idgravidade`,`desvio_area_responsavel_id_area`,`desvio_setor_id_setor`,`desvio_usuario_matricula`,`area_responsavel_id_area`),
+  ADD KEY `fk_resolucao_usuario1_idx` (`usuario_matricula`,`usuario_setor_id_setor`),
+  ADD KEY `fk_resolucao_desvio1_idx` (`desvio_id_desvio`,`desvio_tipo_desvio_idtipo_desvio`,`desvio_gravidade_idgravidade`,`desvio_area_responsavel_id_area`,`desvio_setor_id_setor`,`desvio_usuario_matricula`),
+  ADD KEY `fk_resolucao_area_responsavel1_idx` (`area_responsavel_id_area`);
+
+--
+-- Índices para tabela `setor`
+--
+ALTER TABLE `setor`
+  ADD PRIMARY KEY (`id_setor`);
+
+--
+-- Índices para tabela `tipo_desvio`
+--
+ALTER TABLE `tipo_desvio`
+  ADD PRIMARY KEY (`idtipo_desvio`);
+
+--
+-- Índices para tabela `usuario`
+--
+ALTER TABLE `usuario`
+  ADD PRIMARY KEY (`matricula`,`setor_id_setor`),
+  ADD KEY `fk_usuario_setor1_idx` (`setor_id_setor`);
+
+--
+-- AUTO_INCREMENT de tabelas despejadas
+--
+
+--
+-- AUTO_INCREMENT de tabela `desvio`
+--
+ALTER TABLE `desvio`
+  MODIFY `id_desvio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+
+--
+-- Restrições para despejos de tabelas
+--
+
+--
+-- Limitadores para a tabela `desvio`
+--
+ALTER TABLE `desvio`
+  ADD CONSTRAINT `fk_desvio_area_responsavel1` FOREIGN KEY (`area_responsavel_id_area`) REFERENCES `area_responsavel` (`id_area`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_desvio_gravidade1` FOREIGN KEY (`gravidade_idgravidade`) REFERENCES `gravidade` (`idgravidade`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_desvio_setor1` FOREIGN KEY (`setor_id_setor`) REFERENCES `setor` (`id_setor`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_desvio_tipo_desvio1` FOREIGN KEY (`tipo_desvio_idtipo_desvio`) REFERENCES `tipo_desvio` (`idtipo_desvio`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_desvio_usuario1` FOREIGN KEY (`usuario_matricula`) REFERENCES `usuario` (`matricula`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Limitadores para a tabela `feedback`
+--
+ALTER TABLE `feedback`
+  ADD CONSTRAINT `fk_feedback_usuario1` FOREIGN KEY (`usuario_matricula`) REFERENCES `usuario` (`matricula`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Limitadores para a tabela `resolucao`
+--
+ALTER TABLE `resolucao`
+  ADD CONSTRAINT `fk_resolucao_area_responsavel1` FOREIGN KEY (`area_responsavel_id_area`) REFERENCES `area_responsavel` (`id_area`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_resolucao_desvio1` FOREIGN KEY (`desvio_id_desvio`,`desvio_tipo_desvio_idtipo_desvio`,`desvio_gravidade_idgravidade`,`desvio_area_responsavel_id_area`,`desvio_setor_id_setor`,`desvio_usuario_matricula`) REFERENCES `desvio` (`id_desvio`, `tipo_desvio_idtipo_desvio`, `gravidade_idgravidade`, `area_responsavel_id_area`, `setor_id_setor`, `usuario_matricula`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_resolucao_usuario1` FOREIGN KEY (`usuario_matricula`,`usuario_setor_id_setor`) REFERENCES `usuario` (`matricula`, `setor_id_setor`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Limitadores para a tabela `usuario`
+--
+ALTER TABLE `usuario`
+  ADD CONSTRAINT `fk_usuario_setor1` FOREIGN KEY (`setor_id_setor`) REFERENCES `setor` (`id_setor`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
