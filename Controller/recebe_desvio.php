@@ -62,12 +62,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Inserção dos dados em Desvio, incluindo o URL da imagem
-    $sql = "INSERT INTO desvio (data_identificacao, turno, setor, local_desvio, descricao_desvio, tipo_desvio_idtipo_desvio, gravidade_idgravidade, foto_desvio, area_responsavel_id_area, setor_id_setor, usuario_matricula)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO desvio (data_identificacao, turno, local_desvio, descricao_desvio, tipo_desvio_idtipo_desvio, gravidade_idgravidade, foto_desvio, area_responsavel_id_area, setor_id_setor, usuario_matricula)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $mysqli->prepare($sql);
 
     if ($stmt) {
-        $stmt->bind_param("sssssssssss", $data_identificacao, $turno, $setor, $local_desvio, $descricao_desvio, $tipo_desvio, $gravidade, $imagem_url, $area_responsavel, $setor, $user_matricula);
+        $stmt->bind_param("ssssssssss", $data_identificacao, $turno, $local_desvio, $descricao_desvio, $tipo_desvio, $gravidade, $imagem_url, $area_responsavel, $user_matricula);
         $stmt->execute();
 
         if ($stmt->affected_rows > 0) {
