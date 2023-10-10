@@ -138,10 +138,10 @@ if ($stmt_nome) {
                             <label for="gravidade" class="form-label">Potencial de Gravidade</label>
                             <select class="form-select" id="gravidade" name="gravidade" required="">
                                 <option value="">Escolha...</option>
-                                <option value="Leve">Leve</option>
-                                <option value="Moderado">Moderado</option>
-                                <option value="Grave">Grave</option>
-                                <option value="Gravissimo">Gravíssimo</option>
+                                <option value="1">Leve</option>
+                                <option value="2">Moderado</option>
+                                <option value="3">Grave</option>
+                                <option value="4">Gravíssimo</option>
                             </select>
                             <div class="invalid-feedback">
                                 Potencial de gravidade é obrigatório.
