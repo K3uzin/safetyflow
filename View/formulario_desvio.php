@@ -1,6 +1,6 @@
 <!-- Possível caminho View/form.php -->
 <?php
-require 'cadastro/conexao.php'; // Verifique se o caminho está correto
+require '../Model/conexao.php'; // Verifique se o caminho está correto
 
 session_start();
 
