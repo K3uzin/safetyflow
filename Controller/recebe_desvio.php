@@ -1,5 +1,5 @@
 <?php
-require 'cadastro/conexao.php';
+require '../Model/conexao.php';
 
 session_start();
 
