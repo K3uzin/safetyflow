@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                  $_SESSION["user_matricula"] = $matricula_or_email; // Armazene o ID do usuário na sessão
     
                  // Redirecionar para o formulário de desvio
-                header("Location: ../formulario_desvio.php");
+                header("Location: formulario_desvio.php");
                 exit();
                 } else {
                      echo "Matrícula ou senha inválidos!";
