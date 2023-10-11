@@ -80,8 +80,8 @@ $mysqli->close();
 
     </main>
     <!-- Scripts -->
-    <script src="assets/js/popper.min.js"></script>
-    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="../Public/Js/popper.min.js"></script>
+    <script src="../Public/Js/bootstrap.min.js"></script>
     <script>
         // Função que executa após o carregamento do DOM
         document.addEventListener("DOMContentLoaded", function () {
