@@ -51,13 +51,13 @@ $mysqli->close();
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link rel="stylesheet" href="bootstrap/css/sign-in.css">
-    <link rel="icon" href="img/logo.ico" type="image/x-icon">
+    <link rel="icon" href="../Public/Css/Img/logo.ico" type="image/x-icon">
 </head>
 
 <body class="text-center">
     <main class="form-signin">
         <form method="POST" action="login.php">
-            <img class="mb-4" src="img/logo.png" alt="" width="150" height="150">
+            <img class="mb-4" src="../Public/Css/Img/logo.png" alt="" width="150" height="150">
             <h1 class="h3 mb-3 fw-normal">Acessar conta</h1>
 
             <label for="matricula_or_email" class="visually-hidden">Matrícula ou E-mail</label>
