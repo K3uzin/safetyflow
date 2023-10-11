@@ -48,9 +48,9 @@ $mysqli->close();
     <meta name="description" content="">
     <title>Acessar desvios</title>
     <!-- Bootstrap core CSS -->
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../Public/Css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <link rel="stylesheet" href="bootstrap/css/sign-in.css">
+    <link rel="stylesheet" href="../Public/Css/sign-in.css">
     <link rel="icon" href="../Public/Css/Img/logo.ico" type="image/x-icon">
 </head>
 
