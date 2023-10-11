@@ -2,14 +2,25 @@
 require '../Model/conexao.php'; // Verifique se o caminho está correto
 
 // Consulta para obter informações sobre o último desvio no Setor "Administrativa"
-$sql_ultimo_desvio = "SELECT user_nome, data_identificacao, local_desvio FROM desvios WHERE setor = 1 ORDER BY id_desvio DESC LIMIT 1";
+$sql_ultimo_desvio = "SELECT usuario_matricula, data_identificacao, local_desvio FROM desvio WHERE setor_id_setor = 1 ORDER BY id_desvio DESC LIMIT 1";
 $result_ultimo_desvio = $mysqli->query($sql_ultimo_desvio);
 
 if ($result_ultimo_desvio) {
     $row_ultimo_desvio = $result_ultimo_desvio->fetch_assoc();
-    $ultimo_nome = $row_ultimo_desvio['user_nome'];
+    $ultimo_matricula = $row_ultimo_desvio['usuario_matricula'];
     $ultimo_data = $row_ultimo_desvio['data_identificacao'];
     $ultimo_local = $row_ultimo_desvio['local_desvio'];
+
+    // Consulta para obter o nome do usuário do último desvio
+    $sql_nome_usuario = "SELECT nome FROM usuario WHERE nome = $ultimo_matricula";
+    $result_nome_usuario = $mysqli->query($sql_nome_usuario);
+
+    if ($result_nome_usuario && $result_nome_usuario->num_rows > 0) {
+        $row_nome_usuario = $result_nome_usuario->fetch_assoc();
+        $ultimo_nome = $row_nome_usuario['nome'];
+    } else {
+        $ultimo_nome = "";
+    }
 } else {
     echo "Erro na consulta do último desvio: " . $mysqli->error;
     $ultimo_nome = "";
@@ -18,7 +29,7 @@ if ($result_ultimo_desvio) {
 }
 
 // Consulta para contar os desvios no Setor "Administrativa"
-$sql_total_desvios = "SELECT COUNT(*) AS total_desvios FROM desvios WHERE setor = 1";
+$sql_total_desvios = "SELECT COUNT(*) AS total_desvios FROM desvio WHERE setor_id_setor = 1";
 $result_total_desvios = $mysqli->query($sql_total_desvios);
 
 if ($result_total_desvios) {
