@@ -27,7 +27,7 @@
                         </div>                         
                     </div>                     
                     <div class="col-md-4"> 
-                        <div class="setor-card" style="background: #003884;"> <a href="cremes.php" style="color: #ffffff;">Cremes</a> 
+                        <div class="setor-card" style="background: #003884;"> <a href="creme.php" style="color: #ffffff;">Cremes</a> 
                         </div>                         
                     </div>                     
                     <div class="col-md-4"> 
