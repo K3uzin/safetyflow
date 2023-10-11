@@ -121,13 +121,13 @@ if ($stmt_nome) {
                             <label for="tipo_desvio" class="form-label">Tipo do Desvio</label>
                             <select class="form-select" id="tipo_desvio" name="tipo_desvio" required="">
                                 <option value="">Escolha...</option>
-                                <option value="Desvio Comportamental">Desvio Comportamental</option>
-                                <option value="Desvio Ergonômico">Desvio Ergonômico</option>
-                                <option value="Desvio de Segurança">Desvio de Segurança</option>
-                                <option value="Desvio de Qualidade">Desvio de Qualidade</option>
-                                <option value="Desvio de Processo">Desvio de Processo</option>
-                                <option value="Desvio Ambiental">Desvio Ambiental</option>
-                                <option value="Desvio de Manutenção">Desvio de Manutenção</option>
+                                <option value="1">Desvio Comportamental</option>
+                                <option value="2">Desvio Ergonômico</option>
+                                <option value="3">Desvio de Segurança</option>
+                                <option value="4">Desvio de Qualidade</option>
+                                <option value="5">Desvio de Processo</option>
+                                <option value="6">Desvio Ambiental</option>
+                                <option value="7">Desvio de Manutenção</option>
                             </select>
                             <div class="invalid-feedback">
                                 Tipo do desvio é obrigatório.
