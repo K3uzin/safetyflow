@@ -84,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Fechamento da conexão com o banco de dados
     $mysqli->close();
 
-    header("Location: ./View/setores.php");
+    header("Location: ../View/setores.php");
     exit();
 } else {
     echo "O formulário não foi submetido corretamente.";
