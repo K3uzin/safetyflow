@@ -18,7 +18,7 @@
             <p class="lead">Agradecemos pelo seu comprometimento com a segurança e melhoria contínua.</p> 
             <p>Seu desvio foi registrado com sucesso e nossa equipe está trabalhando nele.</p> <a href="index.html" class="btn btn-primary mt-3" style="background: #003884;">Voltar à página inicial</a> 
         </main>         
-        <script src="assets/js/popper.min.js"></script>         
-        <script src="bootstrap/js/bootstrap.min.js"></script>         
+        <script src="../Public/Js/popper.min.js"></script>         
+        <script src="../Public/Js/bootstrap.min.js"></script>         
     </body>     
 </html>
