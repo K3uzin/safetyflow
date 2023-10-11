@@ -26,12 +26,12 @@ if ($stmt_nome) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $data_identificacao = $_POST["data_identificacao"];
     $turno = $_POST["turno"];
-    $setor = $_POST["setor"];
     $local_desvio = $_POST["local_desvio"];
     $descricao_desvio = $_POST["descricao_desvio"];
-    $tipo_desvio = $_POST["tipo_desvio"];
-    $gravidade = $_POST["gravidade"];
-    $area_responsavel = $_POST["area_responsavel"];
+    $tipo_desvio_idtipo_desvio = $_POST["idtipo_desvio"];
+    $gravidade_idgravidade = $_POST["gravidade"];
+    $area_responsavel_id_area = $_POST["area_responsavel"];
+    $setor_id_setor = $_POST["setor"];
 
     $imagem_url = null; // Inicializa a variável para o URL da imagem
 
@@ -62,12 +62,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Inserção dos dados em Desvio, incluindo o URL da imagem
-    $sql = "INSERT INTO desvio (data_identificacao, turno, local_desvio, descricao_desvio, tipo_desvio_idtipo_desvio, gravidade_idgravidade, foto_desvio, area_responsavel_id_area, setor_id_setor, usuario_matricula)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO safetyflow.desvio (data_identificacao, turno, local_desvio, descricao_desvio, tipo_desvio_idtipo_desvio, gravidade_idgravidade, foto_desvio, area_responsavel_id_area, setor_id_setor, usuario_matricula)
+    VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $mysqli->prepare($sql);
 
     if ($stmt) {
-        $stmt->bind_param("ssssssssss", $data_identificacao, $turno, $local_desvio, $descricao_desvio, $tipo_desvio, $gravidade, $imagem_url, $area_responsavel, $user_matricula);
+        $stmt->bind_param("sssssssiis", $data_identificacao, $turno, $local_desvio, $descricao_desvio, $tipo_desvio_idtipo_desvio, $gravidade_idgravidade, $imagem_url, $area_responsavel_id_area, $setor_id_setor, $user_matricula);
         $stmt->execute();
 
         if ($stmt->affected_rows > 0) {
