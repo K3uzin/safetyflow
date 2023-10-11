@@ -67,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt = $mysqli->prepare($sql);
 
     if ($stmt) {
-        $stmt->bind_param("sssssssiis", $data_identificacao, $turno, $local_desvio, $descricao_desvio, $tipo_desvio_idtipo_desvio, $gravidade_idgravidade, $imagem_url, $area_responsavel_id_area, $setor_id_setor, $user_matricula);
+        $stmt->bind_param("ssssiiiiii", $data_identificacao, $turno, $local_desvio, $descricao_desvio, $tipo_desvio_idtipo_desvio, $gravidade_idgravidade, $area_responsavel_id_area, $setor_id_setor, $user_matricula);
         $stmt->execute();
 
         if ($stmt->affected_rows > 0) {
