@@ -5,12 +5,12 @@ class desvio{
     
     private $usuario_matricula;//int exat11
     private $data_identificacao;//date
-    private $turno;//varchar max20
+    private $turno;//varchar max 20
     private $setor;//int espec(1...7)
     private $local;//varchar max255
     private $descricao_desvio;//text
     private $tipo_desvio;//int espec(a ser delimitado)
-    private $gravidade;//int espec(a ser delimitado)
+    private $gravidade;//int espec(1...4)
     private $area_responsavel;//int espec(a ser delimitado)
     private $img;//varchar max255
     private $status;
@@ -153,7 +153,7 @@ class desvio{
 
         $query = "SELECT * from desvio where data_identificacao = (SELECT max(data_identificacao) from desvio)";
         $result = $conexao->query($query);
-        
+
         if ($result->num_rows == 0){
             exit('nenhum desvio encontrado');
         }else{
