@@ -41,14 +41,14 @@ if ($stmt_nome) {
     <link href="..Public/Css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="../Public/Css/form-validation.css" rel="stylesheet">
-    <link rel="icon" href="img/logo.ico" type="image/x-icon">
+    <link rel="icon" href="..Public/Img/logo.ico" type="image/x-icon">
 </head>
 
 <body class="bg-light">
     <div class="container">
         <main>
             <div class="py-5 text-center">
-                <img class="d-block mx-auto mb-4" src="img/logo.png" alt="" width="150" height="150">
+                <img class="d-block mx-auto mb-4" src="..Public/Img/logo.png" alt="" width="150" height="150">
                 <h2>Desvios Corporativos</h2>
                 <p class="lead">Abrir um desvio é como ter um superpoder empresarial: você aponta riscos e melhorias
                     essenciais. Seja parte da mudança para um ambiente mais seguro e eficiente!</p>
@@ -190,7 +190,7 @@ if ($stmt_nome) {
             <li class="list-inline-item"><a href="#">Suporte</a></li>
         </ul>
     </footer>
-    <script src="..Public/Js/popper.js"></script>
+    <script src="..Public/Js/popper.min.js"></script>
     <script src="..Public/Css/bootstrap.min.css"></script>
     <script>
         // Exemplo de JavaScript inicial para desativar o envio do formulário se houver campos inválidos
