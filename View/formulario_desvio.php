@@ -38,9 +38,9 @@ if ($stmt_nome) {
     <meta name="description" content="">
     <title>Checklist Desvios Corporativos</title>
     <!-- Bootstrap core CSS -->
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="..Public/Css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <link href="bootstrap/css/form-validation.css" rel="stylesheet">
+    <link href="../Public/Css/form-validation.css" rel="stylesheet">
     <link rel="icon" href="img/logo.ico" type="image/x-icon">
 </head>
 
@@ -190,8 +190,8 @@ if ($stmt_nome) {
             <li class="list-inline-item"><a href="#">Suporte</a></li>
         </ul>
     </footer>
-    <script src="assets/js/popper.min.js"></script>
-    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="..Public/Js/popper.js"></script>
+    <script src="..Public/Css/bootstrap.min.css"></script>
     <script>
         // Exemplo de JavaScript inicial para desativar o envio do formulário se houver campos inválidos
         (function () {
