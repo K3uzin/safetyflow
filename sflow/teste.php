@@ -80,7 +80,10 @@
                 //alter table resolucao change desvio_setor_id_setro to desvio_setor;
                 //alter table resolucao change area_responsavel_id_area to area_responsavel;
 
-                
+        //tabela feedback
+        
+            //alter table feedback add column data_postagem date;
+
     //teste classe usuario
 
         //teste de set do usuario
@@ -350,31 +353,31 @@
                     $data_identificacao = $desvio_i['data_identificacao'];
                     $descricao = $desvio_i['descricao_desvio'];
                     $local = $desvio_i['local_desvio'];    
-                    echo "\n";
-                    echo 'nome: '.$nome. "\n";
-                    echo 'turno: '.$turno. "\n";
-                    echo 'setor: '.$setor. "\n";
-                    echo 'tipo_desvio: '.$tipo_desvio. "\n";
-                    echo 'gravidade: '.$gravidade. "\n";
-                    echo 'data de identificação: '.$data_identificacao. "\n";
-                    echo 'descrição: '.$descricao. "\n";
-                    echo 'local do desvio: '.$local. "\n";
-                    echo "\n";
-                    echo "\n";
+                    echo '<br>';
+                    echo 'nome: '.$nome. '<br>';
+                    echo 'turno: '.$turno. '<br>';
+                    echo 'setor: '.$setor. '<br>';
+                    echo 'tipo_desvio: '.$tipo_desvio. '<br>';
+                    echo 'gravidade: '.$gravidade. '<br>';
+                    echo 'data de identificação: '.$data_identificacao. '<br>';
+                    echo 'descrição: '.$descricao. '<br>';
+                    echo 'local do desvio: '.$local. '<br>';
+                    echo '<br>';
+                    echo '<br>';
                     echo '-----------------------------------------------------------------------';
                     $x++;
                 }*/
     
-    //teste de classe desvio
+    //teste de classe resolucao
 
         //teste set resolução
 
-            /*$usuario = 3;
-            $desvio = 27;
+            $usuargio = 3;
+            $desvio = 32;
             $area = 1;
             $resolucao = new resolucao;
             $resolucao->set_resolucao($usuario,$desvio,$area,$conexao);
-            var_dump($resolucao);*/
+            var_dump($resolucao);
 
     
     //teste de classe feedback;
@@ -384,10 +387,11 @@
             //cenario de sucesso
                 
                 /*$nota = 5;
-                $comentario = null;
+                $comentario = 'muito bom servico';
                 $usuario = 1;
                 $feedback = new feedback;
-                $feedback->set_feedback($nota,$comentario,$usuario,$conexao);*/
+                $feedback->set_feedback($nota,$comentario,$usuario,$conexao);
+                var_dump($feedback);*/
             
             //cenario de fracasso (usuario nao cadastrado)
 
@@ -397,14 +401,117 @@
                 $feedback = new feedback;
                 $feedback->set_feedback($nota,$comentario,$usuario,$conexao);*/
 
+        //teste update_feedback
+
+            //cenario de sucesso
+
+                /*$nota = 3;
+                $comentario = 'seviço ok';
+                $usuario = 1;
+                $feedback = new feedback;
+                $feedback->update_feedback($usuario,$nota,$comentario,$conexao);
+                var_dump($feedback);*/
+
+            //cenario de fracasso (usuario não castrado)
+
+                /*$nota = 5;
+                $comentario = 'premiun';
+                $usuario = 100;
+                $feedback = new feedback;
+                $feedback->update_feedback($usuario,$nota,$comentario,$conexao);
+                var_dump($feedback);*/
+            
+            //cenario de fracasso (usuario não deu feedback ainda)
+
+                /*$nota = 5;
+                $comentario = 'premiun';
+                $usuario = 2;
+                $feedback = new feedback;
+                $feedback->update_feedback($usuario,$nota,$comentario,$conexao);
+                var_dump($feedback);*/
+
         //teste de fetch_feedback_usuario
 
             //cenario de sucesso
 
-                $usuario = 1;
+                /*$usuario = 1;
                 $feedback = new feedback;
                 $feedback->fetch_feedback_usuario($usuario,$conexao);
-                var_dump($feedback);
+                var_dump($feedback);*/
+
+            //cenario de fracasso (usuario não cadastrado)
+
+                /*$usuario = 10;
+                $feedback = new feedback;
+                $feedback->fetch_feedback_usuario($usuario,$conexao);
+                var_dump($feedback);*/
+
+            //cenario de fracasso (usuario nao deu feedback)
+
+                /*$usuario = 2;
+                $feedback = new feedback;
+                $feedback->fetch_feedback_usuario($usuario,$conexao);
+                var_dump($feedback);*/
+            
+        //teste de get_feedback_avg_nota
+        
+            //cenario de sucesso
+
+                /*$nota = 4;
+                $comentario = 'muito bom servico';
+                $usuario = 3;
+                $feedback = new feedback;
+                $feedback->set_feedback($nota,$comentario,$usuario,$conexao);
+                $nota = 4;
+                $comentario = 'satisfeito';
+                $usuario = 4;
+                $feedback->set_feedback($nota,$comentario,$usuario,$conexao);
+                $nota = 1;
+                $comentario = 'horrivel';
+                $usuario = 5;
+                $feedback->set_feedback($nota,$comentario,$usuario,$conexao);
+                $avg_feedback_nota = $feedback->get_feedback_avg_nota($conexao);
+                echo "resultado esperado = 3 ";
+                var_dump($avg_feedback_nota);*/
+
+        //teste de get_all_feedback
+
+            //cenario de sucesso
+
+                /*$feedback = new feedback;
+                $feedback_data = $feedback->get_all_feedback($conexao);
+                $m = count($feedback_data);
+                $x = 0;
+                while($x < $m){
+
+                    $feedback_i = $feedback_data[$x];
+                    echo ' nota = '.$feedback_i['nota'].' | ';
+                    echo ' comentario = '.$feedback_i['comentario'].' | ';
+                    echo ' usuario = '.$feedback_i['usuario_matricula'].'<br>' ;
+                    $x++;
+                }*/
+        
+        //teste de get_feedback_by_data
+
+            //cenario de sucesso
+             
+                /*$feedback = new feedback;
+                //exit(var_dump($feedback));
+                $data_postagem_i = '2023-10-01';
+                $data_postagem_f = '2023-10-30';
+                $feedback_data = $feedback->get_feedback_by_data($data_postagem_i,$data_postagem_f,$conexao);
+                $m = count($feedback_data);
+                $x = 0;
+                while($x < $m){
+
+                    $feedback_i = $feedback_data[$x];
+                    echo ' nota = '.$feedback_i['nota'].' | ';
+                    echo ' comentario = '.$feedback_i['comentario'].' | ';
+                    echo ' usuario = '.$feedback_i['usuario_matricula'].'<br>' ;
+                    $x++;
+                }*/
+
+                                
 
 
 ?>
