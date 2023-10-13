@@ -27,6 +27,21 @@ O SafetyFlow é uma plataforma desenvolvida como parte do Trabalho de Conclusão
 - **HTML, CSS e JavaScript**: Para a criação da interface do usuário interativa e responsiva.
 
 
+## Considerações Adicionais
+
+### Consultoria Legal Específica
+
+Este projeto não oferece consultoria legal específica sobre questões de conformidade regulatória. No entanto, ele é projetado seguindo as melhores práticas de segurança e conformidade regulatória, proporcionando um ambiente mais seguro para as empresas.
+
+### Integração com Todos os Sistemas Existentes
+
+Embora a integração com sistemas existentes seja uma premissa, detalhes específicos de todas as integrações não estão dentro do escopo inicial. No entanto, estamos preparados para tratar cada integração caso a caso, garantindo flexibilidade e adaptação às necessidades de cada empresa.
+
+### Suporte de Hardware e Infraestrutura
+
+Este projeto não inclui o suporte de hardware ou a gestão de infraestrutura física. Nosso foco está na lógica e funcionalidades do sistema, deixando a gestão de hardware e infraestrutura física fora de seu escopo. Isso simplifica a operação da plataforma.
+
+
 ## Status do Projeto
 
 O projeto SafetyFlow está atualmente em desenvolvimento ativo. As funcionalidades principais descritas acima estão em diferentes estágios de implementação. A equipe está trabalhando continuamente para aprimorar a plataforma, adicionar recursos adicionais e melhorar a experiência do usuário.
