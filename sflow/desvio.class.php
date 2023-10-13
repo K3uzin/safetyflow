@@ -200,7 +200,7 @@ class desvio{
             $desvio_data = array();
     
             while ($data = mysqli_fetch_assoc($result)) {
-                $desvioData[] = $data;
+                $desvio_data[] = $data;
             }
             return $desvio_data;
             }
