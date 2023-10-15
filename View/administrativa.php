@@ -12,7 +12,7 @@ if ($result_ultimo_desvio) {
     $ultimo_local = $row_ultimo_desvio['local_desvio'];
 
     // Consulta para obter o nome do usuário do último desvio
-    $sql_nome_usuario = "SELECT nome FROM usuario WHERE nome = $ultimo_matricula";
+    $sql_nome_usuario = "SELECT nome FROM usuario WHERE matricula = $ultimo_matricula";
     $result_nome_usuario = $mysqli->query($sql_nome_usuario);
 
     if ($result_nome_usuario && $result_nome_usuario->num_rows > 0) {
