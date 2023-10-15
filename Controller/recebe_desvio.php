@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $turno = $_POST["turno"];
     $local_desvio = $_POST["local_desvio"];
     $descricao_desvio = $_POST["descricao_desvio"];
-    $tipo_desvio_idtipo_desvio = $_POST["idtipo_desvio"];
+    $tipo_desvio_idtipo_desvio = $_POST["tipo_desvio"];
     $gravidade_idgravidade = $_POST["gravidade"];
     $area_responsavel_id_area = $_POST["area_responsavel"];
     $setor_id_setor = $_POST["setor"];
