@@ -2,7 +2,13 @@
 require '../Model/conexao.php'; // Verifique se o caminho está correto
 
 // Consulta para obter todos os desvios no Setor "Estojo"
-$sql_desvios_setor_estojo = "SELECT id_desvio, tipo_desvio, gravidade, setor FROM desvios WHERE setor = 4"; // Aqui usei o ID do setor Estojo (4) para a consulta
+$sql_desvios_setor_estojo = "SELECT d.id_desvio, td.descricao AS tipo_desvio, g.descricao AS gravidade, s.nome_setor AS setor 
+FROM desvio d
+INNER JOIN tipo_desvio td ON d.tipo_desvio_idtipo_desvio = td.idtipo_desvio
+INNER JOIN gravidade g ON d.gravidade_idgravidade = g.idgravidade
+INNER JOIN setor s ON d.setor_id_setor = s.id_setor
+WHERE d.setor_id_setor = 4";
+
 $result_desvios_setor_estojo = $mysqli->query($sql_desvios_setor_estojo);
 
 $desvios_setor_estojo = [];
