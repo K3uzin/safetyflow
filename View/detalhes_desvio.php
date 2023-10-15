@@ -5,7 +5,14 @@ if (isset($_GET['id_desvio'])) {
     $id_desvio = $_GET['id_desvio'];
 
     // Consulta para obter os detalhes de um desvio específico com base no ID do desvio
-    $sql = "SELECT * FROM desvios WHERE id_desvio = ?";
+    $sql = "SELECT d.id_desvio, d.data_identificacao, d.turno, d.local_desvio, d.descricao_desvio, d.foto_desvio, td.descricao AS tipo_desvio, g.descricao AS gravidade, s.nome_setor AS setor, u.matricula AS user_matricula, u.nome AS user_nome
+            FROM desvio d
+            INNER JOIN tipo_desvio td ON d.tipo_desvio_idtipo_desvio = td.idtipo_desvio
+            INNER JOIN gravidade g ON d.gravidade_idgravidade = g.idgravidade
+            INNER JOIN setor s ON d.setor_id_setor = s.id_setor
+            INNER JOIN usuario u ON d.usuario_matricula = u.matricula
+            WHERE d.id_desvio = ?";
+    
     $stmt = $mysqli->prepare($sql);
 
     if ($stmt) {
