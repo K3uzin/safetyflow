@@ -60,13 +60,8 @@ if ($stmt_nome) {
                         <div class="row g-3 mt-3">
                             <!-- Data de identificação do desvio -->
                             <div class="col-12">
-                                <label for="data_identificacao" class="form-label">Data que o desvio foi
-                                    identificado</label>
-                                <input type="date" class="form-control" id="data_identificacao" name="data_identificacao"
+                                <input type="hidden" class="form-control" id="data_identificacao" name="data_identificacao"
                                     required="">
-                                <div class="invalid-feedback">
-                                    Data do desvio é obrigatória.
-                                </div>
                             </div>
                             <!-- Turno -->
                             <div class="col-12 mt-3">
@@ -208,6 +203,11 @@ if ($stmt_nome) {
             });
         })();
     </script>
-</body>
+    <script>
+    var dataAtual = new Date().toISOString();
 
+    // Define o valor do campo de entrada oculto com a data atual
+    document.getElementById("data_identificacao").value = dataAtual;
+  </script>
+</body>
 </html>
