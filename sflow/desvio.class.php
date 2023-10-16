@@ -30,7 +30,7 @@ class desvio{
             
             exit('setor invalido');
         }
-        $query = "SELECT idtipo_desvio from tipo_descio where idtipo_desvio = '$tipo_desvio'";
+        $query = "SELECT idtipo_desvio from tipo_desvio where idtipo_desvio = '$tipo_desvio'";
         $result = $conexao->query($query);
         if($result->num_rows == 0){
 

@@ -102,7 +102,7 @@
                 email,
                 senha,
                 isAdmin,
-                setor_id_setor) 
+                setor) 
                 VALUES ('$nome',
                 $matricula,
                 '$email',
@@ -130,7 +130,7 @@
                 $this->email = $data['email'];
                 $this->senha = $data['senha'];
                 $this->adm = $data['isAdmin'];
-                $this->setor = $data['setor_id_setor']; 
+                $this->setor = $data['setor']; 
             }
         }
         public function get_matricula(){
@@ -191,14 +191,14 @@
 
                 $query = "SELECT matricula FROM usuario WHERE matricula = $matricula";
                 $result = $conexao->query($query);
-                if ($result == null){
+                if ($result->num_rows == 0){
 
                     exit('usuario não encontrado');
 
                 }else{
 
                     $usuario = new usuario;
-                    $usuario->get_usuario($matricula,$conexao);
+                    $usuario->fetch_usuario($matricula,$conexao);
                     $usuario->adm = 2;
                     $query = "UPDATE usuario SET isAdmin = $usuario->adm WHERE matricula = $matricula";
                     $conexao->query($query);
@@ -217,16 +217,16 @@
 
                 $query = "SELECT matricula FROM usuario WHERE matricula = $matricula";
                 $result = $conexao->query($query);
-                if ($result == null){
+                if ($result->num_rows == 0){
 
                     exit('usuario não encontrado');
 
                 }else{
 
                     $usuario = new usuario;
-                    $usuario->get_usuario($matricula,$conexao);
+                    $usuario->fetch_usuario($matricula,$conexao);
                     $usuario->adm = 1;
-                    $query = "UPDATE usuario SET isAdmin = $usuario->adm WHERE matricula = $matricula";
+                    $query = "UPDATE usuario SET isAdmin = 1 WHERE matricula = $matricula";
                     $conexao->query($query);
                     $usuario = null;
                 }

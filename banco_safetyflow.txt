@@ -1,0 +1,154 @@
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `safetyflow`.`gravidade`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `safetyflow`.`gravidade` (
+  `idgravidade` INT NOT NULL,
+  `descricao` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idgravidade`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `safetyflow`.`setor`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `safetyflow`.`setor` (
+  `id_setor` INT NOT NULL,
+  `nome_setor` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`id_setor`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `safetyflow`.`tipo_desvio`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `safetyflow`.`tipo_desvio` (
+  `idtipo_desvio` INT NOT NULL,
+  `descricao` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idtipo_desvio`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `safetyflow`.`usuario`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `safetyflow`.`usuario` (
+  `matricula` INT NOT NULL,
+  `nome` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
+  `senha` VARCHAR(6) NOT NULL,
+  `isAdmin` TINYINT(1) NOT NULL,
+  `setor` INT NOT NULL,
+  PRIMARY KEY (`matricula`, `setor`),
+  INDEX `fk_usuario_setor1_idx` (`setor` ASC) VISIBLE,
+  CONSTRAINT `fk_usuario_setor1`
+    FOREIGN KEY (`setor`)
+    REFERENCES `safetyflow`.`setor` (`id_setor`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `safetyflow`.`desvio`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `safetyflow`.`desvio` (
+  `id_desvio` INT NOT NULL AUTO_INCREMENT,
+  `data_identificacao` DATE NOT NULL,
+  `turno` VARCHAR(20) NOT NULL,
+  `local_desvio` VARCHAR(255) NOT NULL,
+  `descricao_desvio` TEXT NOT NULL,
+  `foto_desvio` VARCHAR(255) NULL DEFAULT NULL,
+  `tipo_desvio` INT NOT NULL,
+  `gravidade` INT NOT NULL,
+  `area_responsavel` INT NOT NULL,
+  `setor` INT NOT NULL,
+  `usuario_matricula` INT NOT NULL,
+  PRIMARY KEY (`id_desvio`, `tipo_desvio`, `gravidade`, `area_responsavel`, `setor`, `usuario_matricula`),
+  INDEX `fk_desvio_tipo_desvio1_idx` (`tipo_desvio` ASC) VISIBLE,
+  INDEX `fk_desvio_gravidade1_idx` (`gravidade` ASC) VISIBLE,
+  INDEX `fk_desvio_area_responsavel1_idx` (`area_responsavel` ASC) VISIBLE,
+  INDEX `fk_desvio_setor1_idx` (`setor` ASC) VISIBLE,
+  INDEX `fk_desvio_usuario1_idx` (`usuario_matricula` ASC) VISIBLE,
+  CONSTRAINT `fk_desvio_area_responsavel1`
+    FOREIGN KEY (`area_responsavel`)
+    REFERENCES `safetyflow`.`area_responsavel` (`id_area`),
+  CONSTRAINT `fk_desvio_gravidade1`
+    FOREIGN KEY (`gravidade`)
+    REFERENCES `safetyflow`.`gravidade` (`idgravidade`),
+  CONSTRAINT `fk_desvio_setor1`
+    FOREIGN KEY (`setor`)
+    REFERENCES `safetyflow`.`setor` (`id_setor`),
+  CONSTRAINT `fk_desvio_tipo_desvio1`
+    FOREIGN KEY (`tipo_desvio`)
+    REFERENCES `safetyflow`.`tipo_desvio` (`idtipo_desvio`),
+  CONSTRAINT `fk_desvio_usuario1`
+    FOREIGN KEY (`usuario_matricula`)
+    REFERENCES `safetyflow`.`usuario` (`matricula`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 1
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `safetyflow`.`feedback`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `safetyflow`.`feedback` (
+  `nota` INT NOT NULL,
+  `comentario` LONGTEXT NULL DEFAULT NULL,
+  `usuario_matricula` INT NOT NULL,
+  `data_postagem` DATE NULL DEFAULT NULL,
+  PRIMARY KEY (`usuario_matricula`),
+  CONSTRAINT `fk_feedback_usuario1`
+    FOREIGN KEY (`usuario_matricula`)
+    REFERENCES `safetyflow`.`usuario` (`matricula`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `safetyflow`.`resolucao`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `safetyflow`.`resolucao` (
+  `idresolucao` INT NOT NULL AUTO_INCREMENT,
+  `status` INT NOT NULL,
+  `descricao` VARCHAR(255) NULL DEFAULT NULL,
+  `acoes` VARCHAR(255) NULL DEFAULT NULL,
+  `data_resolucao` DATE NOT NULL,
+  `usuario_matricula` INT NOT NULL,
+  `id_desvio` INT NOT NULL,
+  `id_area_r` INT NOT NULL,
+  PRIMARY KEY (`idresolucao`, `usuario_matricula`, `id_desvio`, `id_area_r`),
+  INDEX `fk_resolucao_usuario1_idx` (`usuario_matricula` ASC) VISIBLE,
+  INDEX `fk_resolucao_desvio1_idx` (`id_desvio` ASC) VISIBLE,
+  INDEX `fk_resolucao_area_responsavel1_idx` (`id_area_r` ASC) VISIBLE,
+  CONSTRAINT `fk_resolucao_area_responsavel1`
+    FOREIGN KEY (`id_area_r`)
+    REFERENCES `safetyflow`.`area_responsavel` (`id_area`),
+  CONSTRAINT `fk_resolucao_desvio1`
+    FOREIGN KEY (`id_desvio`)
+    REFERENCES `safetyflow`.`desvio` (`id_desvio`),
+  CONSTRAINT `fk_resolucao_usuario1`
+    FOREIGN KEY (`usuario_matricula`)
+    REFERENCES `safetyflow`.`usuario` (`matricula`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 1
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

@@ -2,7 +2,7 @@
     require_once 'conexao.php';
     require_once 'usuario.class.php';
     require_once 'desvio.class.php';
-    require_once 'resolucao.class.php';
+    require_once 'resolucao2.class.php';
     require_once 'feedback.class.php';
     
     /*teste geral de todas as classes. Para execução correta dos testes e necessario a um banco de dados do projeto safety flow
@@ -40,12 +40,12 @@
 
         //tabela area_responsavel
 
-            /*INSERT INTO area_desvio(id_area,nome_area) VALUES (1,'manutencao_eletrica'),(2'manutencao_hidraulica'),
+            /*INSERT INTO area_responsavel(id_area,nome_area) VALUES (1,'manutencao_eletrica'),(2,'manutencao_hidraulica'),
             (3,'manutencao_pneumatica'),(4,'manutencao_geral'),(5,'meio-ambiente'),(6,'administração');/*
         
         //tabela usuario  
 
-            /*INSERT INTO usuario(nome,matricula,email,senha,isAdmin,setor_id_setor) 
+            /*INSERT INTO usuario(nome,matricula,email,senha,isAdmin,setor) 
             VALUES ('luan',1,'luan@gamil.com','123456',2,1),('matheus',3,'mat@gmail.com','123456',1,2),
             ('natalia',4,'natalaia@gmail.com','123456',1,3),('marcos',5,'mark@gmail.com','123456',1,4);*/
         
@@ -139,7 +139,7 @@
 
                 /*$usuario = new usuario;
                 $usuario->fetch_usuario(1,$conexao);
-                //var_dump($usuario);*/
+                var_dump($usuario);*/
 
             //cenario de fracasso
 
@@ -180,40 +180,40 @@
                 $usuario->change_senha(20,$senha_antiga,$senha_nova,$email,$conexao);
                 var_dump($usuario);*/
         
-        //teste usuario turn_adm_on
+        //teste usuario turn_adm_on(a ser reformulada, funcional)
 
             //cenario de sucesso
             
                 /*$usuario = new usuario;
                 $usuario->fetch_usuario(1,$conexao);
-                $guilherme = 2;
-                $usuario->turn_adm_on($guilherme,$conexao);
+                $natalia = 4;
+                $usuario->turn_adm_on($natalia,$conexao);
                 var_dump($usuario);*/
 
             //cenario de fracaso (acesso de usuario negado)
             
                 /*$usuario = new usuario;
                 $usuario->fetch_usuario(3,$conexao);
-                $guilherme = 2;
-                $usuario->turn_adm_on($guilherme,$conexao);
+                $natalia = 2;
+                $usuario->turn_adm_on($natalia,$conexao);
                 var_dump($usuario);*/
 
-        // teste usuario turn_adm_off
+        // teste usuario turn_adm_off (a ser refromulada, não funcional)
 
-            //cenario de sucesso
-
+            //cenario de sucesso 
+               
                 /*$usuario = new usuario;
                 $usuario->fetch_usuario(1,$conexao);
-                $guilherme = 2;
-                $usuario->turn_adm_on($guilherme,$conexao);
+                $natalia = 3;
+                $usuario->turn_adm_on($natalia,$conexao);
                 var_dump($usuario);*/
 
             //cenario de fracaso (acesso de usuario negado)
             
                 /*$usuario = new usuario;
                 $usuario->fetch_usuario(3,$conexao);
-                $guilherme = 2;
-                $usuario->turn_adm_on($guilherme,$conexao);
+                $natalia = 4;
+                $usuario->turn_adm_on($natalia,$conexao);
                 var_dump($usuario);*/
 
 
@@ -295,14 +295,14 @@
                 $gravidade = 7;
                 $area_r = 5;
                 $img = 'img';
-                $desvio->set_desvio($matricula,$data_i,$turno,$setor,$local,$descricao,$tipo_desvio,$gravidade,$area_r,$img,$conexao);
+                $desvio->set_desvio($matricula,$data_i,$turno,$setor,$local,$descricao,$tipo_desvio,$gravidade,$area_r,$img,$conexao);*/
 
         //teste de fetch_last_desvio_usuario
 
             //cenario de sucesso
                 
                 /*$desvio = new desvio;
-                $matricula = 1;
+                $matricula = 3;
                 $desvio->fetch_last_desvio_usuario($matricula,$conexao);
                 var_dump($desvio);*/
             
@@ -324,7 +324,8 @@
 
             //cenario de sucesso
                 
-                /*$desvio->fetch_last_desvio($conexao);
+                /*$desvio = new desvio;
+                $desvio->fetch_last_desvio($conexao);
                 var_dump($desvio);*/
 
         //teste fetch_desvio_by_filter
@@ -372,12 +373,12 @@
 
         //teste set resolução
 
-            $usuargio = 3;
-            $desvio = 32;
-            $area = 1;
+            /*$usuario = 1;
+            $desvio = 5;
+            $area = 2;
             $resolucao = new resolucao;
             $resolucao->set_resolucao($usuario,$desvio,$area,$conexao);
-            var_dump($resolucao);
+            var_dump($resolucao);*/
 
     
     //teste de classe feedback;
