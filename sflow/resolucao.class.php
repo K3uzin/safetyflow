@@ -2,6 +2,7 @@
 
 class resolucao{
 
+    private $id_resolucao
     private $status;//int espc (1 or 2)
     private $descricao;//varchar max 255
     private $acoes;//varchar max 255
@@ -50,5 +51,66 @@ class resolucao{
     
         }
     }
+    public function get_all_resolucao($conexao){
+
+        $query = "SELECT * from resolucao";
+        $result = $conexao->query($query);
+        if ($result->num_rows == 0){
+            exit('nenhum resolucao encontrada')
+        }
+        
+        $resolucao_data = array();
+        while ($data = mysqli_fetch_assoc($result)){
+            $resolucao_data[] = $data;
+        }
+
+        return $resolucao_data; 
+
+    }
+    public function fetch_resolucao($resolucao,$conexao){
+
+        $query = "SELECT * from resolucao where id_resolucao = $resolucao";
+        $result = $conexao->query($query);
+        if ($result->num_rows == 0){
+            exit('nenhum resolucao encontrada')
+        }
+
+        $data = mysqli_fetch_assoc($result);
+        $this->id_resolucao = $data['id_resolucao'];
+        $this->status = $data['status'];
+        $this->acoes = $data['acoes'];
+        $this->descricao = $data['descricao'];
+        $this->data_resolucao = $data['data_resoluco'];
+        $this->usuario = $data['usuario_matricula'];
+        $this->desvio = $data['id_desvio'];
+        $this->area_responsasavel['id_area_r'];
+       
+
+    }
+    public function get_id(){
+        return $this->id_resolucao;
+    }
+    public function get_status(){
+        return $this->status;
+    }
+    public function get_acoes(){
+        return $this->acoes;
+    }
+    public function get_descricao(){
+        return $this->decricao;
+    }
+    public function get_data_resolucao(){
+        return $this->data_resolucao;
+    }
+    public function get_usuario(){
+        return $this->usuario;
+    }
+    public function get_desvio(){
+        return $this->desvio;
+    }
+    public function get_area_responsavel(){
+        return $this->area_responsavel;
+    }
+
 
 ?>

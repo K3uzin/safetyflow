@@ -2,7 +2,7 @@
     require_once 'conexao.php';
     require_once 'usuario.class.php';
     require_once 'desvio.class.php';
-    require_once 'resolucao2.class.php';
+    require_once 'resolucao.class.php';
     require_once 'feedback.class.php';
     
     /*teste geral de todas as classes. Para execução correta dos testes e necessario a um banco de dados do projeto safety flow
@@ -379,7 +379,66 @@
             $resolucao = new resolucao;
             $resolucao->set_resolucao($usuario,$desvio,$area,$conexao);
             var_dump($resolucao);*/
+        
+        //teste de get_all_resolucao
+                
+            //cenario de sucesso
+                
+                /*$resolucao = new resolucao;
+                $data = $resolucao->get_all_resolucao($conexao);
+                $t = count($data)
+                for ($x = 0;$x < $t;$x++){
+                    
+                    $resolucao_i = $data[$x];
+                    echo 'id_resolução: '.$resolucao_i['id_resolucao'].'<br>';
+                    echo 'status: '.$resolucao_i['status'].'<br>';
+                    echo 'acoes: '.$resolucao_i['acoes'].'<br>';
+                    echo 'data de resolucao: '.$resolucao_i['data_resolucao'].'<br>';
+                    $usuario_data = new usuario;
+                    $usuario_data->fetch_usuario($resolucao_i['usuario_matricula'],$conexao);
+                    $usuario_nome = $usuario_data->get_nome();
+                    $usuario_setor = $usuario_data->get_setor();
+                    echo 'responsavel pela resolução: '.$usuario_nome.'<br>';
+                    echo 'setor do responsavel: '.$usuario_setor.'<br>';
+                    echo 'area responsavel: '.$resolucao_i['id_area_r'];
+                    $desvio_data = new desvio;
+                    $desvio_data->fetch_desvio($resolucao_i['id_desvio'],$conexao);
+                    echo 'responsavel pelo desvio: '.$desvio_data->get_usuario_matricula().'<br>';
+                    echo 'data do desvio: '.$desvio_data->get_data_identificacao().'<br>';
+                    echo 'graviade do desvio: '.$desvio_data->get_graviade().'<br>';
+                    echo 'descrição do desvio: '.$desvio_data->get_descricao().'<br>';
+                    echo 'setor do desvio: '.$desvio_data->get_setor().'<br>';
+                    echo 'local especifico do descio: '.$desvio_data->get_local().'<br>':
+                   
+                }*/
+        
+        //teste  de get_resolucao
+        
+            //cenario de sucesso
 
+                $resolucao = new resolucao;
+                $id_resolucao = 1;
+                $resolucao->fetch_resolucao($id_resolucao,$conexao);
+                echo 'id_resolução: '.$resolucao->get_id().'<br>';
+                echo 'status: '.$resolucao->get_status().'<br>';
+                echo 'acoes: '.$resolucao->get_acoes().'<br>';
+                echo 'data de resolucao: '.$resolucao->get_data_resolucao().'<br>';
+                $usuario_data = new usuario;
+                $usuario_data->fetch_usuario($resolucao->get_usuario(),$conexao);
+                $usuario_nome = $usuario_data->get_nome();
+                $usuario_setor = $usuario_data->get_setor();
+                echo 'responsavel pela resolução: '.$usuario_nome.'<br>';
+                echo 'setor do responsavel: '.$usuario_setor.'<br>';
+                echo 'area responsavel: '.$resolucao->get_area_responsavel().'<br>';
+                $desvio_data = new desvio;
+                $desvio_data->fetch_desvio($resolucao->get_desvio(),$conexao);
+                echo 'responsavel pelo desvio: '.$desvio_data->get_usuario_matricula().'<br>';
+                echo 'data do desvio: '.$desvio_data->get_data_identificacao().'<br>';
+                echo 'graviade do desvio: '.$desvio_data->get_graviade().'<br>';
+                echo 'descrição do desvio: '.$desvio_data->get_descricao().'<br>';
+                echo 'setor do desvio: '.$desvio_data->get_setor().'<br>';
+                echo 'local especifico do descio: '.$desvio_data->get_local().'<br>':
+                
     
     //teste de classe feedback;
     

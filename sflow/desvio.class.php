@@ -171,6 +171,28 @@ class desvio{
             $this->img = $data['foto_desvio'];
         }
     }
+    public function fetch_desvio($desvio,$conexao){
+
+        $query = "SELECT * from desvio where id_desvio = $desvio";
+        $result = $conexao->query($query);
+
+        if ($result->num_rows == 0){
+            exit('nenhum desvio encontrado');
+        }else{
+             
+            $data = mysqli_fetch_assoc($result);
+            $this->usuario_matricula = $data['usuario_matricula'];
+            $this->data_identificacao = $data['data_identificacao'];
+            $this->turno = $data['turno'];
+            $this->setor = $data['setor'];
+            $this->local = $data['local_desvio'];
+            $this->descricao = $data['descricao_desvio'];
+            $this->tipo_desvio = $data['tipo_desvio'];
+            $this->gravidade = $data['gravidade'];
+            $this->area_responsavel = $data['area_responsavel'];
+            $this->img = $data['foto_desvio'];
+        }
+    }
     // função responsavel em dar fetch em TODOS os devios dentro do espectro do filtro,
     // os armazenandos dentro de um array e retornado o mesmo, para que seu conteudo possa ser manipulado .
     public function fetch_desvio_by_filter($turno,$setor,$tipo_desvio,$gravidade,$data_i,$data_f,$conexao){
