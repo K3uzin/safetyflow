@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_FILES["foto_desvio"]) && $_FILES["foto_desvio"]["error"] === 0) {
         $imagem_tmp = $_FILES["foto_desvio"]["tmp_name"];
         $imagem_tipo = $_FILES["foto_desvio"]["type"];
-        $pasta_destino = 'setores/listas_setores/fotos_desvio'; // Diretório acessível pelo servidor
+        $pasta_destino = '../Public/Img/desvio'; // Diretório acessível pelo servidor
 
         // Verifica o tamanho máximo (8 MB) e formatos permitidos
         if ($_FILES["foto_desvio"]["size"] <= 8 * 1024 * 1024) {
