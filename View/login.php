@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 header("Location: formulario_desvio.php");
                 exit();
                 } else {
-                     echo "Matrícula ou senha inválidos!";
+                     $errorMessage = "Matrícula ou senha inválidos!";
                 }
 
             $stmt->close();
@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "Erro na preparação do statement: " . $mysqli->error;
         }
     } else {
-        echo "Preencha todos os campos!";
+        $errorMessage = "Preencha todos os campos!";
     }
 }
 
@@ -61,7 +61,7 @@ $mysqli->close();
             <h1 class="h3 mb-3 fw-normal">Acessar conta</h1>
 
             <label for="matricula_or_email" class="visually-hidden">Matrícula ou E-mail</label>
-            <input type="text" id="matricula_or_email" name="matricula_or_email" class="form-control" placeholder="Matrícula ou E-mail" required="" autofocus="">
+            <input type="text" id="matricula_or_email" name="matricula_or_email" class="form-control" placeholder="Matrícula" required="" autofocus="">
 
             <label for="senha" class="visually-hidden">Senha</label>
             <input type="password" id="senha" name="senha" class="form-control" placeholder="Senha" required="">
@@ -75,7 +75,13 @@ $mysqli->close();
             <button class="w-100 btn btn-lg btn-primary" type="submit"
                 style="background-color: #003884;">Acessar</button>
 
-            <p class="mt-5 mb-3 text-muted">&copy; 2023</p>
+            <?php if (!empty($errorMessage)) { ?>
+                <div class="alert alert-danger mt-3" role="alert">
+                    <?php echo $errorMessage; ?>
+                </div>
+            <?php } ?>
+
+            <p class="mt-3 mb-3 text-muted">&copy; 2023</p>
         </form>
 
     </main>
