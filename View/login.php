@@ -81,7 +81,7 @@ $mysqli->close();
                 </div>
             <?php } ?>
 
-            <p class="mt-3 mb-3 text-muted">&copy; 2023</p>
+            <p class="mt-3 mb-3 text-muted">&copy; 2023 SENAI</p>
         </form>
 
     </main>
