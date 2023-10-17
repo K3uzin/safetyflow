@@ -145,7 +145,7 @@ $mysqli->close();
         <thead>
             <tr>
                 <th>ID Desvio</th>
-                <th Data de Identificação</th>
+                <th>Data de Identificação</th>
                 <th>Tipo de Desvio</th>
                 <th>Gravidade</th>
                 <th>Setor</th>
