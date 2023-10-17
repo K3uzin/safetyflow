@@ -56,7 +56,7 @@ if ($stmt_nome) {
             <div class="row g-3" style="text-align: left; align-items: center; justify-content: center;">
                 <div class="col-md-7 col-lg-8">
                     <h4 class="mb-3">Faça a diferença!</h4>
-                    <form action="../Controller/recebe_desvio.php" method="POST" style="text-align: left;">
+                    <form action="../Controller/recebe_desvio.php" method="POST" style="text-align: left;" enctype="multipart/form-data">
                         <div class="row mt-3">
                             <!-- Data de identificação do desvio -->
                             <div class="col-12">
