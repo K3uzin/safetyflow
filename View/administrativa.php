@@ -46,7 +46,7 @@ $mysqli->close();
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Contador de Desvios - Setor Administrativa</title>
+    <title>Contador de Desvios - Setor Administrativo</title>
 </head>
 <body>
     <h2>Contador de Desvios - Setor Administrativa</h2>
