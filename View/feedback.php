@@ -7,8 +7,8 @@
         if(isset($_POST["nota"]) && isset($_POST["comentario"])){
             
             $nota = $_POST["nota"];
-            $comentario = $_POST["comentario"];
-            $usuario = 3;
+            $comentario  = $_POST["comentario"];
+            $usuario = 1;
             $query = "SELECT * from feedback where usuario_matricula = $usuario";
             $result = $conexao->query($query);
             if ($result->num_rows > 0){

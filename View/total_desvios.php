@@ -1,8 +1,8 @@
 <?php
 require '../Model/conexao.php';
-
+require_once '../controller/desvio.class.php';
 // Parâmetros de filtragem
-$orderBy = isset($_GET['order']) ? $_GET['order'] : 'data_identificacao';
+/*$orderBy = isset($_GET['order']) ? $_GET['order'] : 'data_identificacao';
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $perPage = 15;
 
@@ -67,6 +67,22 @@ $row_count_desvios = $result_count_desvios->fetch_assoc();
 $total_desvios = $row_count_desvios['total_desvios'];
 
 $mysqli->close();
+*/
+$desvio = new desvio;
+$turno = null;
+$setor = null;
+$tipo_desvio = null;
+$gravidade = null;
+$data_i = null;
+$data_f = null;
+if ($_SERVER["REQUEST_METHOD"] == "POST"){
+    
+    $setor = $_POST['setor'];
+    $gravidade = $_POST['gravidade'];
+    $data_i = $_POST['data_i'];
+    $data_f = $_POST["data_f"];  
+
+}
 ?>
 
 
@@ -75,37 +91,37 @@ $mysqli->close();
 <head>
     <title>Lista de Desvios Abertos</title>
     <script>
-    function filterAndSort() {
-        var orderBy = document.getElementById("orderSelect").value;
-        getDesvios(orderBy, 1);
-    }
-
-    function getDesvios(orderBy, page) {
-        var xhr = new XMLHttpRequest();
-        var url = "lista_desvios.php?order=" + orderBy + "&page=" + page;
-        
-        // Adicione a ordenação ascendente (ASC) para as colunas selecionadas
-        if (orderBy === "data_identificacao" || orderBy === "gravidade" || orderBy === "setor") {
-            url += "&sort=ASC";
+        /*function filterAndSort() {
+            var orderBy = document.getElementById("orderSelect").value;
+            getDesvios(orderBy, 1);
         }
         
-        xhr.open('GET', url, true);
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                var response = xhr.responseText;
-                document.querySelector('table tbody').innerHTML = response;
-            } else {
-                console.error('Erro na solicitação AJAX');
+        function getDesvios(orderBy, page) {
+            var xhr = new XMLHttpRequest();
+            var url = "lista_desvios.php?order=" + orderBy + "&page=" + page;
+            
+            // Adicione a ordenação ascendente (ASC) para as colunas selecionadas
+            if (orderBy === "data_identificacao" || orderBy === "gravidade" || orderBy === "setor") {
+                url += "&sort=ASC";
             }
-        };
-        xhr.send();
-    }
+            
+            xhr.open('GET', url, true);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    var response = xhr.responseText;
+                    document.querySelector('table tbody').innerHTML = response;
+                } else {
+                    console.error('Erro na solicitação AJAX');
+                }
+            };
+            xhr.send();
+        }*/
 
-    window.onload = function() {
-        filterAndSort();
-    };
-</script>
-
+        //window.onload = function() {
+         //   filterAndSort();
+        //};
+    </script>
+*/
 </head>
 <body>
     <h2>Lista de Desvios Abertos</h2>
@@ -113,7 +129,7 @@ $mysqli->close();
     <!-- Filtrar por -->
     <form method="post">
     <label>Filtrar por:</label>
-    <select name="gravidade">
+    <select name="gravidade" id="gravidade">
         <option value="">Todas as Gravidades</option>
         <option value="1">Leve</option>
         <option value="2">Moderado</option>
@@ -122,12 +138,12 @@ $mysqli->close();
     </select>
 
     <label>Data Inicial:</label>
-    <input type="date" name="data_inicial" placeholder="Data Inicial">
+    <input type="date" name="data_inicial" id="data_i" placeholder="Data Inicial">
 
     <label>Data Final:</label>
-    <input type="date" name="data_final" placeholder="Data Final">
+    <input type="date" name="data_final" id="data_f" placeholder="Data Final">
 
-        <select name="setor">
+        <select name="setor" id="setor">
             <option value="">Todos os Setores</option>
             <option value="1">Administrativo</option>
             <option value="2">Hidro</option>
@@ -152,13 +168,18 @@ $mysqli->close();
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($desvios_abertos as $desvio) { ?>
+            <?php
+
+            $desvio_data = $desvio->fetch_desvio_by_filter($turno,$setor,$tipo_desvio,$gravidade,$data_i,$data_f,$mysqli);
+            
+             foreach ($desvio_data as $data)    
+            {?>
             <tr>
-                <td><?php echo $desvio['id_desvio']; ?></td>
-                <td><?php echo $desvio['data_identificacao']; ?></td>
-                <td><?php echo $desvio['tipo_desvio']; ?></td>
-                <td><?php echo $desvio['gravidade']; ?></td>
-                <td><?php echo $desvio['setor']; ?></td>
+                <td><?php echo $data['id_desvio']; ?></td>
+                <td><?php echo $data['data_identificacao']; ?></td>
+                <td><?php echo $data['tipo_desvio']; ?></td>
+                <td><?php echo $data['gravidade']; ?></td>
+                <td><?php echo $data['setor']; ?></td>
             </tr>
             <?php } ?>
         </tbody>
@@ -174,6 +195,6 @@ $mysqli->close();
         }
     }
         ?>
-    </div>
+    </div> 
 </body>
 </html>
