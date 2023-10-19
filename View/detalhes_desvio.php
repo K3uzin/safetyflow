@@ -38,7 +38,7 @@ if (isset($_GET['id_desvio'])) {
 
             // Exibir a imagem, se existir
         if ($desvio['foto_desvio']) {
-            $imagem_url = 'http://localhost/safetyflow/Public/Img/desvio/' . basename($desvio['foto_desvio']);
+            $imagem_url = 'http://localhost/safetyflow/Desvio/' . basename($desvio['foto_desvio']);
             echo "<br>Imagem do Desvio: <br><img src='$imagem_url' alt='Imagem do desvio'>";
         } else {
             echo "<br>Imagem do Desvio: Nenhuma imagem disponível";
