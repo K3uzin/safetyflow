@@ -75,14 +75,38 @@ $tipo_desvio = null;
 $gravidade = null;
 $data_i = null;
 $data_f = null;
-if ($_SERVER["REQUEST_METHOD"] == "POST"){
-    
-    $setor = $_POST['setor'];
-    $gravidade = $_POST['gravidade'];
-    $data_i = $_POST['data_i'];
-    $data_f = $_POST["data_f"];  
+$order = null;
 
+if ($_SERVER["REQUEST_METHOD"] == "POST"){
+    if( isset($_POST['setor'])){
+        $setor = (int)$_POST['setor'];
+        if ($setor == 0){
+            $setor = null;
+        }
+    }
+    if( isset($_POST['gravidade'])){
+        $gravidade = (int)$_POST['gravidade'];
+        if ($gravidade == 0){
+            $gravidade = null;
+        }
+    }
+    if( isset($_POST['data_i'])){
+        $data_i = $_POST['data_i'];
+    }
+    if( isset($_POST['data_f'])){
+        $data_f = $_POST["data_f"];
+    }
+    if( isset($_POST['order'])){
+        $order = (int)$_POST['order'];  
+    }
+    
+    var_dump($data_f);
+    var_dump($data_i);
+    var_dump($gravidade);
+    var_dump($setor);
+    
 }
+
 ?>
 
 
@@ -170,8 +194,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         <tbody>
             <?php
 
-            $desvio_data = $desvio->fetch_desvio_by_filter($turno,$setor,$tipo_desvio,$gravidade,$data_i,$data_f,$mysqli);
-            
+            $desvio_data = $desvio->fetch_desvio_by_filter($turno,$setor,$tipo_desvio,$gravidade,$data_i,$data_f,$order,$mysqli);
+        
              foreach ($desvio_data as $data)    
             {?>
             <tr>
