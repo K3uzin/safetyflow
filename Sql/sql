@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 11-Out-2023 às 01:19
+-- Tempo de geração: 21-Out-2023 às 01:00
 -- Versão do servidor: 10.4.25-MariaDB
 -- versão do PHP: 8.1.10
 
@@ -58,12 +58,43 @@ CREATE TABLE `desvio` (
   `local_desvio` varchar(255) NOT NULL,
   `descricao_desvio` text NOT NULL,
   `foto_desvio` varchar(255) DEFAULT NULL,
-  `tipo_desvio_idtipo_desvio` int(11) NOT NULL,
-  `gravidade_idgravidade` int(11) NOT NULL,
-  `area_responsavel_id_area` int(11) NOT NULL,
-  `setor_id_setor` int(11) NOT NULL,
+  `tipo_desvio` int(11) NOT NULL,
+  `gravidade` int(11) NOT NULL,
+  `area_responsavel` int(11) NOT NULL,
+  `setor` int(11) NOT NULL,
   `usuario_matricula` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `desvio`
+--
+
+INSERT INTO `desvio` (`id_desvio`, `data_identificacao`, `turno`, `local_desvio`, `descricao_desvio`, `foto_desvio`, `tipo_desvio`, `gravidade`, `area_responsavel`, `setor`, `usuario_matricula`) VALUES
+(30, '2023-10-16', 'Tarde', '1 q', 'aga', NULL, 7, 4, 1, 6, 1),
+(31, '2023-10-16', 'Manhã', 'adfafd', 'fafa', NULL, 4, 1, 4, 1, 1),
+(32, '2023-10-16', 'Manhã', 'dada', 'afafaaaf', NULL, 6, 4, 2, 4, 1),
+(33, '2023-10-16', 'Manhã', 'dada', 'afafaaaf', NULL, 6, 4, 2, 4, 1),
+(34, '2023-10-16', 'Tarde', 'afaf', 'adafaf', '../Public/Img/desvio/1697498541.jpeg', 4, 3, 4, 1, 1),
+(35, '2023-10-16', 'Manhã', 'fafa', 'afafa', '../Public/Img/desvio/1697498777.jpeg', 3, 1, 4, 1, 1),
+(36, '2023-10-16', 'Noite', 'afa', 'fafaf', '../Public/Img/desvio/1697499049.jpeg', 2, 2, 4, 1, 1),
+(37, '2023-10-16', 'Tarde', 'a', 'faa', '../Public/Img/desvio/1697499354.jpeg', 4, 2, 6, 2, 1),
+(38, '2023-10-16', 'Noite', 'afa', 'afa', '../Public/Img/desvio/1697500216.jpeg', 3, 1, 3, 1, 1),
+(39, '2023-10-16', 'Noite', 'afa', 'afa', '../Public/Img/desvio/1697500297.jpg', 3, 1, 3, 1, 1),
+(40, '2023-10-16', 'Noite', 'afa', 'afa', '../Public/Img/desvio/_1697500447.jpg', 3, 1, 3, 1, 1),
+(41, '2023-10-17', 'Tarde', 'afafa', 'fafaf', '../Public/Img/desvio/1697501095.jpeg', 1, 1, 6, 1, 1),
+(42, '2023-10-17', 'Tarde', 'afafa', 'fafaf', '../Public/Img/desvio/1697501176.jpeg', 1, 1, 6, 2, 1),
+(43, '2023-10-17', 'Manhã', 'atras da mesa', 'fios expostos', '../Public/Img/desvio/1697502009.jpeg', 3, 3, 1, 2, 1),
+(44, '2023-10-17', 'Tarde', 'aaa', 'a1', '../Desvio/img//1697580730.jpeg', 1, 1, 1, 3, 1),
+(45, '2023-10-17', 'Manhã', '11', 'fafaf', '../Desvio//1697580804.jpeg', 7, 2, 5, 2, 1),
+(46, '2023-10-17', 'Manhã', '12adaf', 'afafa', '../Desvio//1697581773.jpeg', 2, 2, 7, 1, 1),
+(47, '2023-10-17', 'Manhã', '12adaf', 'afafa', '../Desvio//1697581782.jpeg', 2, 2, 7, 1, 1),
+(48, '2023-10-17', 'Manhã', '12adaf', 'afafa', '../Desvio//1697581815.jpeg', 2, 2, 7, 1, 1),
+(49, '2023-10-19', 'Manhã', 'adaf', 'afagfa', '../Public/Img/desvio/1697752526.jpeg', 3, 4, 1, 2, 1),
+(50, '2023-10-19', 'Manhã', 'gaga', 'agaga', '../Public/Img/desvio/1697752682.jpeg', 3, 2, 1, 1, 1),
+(51, '2023-10-19', 'Manhã', 'gaga', 'agaga', '../Desvio/1697752793.jpeg', 3, 2, 1, 1, 1),
+(52, '2023-10-19', 'Tarde', 'afaf', 'gaga', '../Desvio/1697755952.jpeg', 7, 1, 6, 1, 1),
+(53, '2023-10-20', 'Tarde', 'afaf', 'aga', '../Desvio/1697841035.jpg', 3, 1, 3, 2, 1),
+(54, '2023-10-20', 'Manhã', 'local', 'local', '../Desvio/1697842071.jpg', 1, 4, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -184,6 +215,13 @@ CREATE TABLE `usuario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
+-- Extraindo dados da tabela `usuario`
+--
+
+INSERT INTO `usuario` (`matricula`, `nome`, `email`, `senha`, `isAdmin`, `setor_id_setor`) VALUES
+(1, 'Natan', 'santos@gmail.com', '12345', 1, 1);
+
+--
 -- Índices para tabelas despejadas
 --
 
@@ -197,11 +235,11 @@ ALTER TABLE `area_responsavel`
 -- Índices para tabela `desvio`
 --
 ALTER TABLE `desvio`
-  ADD PRIMARY KEY (`id_desvio`,`tipo_desvio_idtipo_desvio`,`gravidade_idgravidade`,`area_responsavel_id_area`,`setor_id_setor`,`usuario_matricula`),
-  ADD KEY `fk_desvio_tipo_desvio1_idx` (`tipo_desvio_idtipo_desvio`),
-  ADD KEY `fk_desvio_gravidade1_idx` (`gravidade_idgravidade`),
-  ADD KEY `fk_desvio_area_responsavel1_idx` (`area_responsavel_id_area`),
-  ADD KEY `fk_desvio_setor1_idx` (`setor_id_setor`),
+  ADD PRIMARY KEY (`id_desvio`,`tipo_desvio`,`gravidade`,`area_responsavel`,`setor`,`usuario_matricula`),
+  ADD KEY `fk_desvio_tipo_desvio1_idx` (`tipo_desvio`),
+  ADD KEY `fk_desvio_gravidade1_idx` (`gravidade`),
+  ADD KEY `fk_desvio_area_responsavel1_idx` (`area_responsavel`),
+  ADD KEY `fk_desvio_setor1_idx` (`setor`),
   ADD KEY `fk_desvio_usuario1_idx` (`usuario_matricula`);
 
 --
@@ -252,7 +290,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de tabela `desvio`
 --
 ALTER TABLE `desvio`
-  MODIFY `id_desvio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id_desvio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- Restrições para despejos de tabelas
@@ -262,10 +300,10 @@ ALTER TABLE `desvio`
 -- Limitadores para a tabela `desvio`
 --
 ALTER TABLE `desvio`
-  ADD CONSTRAINT `fk_desvio_area_responsavel1` FOREIGN KEY (`area_responsavel_id_area`) REFERENCES `area_responsavel` (`id_area`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_desvio_gravidade1` FOREIGN KEY (`gravidade_idgravidade`) REFERENCES `gravidade` (`idgravidade`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_desvio_setor1` FOREIGN KEY (`setor_id_setor`) REFERENCES `setor` (`id_setor`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_desvio_tipo_desvio1` FOREIGN KEY (`tipo_desvio_idtipo_desvio`) REFERENCES `tipo_desvio` (`idtipo_desvio`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_desvio_area_responsavel1` FOREIGN KEY (`area_responsavel`) REFERENCES `area_responsavel` (`id_area`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_desvio_gravidade1` FOREIGN KEY (`gravidade`) REFERENCES `gravidade` (`idgravidade`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_desvio_setor1` FOREIGN KEY (`setor`) REFERENCES `setor` (`id_setor`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_desvio_tipo_desvio1` FOREIGN KEY (`tipo_desvio`) REFERENCES `tipo_desvio` (`idtipo_desvio`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_desvio_usuario1` FOREIGN KEY (`usuario_matricula`) REFERENCES `usuario` (`matricula`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
@@ -279,7 +317,7 @@ ALTER TABLE `feedback`
 --
 ALTER TABLE `resolucao`
   ADD CONSTRAINT `fk_resolucao_area_responsavel1` FOREIGN KEY (`area_responsavel_id_area`) REFERENCES `area_responsavel` (`id_area`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_resolucao_desvio1` FOREIGN KEY (`desvio_id_desvio`,`desvio_tipo_desvio_idtipo_desvio`,`desvio_gravidade_idgravidade`,`desvio_area_responsavel_id_area`,`desvio_setor_id_setor`,`desvio_usuario_matricula`) REFERENCES `desvio` (`id_desvio`, `tipo_desvio_idtipo_desvio`, `gravidade_idgravidade`, `area_responsavel_id_area`, `setor_id_setor`, `usuario_matricula`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_resolucao_desvio1` FOREIGN KEY (`desvio_id_desvio`,`desvio_tipo_desvio_idtipo_desvio`,`desvio_gravidade_idgravidade`,`desvio_area_responsavel_id_area`,`desvio_setor_id_setor`,`desvio_usuario_matricula`) REFERENCES `desvio` (`id_desvio`, `tipo_desvio`, `gravidade`, `area_responsavel`, `setor`, `usuario_matricula`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_resolucao_usuario1` FOREIGN KEY (`usuario_matricula`,`usuario_setor_id_setor`) REFERENCES `usuario` (`matricula`, `setor_id_setor`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
