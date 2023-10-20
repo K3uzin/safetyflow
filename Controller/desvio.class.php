@@ -195,7 +195,7 @@ class desvio{
     }
     // função responsavel em dar fetch em TODOS os devios dentro do espectro do filtro,
     // os armazenandos dentro de um array e retornado o mesmo, para que seu conteudo possa ser manipulado .
-    public function fetch_desvio_by_filter($turno,$setor,$tipo_desvio,$gravidade,$data_i,$data_f,$conexao){
+    public function fetch_desvio_by_filter($turno,$setor,$tipo_desvio,$gravidade,$data_i,$data_f,$order,$conexao){
       
         $query = "SELECT * from desvio where 1";
         if($turno !== null){
@@ -216,14 +216,41 @@ class desvio{
         if($data_i !== null && $data_f !== null){
             $query .= " AND data_identificacao >= '$data_i' AND data_identificacao <= '$data_f'";
         }
+        if( $order == 1){
+            $query .= " ORDER BY gravidade ASC";
+        }
+        if($order == -1){
+            $query .= " ORDER BY gravidade DESC";
+        }
+        if($order == 2){
+            $query .= " ORDER BY data_identificacao ASC";
+        }
+        if($order == -2){
+            $query .= " ORDER BY data_identificacao DESC";
+        }
         $result = $conexao->query($query);
         if ($result && $result->num_rows > 0) {
             
             $desvio_data = array();
     
             while ($data = mysqli_fetch_assoc($result)) {
+                $setorResult = $conexao->query("SELECT nome_setor from setor where id_setor = {$data['setor']}");
+                $tipoDesvioResult = $conexao->query("SELECT descricao from tipo_desvio where idtipo_desvio = {$data['tipo_desvio']}");
+                $gravidadeResult = $conexao->query("SELECT descricao from gravidade where idgravidade = {$data['gravidade']}");
+                $areaResponsavelResult = $conexao->query("SELECT nome_area from area_responsavel where id_area = {$data['area_responsavel']}");
+            
+                $setor = $setorResult->fetch_assoc()['nome_setor'];
+                $tipoDesvio = $tipoDesvioResult->fetch_assoc()['descricao'];
+                $gravidade = $gravidadeResult->fetch_assoc()['descricao'];
+                $areaResponsavel = $areaResponsavelResult->fetch_assoc()['nome_area'];
+            
+                $data['setor'] = $setor;
+                $data['tipo_desvio'] = $tipoDesvio;
+                $data['gravidade'] = $gravidade;
+                $data['area_responsavel'] = $areaResponsavel;
                 $desvio_data[] = $data;
             }
+            
             return $desvio_data;
             }
             
