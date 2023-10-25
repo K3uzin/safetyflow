@@ -78,32 +78,38 @@ $data_f = null;
 $order = null;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
-    if( isset($_POST['setor'])){
+    if (isset($_POST['setor'])) {
         $setor = (int)$_POST['setor'];
-        if ($setor == 0){
+        if ($setor === 0 || $_POST['setor'] === "") {
             $setor = null;
         }
     }
     if( isset($_POST['gravidade'])){
         $gravidade = (int)$_POST['gravidade'];
-        if ($gravidade == 0){
+        if ($gravidade === 0 || $gravidade === ""){
             $gravidade = null;
         }
     }
-    if( isset($_POST['data_i'])){
-        $data_i = $_POST['data_i'];
+    if( isset($_POST['data_inicial'])){
+        $data_i = $_POST['data_inicial'];
+        if($data_i == ""){
+            $data_i = null;
+        }
     }
-    if( isset($_POST['data_f'])){
-        $data_f = $_POST["data_f"];
+    if( isset($_POST['data_final'])){
+        $data_f = $_POST["data_final"];
+        if($data_f == ""){
+            $data_f = null;
+        }
     }
     if( isset($_POST['order'])){
         $order = (int)$_POST['order'];  
     }
     
-    var_dump($data_f);
-    var_dump($data_i);
-    var_dump($gravidade);
-    var_dump($setor);
+    echo "data final: ".var_dump($data_f)."<br>";
+    echo "data inicial: ".var_dump($data_i)."<br>";
+    echo "gravidade: ".var_dump($gravidade)."<br>";
+    echo "setor: ".var_dump($setor)."<br>";
     
 }
 
@@ -162,10 +168,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     </select>
 
     <label>Data Inicial:</label>
-    <input type="date" name="data_inicial" id="data_i" placeholder="Data Inicial">
+    <input type="date" name="data_inicial" id="data_inicial" placeholder="Data Inicial">
 
     <label>Data Final:</label>
-    <input type="date" name="data_final" id="data_f" placeholder="Data Final">
+    <input type="date" name="data_final" id="data_final" placeholder="Data Final">
 
         <select name="setor" id="setor">
             <option value="">Todos os Setores</option>
@@ -193,9 +199,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         </thead>
         <tbody>
             <?php
-
+            
             $desvio_data = $desvio->fetch_desvio_by_filter($turno,$setor,$tipo_desvio,$gravidade,$data_i,$data_f,$order,$mysqli);
-        
+            //var_dump($desvio_data);
              foreach ($desvio_data as $data)    
             {?>
             <tr>

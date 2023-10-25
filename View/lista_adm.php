@@ -1,24 +1,35 @@
 <?php
 require '../Model/conexao.php'; // Verifique se o caminho está correto
+require_once '../Controller/desvio.class.php';
 
 // Consulta para obter todos os desvios no Setor "Administrativo"
-$sql_desvios_setor_administrativa = "SELECT d.id_desvio, td.descricao AS tipo_desvio, g.descricao AS gravidade, s.nome_setor AS setor 
+/*$sql_desvios_setor_administrativa = "SELECT d.id_desvio, td.descricao AS tipo_desvio, g.descricao AS gravidade, s.nome_setor AS setor 
 FROM desvio d
 INNER JOIN tipo_desvio td ON d.tipo_desvio_idtipo_desvio = td.idtipo_desvio
 INNER JOIN gravidade g ON d.gravidade_idgravidade = g.idgravidade
 INNER JOIN setor s ON d.setor_id_setor = s.id_setor
-WHERE d.setor_id_setor = 1";
+WHERE d.setor_id_setor = 1";*/
 
-$result_desvios_setor_administrativa = $mysqli->query($sql_desvios_setor_administrativa);
+$desvio = new desvio;
+$turno = null;
+$setor = 1;
+$tipo_desvio = null;
+$gravidade = null;
+$data_i = null;
+$data_f = null;
+$order = 1;
+$desvio_data = $desvio->fetch_desvio_by_filter($turno,$setor,$tipo_desvio,$gravidade,$data_i,$data_f,$order,$mysqli);
 
-$desvios_setor_administrativa = [];
+//$result_desvios_setor_administrativa = $mysqli->query($sql_desvios_setor_administrativa);
+
+/*$desvios_setor_administrativa = [];
 if ($result_desvios_setor_administrativa) {
     while ($row_desvio = $result_desvios_setor_administrativa->fetch_assoc()) {
         $desvios_setor_administrativa[] = $row_desvio;
     }
 } else {
     echo "Erro na consulta de desvios no Setor Administrativa: " . $mysqli->error;
-}
+}*/
 
 $mysqli->close();
 ?>
@@ -39,7 +50,7 @@ $mysqli->close();
         <th>Setor</th>
         <th>Ações</th>
     </tr>
-    <?php foreach ($desvios_setor_administrativa as $desvio) { ?>
+    <?php foreach ($desvio_data as $desvio) { ?>
     <tr>
         <td><?php echo $desvio['id_desvio']; ?></td>
         <td><?php echo $desvio['tipo_desvio']; ?></td>

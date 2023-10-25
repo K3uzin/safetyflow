@@ -1,44 +1,23 @@
 <?php
 require '../Model/conexao.php'; // Verifique se o caminho está correto
 
-// Consulta para obter informações sobre o último desvio no Setor "Estojo"
-$sql_ultimo_desvio = "SELECT usuario_matricula, data_identificacao, local_desvio FROM desvio WHERE setor_id_setor = 4 ORDER BY id_desvio DESC LIMIT 1";
-$result_ultimo_desvio = $mysqli->query($sql_ultimo_desvio);
+require_once '../Controller/desvio.class.php';
 
-if ($result_ultimo_desvio) {
-    $row_ultimo_desvio = $result_ultimo_desvio->fetch_assoc();
-    $ultimo_matricula = $row_ultimo_desvio['usuario_matricula'];
-    $ultimo_data = $row_ultimo_desvio['data_identificacao'];
-    $ultimo_local = $row_ultimo_desvio['local_desvio'];
 
-    // Consulta para obter o nome do usuário do último desvio
-    $sql_nome_usuario = "SELECT nome FROM usuario WHERE matricula = $ultimo_matricula";
-    $result_nome_usuario = $mysqli->query($sql_nome_usuario);
+$desvio = new desvio;
+// Consulta para obter informações sobre o último desvio no Setor "Qualidade"
+$desvio->fetch_last_desvio_setor(4,$mysqli);
+$ultimo_matricula = $desvio->get_usuario_matricula();
+$ultimo_data = $desvio->get_data_identificacao();
+$ultimo_local  = $desvio->get_local();
+$sql_nome_usuario = "SELECT nome FROM usuario WHERE matricula = $ultimo_matricula";
 
-    if ($result_nome_usuario && $result_nome_usuario->num_rows > 0) {
-        $row_nome_usuario = $result_nome_usuario->fetch_assoc();
-        $ultimo_nome_estojo = $row_nome_usuario['nome'];
-    } else {
-        $ultimo_nome_estojo = "";
-    }
-} else {
-    echo "Erro na consulta do último desvio: " . $mysqli->error;
-    $ultimo_nome_estojo = "";
-    $ultimo_data_estojo = "";
-    $ultimo_local_estojo = "";
-}
-
-// Consulta para contar os desvios no Setor "Estojo"
-$sql_total_desvios = "SELECT COUNT(*) AS total_desvios FROM desvio WHERE setor_id_setor = 4";
-$result_total_desvios = $mysqli->query($sql_total_desvios);
-
-if ($result_total_desvios) {
-    $row_total_desvios = $result_total_desvios->fetch_assoc();
-    $total_desvios_estojo = $row_total_desvios['total_desvios'];
-} else {
-    echo "Erro na consulta do total de desvios: " . $mysqli->error;
-    $total_desvios_estojo = 0;
-}
+//consulta o nome
+$result_nome_usuario = $mysqli->query($sql_nome_usuario);
+$row_nome_usuario = $result_nome_usuario->fetch_assoc();
+$ultimo_nome_qualidade = $row_nome_usuario['nome'];
+// Consulta para contar os desvios no Setor "Qualidade"
+$total_desvios_qualidade = $desvio->count_desvio_from_setor(4,$mysqli);
 
 $mysqli->close();
 ?>

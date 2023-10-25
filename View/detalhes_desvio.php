@@ -1,19 +1,22 @@
 <?php
 require '../Model/conexao.php'; // Verifique se o caminho está correto
+require_once '../Controller/desvio.class.php';
 
 if (isset($_GET['id_desvio'])) {
     $id_desvio = $_GET['id_desvio'];
 
+    $desvio = new desvio;
+    $desvio->fetch_desvio($id_desvio,$mysqli);
     // Consulta para obter os detalhes de um desvio específico com base no ID do desvio
-    $sql = "SELECT d.id_desvio, d.data_identificacao, d.turno, d.local_desvio, d.descricao_desvio, d.foto_desvio, td.descricao AS tipo_desvio, g.descricao AS gravidade, s.nome_setor AS setor, u.matricula AS user_matricula, u.nome AS user_nome
+    /*$sql = "SELECT d.id_desvio, d.data_identificacao, d.turno, d.local_desvio, d.descricao_desvio, d.foto_desvio, td.descricao AS tipo_desvio, g.descricao AS gravidade, s.nome_setor AS setor, u.matricula AS user_matricula, u.nome AS user_nome
             FROM desvio d
             INNER JOIN tipo_desvio td ON d.tipo_desvio_idtipo_desvio = td.idtipo_desvio
             INNER JOIN gravidade g ON d.gravidade_idgravidade = g.idgravidade
             INNER JOIN setor s ON d.setor_id_setor = s.id_setor
             INNER JOIN usuario u ON d.usuario_matricula = u.matricula
-            WHERE d.id_desvio = ?";
+            WHERE d.id_desvio = ?";*/
     
-    $stmt = $mysqli->prepare($sql);
+    /*$stmt = $mysqli->prepare($sql);
 
     if ($stmt) {
         $stmt->bind_param("i", $id_desvio);
@@ -22,22 +25,22 @@ if (isset($_GET['id_desvio'])) {
 
         // Verifique se há um desvio para exibir
         if ($result->num_rows > 0) {
-            $desvio = $result->fetch_assoc();
+            $desvio = $result->fetch_assoc();*/
             
             echo "Detalhes do Desvio:";
-            echo "<br>ID: " . $desvio['id_desvio'];
-            echo "<br>Matrícula do Usuário: " . $desvio['user_matricula'];
-            echo "<br>Nome do Usuário: " . $desvio['user_nome'];
-            echo "<br>Data de Identificação: " . $desvio['data_identificacao'];
-            echo "<br>Turno: " . $desvio['turno'];
-            echo "<br>Setor: " . $desvio['setor'];
-            echo "<br>Local do Desvio: " . $desvio['local_desvio'];
-            echo "<br>Descrição do Desvio: " . $desvio['descricao_desvio'];
-            echo "<br>Tipo de Desvio: " . $desvio['tipo_desvio'];
-            echo "<br>Gravidade: " . $desvio['gravidade'];
+            //echo "<br>ID: " . $desvio['id_desvio'];
+            echo "<br>Matrícula do Usuário: " . $desvio->get_usuario_matricula();
+            echo "<br>Nome do Usuário: " . $desvio->get_usuario_nome();
+            echo "<br>Data de Identificação: " . $desvio->get_data_identificacao();
+            echo "<br>Turno: " . $desvio->get_turno();
+            echo "<br>Setor: " . $desvio->get_setor();
+            echo "<br>Local do Desvio: " . $desvio->get_local();
+            echo "<br>Descrição do Desvio: " . $desvio->get_descricao();
+            echo "<br>Tipo de Desvio: " . $desvio->get_tipo_desvio();
+            echo "<br>Gravidade: " . $desvio->get_gravidade();
 
             // Exibir a imagem, se existir
-        if ($desvio['foto_desvio']) {
+        /*if ($desvio['foto_desvio']) {
             $imagem_url = 'http://localhost/safetyflow/Desvio/' . basename($desvio['foto_desvio']);
             echo "<br>Imagem do Desvio: <br><img src='$imagem_url' alt='Imagem do desvio'>";
         } else {
@@ -45,13 +48,13 @@ if (isset($_GET['id_desvio'])) {
         }
         } else {
             echo "Nenhum desvio encontrado com o ID fornecido.";
-        }
+        }*/
 
         // Feche o statement
-        $stmt->close();
+       /* $stmt->close();
     } else {
         echo "Erro na preparação do statement: " . $mysqli->error;
-    }
+    }*/
 
     $mysqli->close();
 } else {
