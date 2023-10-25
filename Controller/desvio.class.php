@@ -4,6 +4,7 @@ class desvio{
 
     
     private $usuario_matricula;//int exat11
+    private $nome_usuario;//output only varchar
     private $data_identificacao;//date
     private $turno;//varchar max 20
     private $setor;//int espec(1...7)
@@ -80,6 +81,9 @@ class desvio{
     public function get_usuario_matricula(){
         return $this->usuario_matricula;
     }
+    public function get_usuario_nome(){
+        return $this->get_usuario_nome;
+    }
     //função responsavel por extrair o conteudo do atributo data_identificação da classe de desvio.
     public function get_data_identificacao(){
         return $this->data_identificacao;
@@ -139,12 +143,39 @@ class desvio{
             $this->usuario_matricula = $data['usuario_matricula'];
             $this->data_identificacao = $data['data_identificacao'];
             $this->turno = $data['turno'];
-            $this->setor = $data['setor'];
             $this->local = $data['local_desvio'];
             $this->descricao = $data['descricao_desvio'];
-            $this->tipo_desvio = $data['tipo_desvio'];
-            $this->gravidade = $data['gravidade'];
-            $this->area_responsavel = $data['area_responsavel'];
+
+            $nome_id = $data['usuario_matricula'];
+            $query = "SELECT nome from usuario where matricula = $nome_id";
+            $result = $conexao->query($query);
+            $nome = mysqli_fetch_assoc($result);
+            $this->get_usuario_nome = $nome['nome'];
+
+            $setor_id = $data['setor'];
+            $query ="SELECT nome_setor from setor where id_setor = $setor_id";
+            $result = $conexao->query($query);
+            $setor_nome = mysqli_fetch_assoc($result);
+            $this->setor = $setor_nome;
+
+            $tipo_desvio_id = $data['tipo_desvio'];
+            $query ="SELECT nome_setor from tipo_desvio where idtipo_desvio = $tipo_desvio_id";
+            $result = $conexao->query($query);
+            $tipo_desvio = mysqli_fetch_assoc($result);
+            $this->tipo_desvio = $tipo_desvio;
+
+            $gravidade_id = $data['gravidade'];
+            $query ="SELECT descricao from gravidade where idgravidade = $gravidade_id";
+            $result = $conexao->query($query);
+            $gravidade = mysqli_fetch_assoc($result);
+            $this->gravidade = $gravidade;
+
+            $area_id = $data['area_responsavel'];
+            $query ="SELECT nome_area from area_responsavel where id_area = $area_id";
+            $result = $conexao->query($query);
+            $area_nome = mysqli_fetch_assoc($result);
+            $this->area_responsavel = $area_nome;
+
             $this->img = $data['foto_desvio'];
         }
     }
@@ -157,23 +188,50 @@ class desvio{
         if ($result->num_rows == 0){
             exit('nenhum desvio encontrado');
         }else{
-             
+            
             $data = mysqli_fetch_assoc($result);
             $this->usuario_matricula = $data['usuario_matricula'];
             $this->data_identificacao = $data['data_identificacao'];
             $this->turno = $data['turno'];
-            $this->setor = $data['setor'];
             $this->local = $data['local_desvio'];
             $this->descricao = $data['descricao_desvio'];
-            $this->tipo_desvio = $data['tipo_desvio'];
-            $this->gravidade = $data['gravidade'];
-            $this->area_responsavel = $data['area_responsavel'];
+
+            $nome_id = $data['usuario_matricula'];
+            $query = "SELECT nome from usuario where matricula = $nome_id";
+            $result = $conexao->query($query);
+            $nome = mysqli_fetch_assoc($result);
+            $this->get_usuario_nome = $nome['nome'];
+
+            $setor_id = $data['setor'];
+            $query ="SELECT nome_setor from setor where id_setor = $setor_id";
+            $result = $conexao->query($query);
+            $setor_nome = mysqli_fetch_assoc($result);
+            $this->setor = $setor_nome;
+
+            $tipo_desvio_id = $data['tipo_desvio'];
+            $query ="SELECT nome_setor from tipo_desvio where idtipo_desvio = $tipo_desvio_id";
+            $result = $conexao->query($query);
+            $tipo_desvio = mysqli_fetch_assoc($result);
+            $this->tipo_desvio = $tipo_desvio;
+
+            $gravidade_id = $data['gravidade'];
+            $query ="SELECT descricao from gravidade where idgravidade = $gravidade_id";
+            $result = $conexao->query($query);
+            $gravidade = mysqli_fetch_assoc($result);
+            $this->gravidade = $gravidade;
+
+            $area_id = $data['area_responsavel'];
+            $query ="SELECT nome_area from area_responsavel where id_area = $area_id";
+            $result = $conexao->query($query);
+            $area_nome = mysqli_fetch_assoc($result);
+            $this->area_responsavel = $area_nome;
+
             $this->img = $data['foto_desvio'];
         }
     }
-    public function fetch_desvio($desvio,$conexao){
-
-        $query = "SELECT * from desvio where id_desvio = $desvio";
+    //função não testada
+    public function fetch_last_desvio_setor($setor,$conexao){
+    $query = "SELECT * from desvio where data_identificacao = (SELECT max(data_identificacao) from desvio where setor = $setor order by id_desvio asc)";
         $result = $conexao->query($query);
 
         if ($result->num_rows == 0){
@@ -184,13 +242,114 @@ class desvio{
             $this->usuario_matricula = $data['usuario_matricula'];
             $this->data_identificacao = $data['data_identificacao'];
             $this->turno = $data['turno'];
-            $this->setor = $data['setor'];
             $this->local = $data['local_desvio'];
             $this->descricao = $data['descricao_desvio'];
-            $this->tipo_desvio = $data['tipo_desvio'];
-            $this->gravidade = $data['gravidade'];
-            $this->area_responsavel = $data['area_responsavel'];
+
+            $nome_id = $data['usuario_matricula'];
+            $query = "SELECT nome from usuario where matricula = $nome_id";
+            $result = $conexao->query($query);
+            $nome = mysqli_fetch_assoc($result);
+            $this->get_usuario_nome = $nome['nome'];
+
+            $setor_id = $data['setor'];
+            $query ="SELECT nome_setor from setor where id_setor = $setor_id";
+            $result = $conexao->query($query);
+            $setor_nome = mysqli_fetch_assoc($result);
+            $this->setor = $setor_nome;
+
+            $tipo_desvio_id = $data['tipo_desvio'];
+            $query ="SELECT nome_setor from tipo_desvio where idtipo_desvio = $tipo_desvio_id";
+            $result = $conexao->query($query);
+            $tipo_desvio = mysqli_fetch_assoc($result);
+            $this->tipo_desvio = $tipo_desvio;
+
+            $gravidade_id = $data['gravidade'];
+            $query ="SELECT descricao from gravidade where idgravidade = $gravidade_id";
+            $result = $conexao->query($query);
+            $gravidade = mysqli_fetch_assoc($result);
+            $this->gravidade = $gravidade;
+
+            $area_id = $data['area_responsavel'];
+            $query ="SELECT nome_area from area_responsavel where id_area = $area_id";
+            $result = $conexao->query($query);
+            $area_nome = mysqli_fetch_assoc($result);
+            $this->area_responsavel = $area_nome;
+
             $this->img = $data['foto_desvio'];
+        }
+    }
+    public function count_desvio_from_setor($setor,$conexao){
+       $query = "SELECT COUNT(*) AS total_desvios FROM desvio WHERE setor = $setor";
+       $result = $conexao->query($query);
+       if ($result->num_rows == 0){
+
+            return "0";
+       }else{
+            $data = mysqli_fetch_assoc($result);
+            $count = $data['total_desvios'];
+            if ($count === 0){
+                $query = "SELECT nome_setor from setor where id_setor = $setor";
+                $result = $conexao->query($query);
+                
+                $data = mysqli_fetch_assoc($result);
+                $setor_nome = $data['nome_setor'];
+                $count = "nenhum desvio encontrado no setor ".$setor_nome;
+
+                return $count;
+            }else{
+                return $count;
+            }
+           
+        }
+    }
+    public function fetch_desvio($id_desvio,$conexao){
+
+        $query = "SELECT * from desvio where id_desvio = $id_desvio";
+        $result = $conexao->query($query);
+
+        if ($result->num_rows == 0){
+            exit('nenhum desvio encontrado');
+        }else{
+             
+            $data = mysqli_fetch_assoc($result);
+            $this->usuario_matricula = $data['usuario_matricula'];
+            $this->data_identificacao = $data['data_identificacao'];
+            $this->turno = $data['turno'];
+            $this->local = $data['local_desvio'];
+            $this->descricao = $data['descricao_desvio'];
+
+            $nome_id = $data['usuario_matricula'];
+            $query = "SELECT nome from usuario where matricula = $nome_id";
+            $result = $conexao->query($query);
+            $nome = mysqli_fetch_assoc($result);
+            $this->get_usuario_nome = $nome['nome'];
+
+            $setor_id = $data['setor'];
+            $query ="SELECT nome_setor from setor where id_setor = $setor_id";
+            $result = $conexao->query($query);
+            $setor_nome = mysqli_fetch_assoc($result);
+            $this->setor = $setor_nome;
+
+            $tipo_desvio_id = $data['tipo_desvio'];
+            $query ="SELECT nome_setor from tipo_desvio where idtipo_desvio = $tipo_desvio_id";
+            $result = $conexao->query($query);
+            $tipo_desvio = mysqli_fetch_assoc($result);
+            $this->tipo_desvio = $tipo_desvio;
+
+            $gravidade_id = $data['gravidade'];
+            $query ="SELECT descricao from gravidade where idgravidade = $gravidade_id";
+            $result = $conexao->query($query);
+            $gravidade = mysqli_fetch_assoc($result);
+            $this->gravidade = $gravidade;
+
+            $area_id = $data['area_responsavel'];
+            $query ="SELECT nome_area from area_responsavel where id_area = $area_id";
+            $result = $conexao->query($query);
+            $area_nome = mysqli_fetch_assoc($result);
+            $this->area_responsavel = $area_nome;
+
+            $this->img = $data['foto_desvio'];
+           
         }
     }
     // função responsavel em dar fetch em TODOS os devios dentro do espectro do filtro,

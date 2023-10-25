@@ -332,14 +332,15 @@
 
             //cenario de sucesso
                 
-                /*$desvio = new desvio;
+                $desvio = new desvio;
                 $turno = null;
                 $setor = null;
                 $tipo_desvio = null;
                 $gravidade = null;
                 $data_i = null;
                 $data_f = null;
-                $desvio_data = $desvio->fetch_desvio_by_filter($turno,$setor,$tipo_desvio,$gravidade,$data_i,$data_f,$conexao);
+                $order = -2;
+                $desvio_data = $desvio->fetch_desvio_by_filter($turno,$setor,$tipo_desvio,$gravidade,$data_i,$data_f,$order,$conexao);
                 
                 $m = count($desvio_data);
                 $x = 0;
@@ -367,7 +368,7 @@
                     echo '<br>';
                     echo '-----------------------------------------------------------------------';
                     $x++;
-                }*/
+                }
     
     //teste de classe resolucao
 

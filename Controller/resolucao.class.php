@@ -111,6 +111,6 @@ class resolucao{
         return $this->area_responsavel;
     }
 
-    public function update_resolucao($resolucao,$status,$acoes,$conexao)
+    //public function update_resolucao($resolucao,$status,$acoes,$conexao);
 }
 ?>
