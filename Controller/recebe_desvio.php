@@ -1,6 +1,6 @@
 <?php
 require '../Model/conexao.php';
-
+require_once 'desvio.class.php';
 session_start();
 
 if (!isset($_SESSION["user_matricula"])) {
@@ -61,8 +61,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
+    $desvio = new desvio;
+    $desvio->set_desvio($user_matricula,$data_identificacao,$turno,$setor_id_setor,$local_desvio,$descricao_desvio,
+    $tipo_desvio_idtipo_desvio,$gravidade_idgravidade,$area_responsavel_id_area,$imagem_url,$mysqli);
     // Inserção dos dados em Desvio, incluindo o URL da imagem
-    $sql = "INSERT INTO safetyflow.desvio (data_identificacao, turno, local_desvio, descricao_desvio, tipo_desvio_idtipo_desvio, gravidade_idgravidade, foto_desvio, area_responsavel_id_area, setor_id_setor, usuario_matricula)
+    /*$sql = "INSERT INTO safetyflow.desvio (data_identificacao, turno, local_desvio, descricao_desvio, tipo_desvio_idtipo_desvio, gravidade_idgravidade, foto_desvio, area_responsavel_id_area, setor_id_setor, usuario_matricula)
     VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $mysqli->prepare($sql);
 
@@ -79,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->close();
     } else {
         echo "Erro na preparação do statement: " . $mysqli->error;
-    }
+    }*/
 
     // Fechamento da conexão com o banco de dados
     $mysqli->close();

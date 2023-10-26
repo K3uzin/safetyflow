@@ -28,7 +28,7 @@
                 //alter table desvio change setor_id_setor setor int;
             //
 
-            //INSERT INTO setor(id_setor,nome_setor) VALUES (1,'geral'),(2,'estojo'),(3,'hidro'),(4,'creme');
+            //INSERT INTO setor(id_setor,nome_setor) VALUES (1,'administrarivo'),(2,'hidro'),(3,'creme'),(4,'estojo'),(5,'qualidade'),(6,'logistica');
 
         //tabela gravidade 
 
