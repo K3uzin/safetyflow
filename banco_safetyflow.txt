@@ -22,6 +22,8 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
+INSERT INTO area_responsavel(id_area,nome_area) VALUES (1,'manutenção'),(2,'engenharia'),
+(3,'produção'),(4,'qualidade'),(5,'recursos humanos'),(6,'segurança do trabalho'),(7,'meio ambiente');
 
 -- -----------------------------------------------------
 -- Table `safetyflow`.`gravidade`
@@ -34,6 +36,7 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
+INSERT INTO gravidade(idgravidade,descricao) VALUES (1,'leve'),(2,'moderado'),(3,'grave'),(4,'gravissimo');
 
 -- -----------------------------------------------------
 -- Table `safetyflow`.`setor`
@@ -46,6 +49,7 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
+INSERT INTO setor(id_setor,nome_setor) VALUES (1,'administrarivo'),(2,'hidro'),(3,'creme'),(4,'estojo'),(5,'qualidade'),(6,'logistica');
 
 -- -----------------------------------------------------
 -- Table `safetyflow`.`tipo_desvio`
@@ -58,7 +62,8 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
-
+INSERT INTO tipo_desvio(idtipo_desvio,descricao) VALUES (1,'desvio comportamental'),(2,'desvio ergonômico'),
+(3,'Desvio de Segurança'),(4,'Desvio de Qualidade'),(5,'Desvio de Processo'),(6,'Desvio Ambiental'),(7,'Desvio de Manutenção');
 -- -----------------------------------------------------
 -- Table `safetyflow`.`usuario`
 -- -----------------------------------------------------
@@ -196,6 +201,8 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_unicode_520_ci;
 
+INSERT INTO area_responsavel(id_area,nome_area) VALUES (1,'manutenção'),(2,'engenharia'),
+(3,'produção'),(4,'qualidade'),(5,'recursos humanos'),(6,'segurança do trabalho'),(7,'meio ambiente');
 
 -- -----------------------------------------------------
 -- Table `safetyflow`.`gravidade`
@@ -208,6 +215,7 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_unicode_520_ci;
 
+INSERT INTO gravidade(idgravidade,descricao) VALUES (1,'leve'),(2,'moderado'),(3,'grave'),(4,'gravissimo');
 
 -- -----------------------------------------------------
 -- Table `safetyflow`.`setor`
@@ -221,6 +229,8 @@ DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_unicode_520_ci;
 
 
+INSERT INTO setor(id_setor,nome_setor) VALUES (1,'administrarivo'),(2,'hidro'),(3,'creme'),(4,'estojo'),(5,'qualidade'),(6,'logistica');
+
 -- -----------------------------------------------------
 -- Table `safetyflow`.`tipo_desvio`
 -- -----------------------------------------------------
@@ -232,7 +242,10 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_unicode_520_ci;
 
+INSERT INTO tipo_desvio(idtipo_desvio,descricao) VALUES (1,'desvio comportamental'),(2,'desvio ergonômico'),
+(3,'Desvio de Segurança'),(4,'Desvio de Qualidade'),(5,'Desvio de Processo'),(6,'Desvio Ambiental'),(7,'Desvio de Manutenção');
 
+-- -----------------------------------------------------
 -- -----------------------------------------------------
 -- Table `safetyflow`.`usuario`
 -- -----------------------------------------------------
@@ -290,7 +303,7 @@ CREATE TABLE IF NOT EXISTS `safetyflow`.`desvio` (
     FOREIGN KEY (`usuario_matricula`)
     REFERENCES `safetyflow`.`usuario` (`matricula`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 11
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_unicode_520_ci;
 
@@ -338,7 +351,7 @@ CREATE TABLE IF NOT EXISTS `safetyflow`.`resolucao` (
     FOREIGN KEY (`usuario_matricula`)
     REFERENCES `safetyflow`.`usuario` (`matricula`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 3
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_unicode_520_ci;
 
