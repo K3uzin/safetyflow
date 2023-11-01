@@ -74,15 +74,55 @@ CREATE TABLE IF NOT EXISTS `safetyflow`.`usuario` (
   `senha` VARCHAR(6) NOT NULL,
   `isAdmin` TINYINT(1) NOT NULL,
   `setor` INT NOT NULL,
+  `area_responsavel` INT,
   PRIMARY KEY (`matricula`, `setor`),
   INDEX `fk_usuario_setor1_idx` (`setor` ASC) VISIBLE,
   CONSTRAINT `fk_usuario_setor1`
     FOREIGN KEY (`setor`)
-    REFERENCES `safetyflow`.`setor` (`id_setor`))
+    REFERENCES `safetyflow`.`setor` (`id_setor`),
+  CONSTRAINT `fk_usuario_area_responsavel1`
+    FOREIGN KEY (`area_responsavel`)
+    REFERENCES `safetyflow`.`area_responsavel` (`id_area`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
+DELIMITER //
+CREATE TRIGGER restrioes_admin 
+BEFORE UPDATE ON usuario 
+FOR EACH ROW
+BEGIN
+DECLARE area_limit_check int;
+set area_limit_check = (SELECT count(matricula) from  usuario where area_responsavel = NEW.area_responsavel and area_responsavel != 0);
+    CASE
+        WHEN NEW.isAdmin = 1 AND (NEW.area_responsavel IS NULL OR NEW.area_responsavel = 0) 
+			THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'necessario atribuir area ao administrador';
+        WHEN NEW.isAdmin = 0 AND NEW.area_responsavel != 0 
+			THEN SET NEW.area_responsavel = 0;
+		ELSE
+			if area_limit_check > 0 
+				THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'numero de administradores da area selecionada já esta lotada';
+			end if;
+    END CASE;
+END;
+//
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER restricao_direct_insert_adm
+before insert on usuario
+for each row
+begin 
+	if NEW.isAdmin > 0 
+		then SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'não é permitido inserção direta de administradores';
+	end if;
+	if NEW.area_responsavel > 0
+		then SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'não é permitido alocação de reponsabildade de area para não administradores';
+	end if;
+end;//
+DELIMITER ;
 
 -- -----------------------------------------------------
 -- Table `safetyflow`.`desvio`
@@ -256,15 +296,55 @@ CREATE TABLE IF NOT EXISTS `safetyflow`.`usuario` (
   `senha` VARCHAR(6) NOT NULL,
   `isAdmin` TINYINT(1) NOT NULL,
   `setor` INT NOT NULL,
+  `area_responsavel` INT,
   PRIMARY KEY (`matricula`, `setor`),
   INDEX `fk_usuario_setor1_idx` (`setor` ASC),
   CONSTRAINT `fk_usuario_setor1`
     FOREIGN KEY (`setor`)
-    REFERENCES `safetyflow`.`setor` (`id_setor`))
+    REFERENCES `safetyflow`.`setor` (`id_setor`)),
+  CONSTRAINT `fk_usuario_area_responsavel1`
+    FOREIGN KEY (`area_responsavel`)
+    REFERENCES `safetyflow`.`area_responsavel` (`id_area`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_unicode_520_ci;
 
+DELIMITER //
+CREATE TRIGGER restricoes admin 
+BEFORE UPDATE ON usuario 
+FOR EACH ROW
+BEGIN
+DECLARE area_limit_check int;
+set area_limit_check = (SELECT count(matricula) from  usuario where area_responsavel = NEW.area_responsavel and area_responsavel != 0);
+    CASE
+        WHEN NEW.isAdmin = 1 AND (NEW.area_responsavel IS NULL OR NEW.area_responsavel = 0) 
+			THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'necessario atribuir area ao administrador';
+        WHEN NEW.isAdmin = 0 AND NEW.area_responsavel != 0 
+			THEN SET NEW.area_responsavel = 0;
+		ELSE
+			if area_limit_check > 0 
+				THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'numero de administradores da area selecionada já esta lotada';
+			end if;
+    END CASE;
+END;
+//
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER restricao_direct_insert_adm
+before insert on usuario
+for each row
+begin 
+	if NEW.isAdmin > 0 
+		then SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'não é permitido inserção direta de administradores';
+	end if;
+	if NEW.area_responsavel > 0
+		then SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'não é permitido alocação de reponsabildade de area para não administradores';
+	end if;
+end;//
+DELIMITER ;
 
 -- -----------------------------------------------------
 -- Table `safetyflow`.`desvio`
