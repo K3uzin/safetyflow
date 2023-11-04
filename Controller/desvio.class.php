@@ -17,7 +17,7 @@ class desvio{
     private $status;
 
     // função responsavel por da set em novos desvios, os armazenado diretamente no banco de dados.
-    public function set_desvio($usuario_matricula,$data_i,$turno,$setor,$local,$descricao_desvio,$tipo_desvio,$gravidade,$area_responsavel,$img,$conexao){
+    public function set_desvio($usuario_matricula,$turno,$setor,$local,$descricao_desvio,$tipo_desvio,$gravidade,$area_responsavel,$img,$conexao){
 
         $query = "SELECT matricula from usuario where matricula = '$usuario_matricula'";
         $result = $conexao->query($query);
@@ -42,7 +42,10 @@ class desvio{
         if($result->num_rows == 0){
 
             exit('gravidade do desvio invalida');
-        }   
+        } 
+        
+        $data_i = date('Y-m-d');
+
         $this->usuario_matricula = $usuario_matricula;
         $this->data_identificacao = $data_i;
         $this->turno = $turno;
@@ -174,7 +177,7 @@ class desvio{
             $query ="SELECT nome_area from area_responsavel where id_area = $area_id";
             $result = $conexao->query($query);
             $area_nome = mysqli_fetch_assoc($result);
-            $this->area_responsavel = $area_nome;
+            $this->area_responsavel = $area_nome['nome_area'];
 
             $this->img = $data['foto_desvio'];
         }
@@ -224,7 +227,7 @@ class desvio{
             $query ="SELECT nome_area from area_responsavel where id_area = $area_id";
             $result = $conexao->query($query);
             $area_nome = mysqli_fetch_assoc($result);
-            $this->area_responsavel = $area_nome;
+            $this->area_responsavel = $area_nome['nome_area'];
 
             $this->img = $data['foto_desvio'];
         }
@@ -273,7 +276,7 @@ class desvio{
             $query ="SELECT nome_area from area_responsavel where id_area = $area_id";
             $result = $conexao->query($query);
             $area_nome = mysqli_fetch_assoc($result);
-            $this->area_responsavel = $area_nome;
+            $this->area_responsavel = $area_nome['nome_area'];
 
             $this->img = $data['foto_desvio'];
         }
@@ -328,25 +331,25 @@ class desvio{
             $query ="SELECT nome_setor from setor where id_setor = $setor_id";
             $result = $conexao->query($query);
             $setor_nome = mysqli_fetch_assoc($result);
-            $this->setor = $setor_nome;
+            $this->setor = $setor_nome['nome_setor'];
 
             $tipo_desvio_id = $data['tipo_desvio'];
-            $query ="SELECT nome_setor from tipo_desvio where idtipo_desvio = $tipo_desvio_id";
+            $query ="SELECT descricao from tipo_desvio where idtipo_desvio = $tipo_desvio_id";
             $result = $conexao->query($query);
             $tipo_desvio = mysqli_fetch_assoc($result);
-            $this->tipo_desvio = $tipo_desvio;
+            $this->tipo_desvio = $tipo_desvio['descricao'];
 
             $gravidade_id = $data['gravidade'];
             $query ="SELECT descricao from gravidade where idgravidade = $gravidade_id";
             $result = $conexao->query($query);
             $gravidade = mysqli_fetch_assoc($result);
-            $this->gravidade = $gravidade;
+            $this->gravidade = $gravidade['descricao'];
 
             $area_id = $data['area_responsavel'];
-            $query ="SELECT nome_area from area_responsavel where id_area = $area_id";
+            $query ="SELECT * from area_responsavel where id_area = $area_id";
             $result = $conexao->query($query);
-            $area_nome = mysqli_fetch_assoc($result);
-            $this->area_responsavel = $area_nome;
+            $area = mysqli_fetch_assoc($result);
+            $this->area_responsavel = $area['nome_area'];
 
             $this->img = $data['foto_desvio'];
            
