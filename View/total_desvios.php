@@ -206,7 +206,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             {?>
             <tr>
                 <td><?php echo $data['id_desvio']; ?></td>
-                <td><?php echo $data['data_identificacao']; ?></td>
+                <?php 
+                    $data_Am = $data['data_identificacao'];
+                    $datetime = new DateTime($data_Am);
+                    $data_Br = $datetime->format('d/m/Y');
+
+                ?>
+                <td><?php echo $data_Br; ?></td>
                 <td><?php echo $data['tipo_desvio']; ?></td>
                 <td><?php echo $data['gravidade']; ?></td>
                 <td><?php echo $data['setor']; ?></td>
@@ -218,7 +224,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
    <!-- Navegação entre páginas -->
     <div class="pagination">
         <?php
-    $totalPages = ceil($total_desvios / $perPage);
+    $totalPages = ceil($desvio_data / $perPage);
     if ($totalPages > 1) {
         for ($i = 1; $i <= $totalPages; $i++) {
             echo "<a href='javascript:getDesvios(\"$orderBy\", $i)'>$i</a> ";
