@@ -119,6 +119,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 <html>
 <head>
     <title>Lista de Desvios Abertos</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../Public/Css/totaldesvios.css">
     <script>
         /*function filterAndSort() {
             var orderBy = document.getElementById("orderSelect").value;
@@ -219,5 +222,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             <?php } ?>
         </tbody>
     </table>
+    <script>
+    var dataCells = document.querySelectorAll(".data-formatada");
+
+    dataCells.forEach(function(cell) {
+        var oldDate = cell.textContent;
+        var dateParts = oldDate.split("-");
+        var formattedDate = dateParts[2] + "/" + dateParts[1] + "/" + dateParts[0].slice(-2);
+        cell.textContent = formattedDate;
+    });
+</script>
 </body>
 </html>
