@@ -5,7 +5,7 @@ require_once '../Controller/desvio.class.php';
 
 
 $desvio = new desvio;
-// Consulta para obter informações sobre o último desvio no Setor "Qualidade"
+// Consulta para obter informações sobre o último desvio no Setor "Estojo"
 $desvio->fetch_last_desvio_setor(4,$mysqli);
 $ultimo_matricula = $desvio->get_usuario_matricula();
 $ultimo_data = $desvio->get_data_identificacao();
@@ -15,9 +15,9 @@ $sql_nome_usuario = "SELECT nome FROM usuario WHERE matricula = $ultimo_matricul
 //consulta o nome
 $result_nome_usuario = $mysqli->query($sql_nome_usuario);
 $row_nome_usuario = $result_nome_usuario->fetch_assoc();
-$ultimo_nome_qualidade = $row_nome_usuario['nome'];
-// Consulta para contar os desvios no Setor "Qualidade"
-$total_desvios_qualidade = $desvio->count_desvio_from_setor(4,$mysqli);
+$ultimo_nome_estojo = $row_nome_usuario['nome'];
+// Consulta para contar os desvios no Setor "Estojo"
+$total_desvios_estojo = $desvio->count_desvio_from_setor(4,$mysqli);
 
 $mysqli->close();
 ?>
