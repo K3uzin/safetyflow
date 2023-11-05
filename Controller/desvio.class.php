@@ -255,7 +255,7 @@ class desvio{
             $this->get_usuario_nome = $nome['nome'];
 
             $setor_id = $data['setor'];
-            $query ="SELECT nome_setor from setor where id_setor = $setor_id";
+            $query ="SELECT descricao from setor where id_setor = $setor_id";
             $result = $conexao->query($query);
             $setor_nome = mysqli_fetch_assoc($result);
             $this->setor = $setor_nome;
