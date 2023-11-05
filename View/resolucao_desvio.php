@@ -1,11 +1,13 @@
 <?php
 require_once '../Model/conexao.php';
 require_once '../Controller/desvio.class.php';
+require_once '../Controller/resolucao.class.php';
 ?>
 <?php
 require '../Model/conexao.php'; // Verifique se o caminho está correto
 
 session_start();
+
 
 if (!isset($_SESSION["user_matricula"])) {
     // Se o usuário não estiver logado, redirecione para a página de login
@@ -27,12 +29,23 @@ if ($stmt_nome) {
     // Armazene o nome em uma variável para exibição posterior
     $stmt_nome->fetch();
     $stmt_nome->close();
+
 } else {
     echo "Erro na preparação do statement: " . $mysqli->error;
 }
+
 $desvio = new desvio;
 $desvio_id = $_SESSION['desvio_selecionado'];
 $desvio->fetch_desvio($desvio_id,$mysqli);
+$resolucao_id = null;
+
+if(isset($_SESSION['resolucao_selecionada'])){
+    
+    $resolucao_id = $_SESSION['resolucao_selecionada'];
+
+    $resolucao = new resolucao;
+    $resolucao->fetch_resolucao($resolucao_id,$mysqli);
+}
 ?>
 
 <!DOCTYPE html>
@@ -107,27 +120,36 @@ $desvio->fetch_desvio($desvio_id,$mysqli);
                                 echo $desvio->get_local();
                                 ?>
                             </div>
-                            <!-- açoes tomadas -->
+                            <!-- descricao do desvio -->
                             <div>
                                 <?php
                                 echo "<br>descricao do desvio: <br>";
                                 echo $desvio->get_descricao();
                                 ?>
                             </div>
+                            <!-- açoes tomadas -->
                             <div class="col-12 mt-3">
-                                <label for="descricao_desvio" class="form-label">açoes tomadas</label>
-                                <textarea class="form-control" id="acoes" name="acoes" rows="5"
-                                    required=""></textarea>
-                                <div class="invalid-feedback">
-                                    Descrição do desvio é obrigatória.
-                                </div>
+                                <?php if ($resolucao_id == null): ?>
+                                    <label for="descricao_desvio" class="form-label">açoes tomadas</label>
+                                    <textarea class="form-control" id="acoes" name="acoes" rows="5" required=""></textarea>
+                                    <div class="invalid-feedback">
+                                        Designar uma ação e obrigatorio.
+                                    </div>
+                                <?php endif;?>
+                                <?php if ($resolucao_id != null): ?>
+                                    <label for="descricao_desvio" class="form-label">açoes tomadas</label>
+                                    <textarea class="form-control" id="acoes" name="acoes" rows="5" required=""><?php echo htmlspecialchars($resolucao->get_acoes());?></textarea>
+                                    <div class="invalid-feedback">
+                                        Designar uma ação e obrigatorio.
+                                    </div>
+                                <?php endif;?>
                             </div>
                         </div>
                         <div class="col-12 mt-3">
                             <!-- Tipo do Desvio -->
                             <label for="tipo_desvio" class="form-label">Tipo do Desvio</label>
                             <select class="form-select" id="tipo_desvio" name="tipo_desvio" required="">
-                                <option value=""><?php echo $desvio->get_tipo_desvio();?></option>
+                                <option value="0"><?php echo htmlspecialchars($desvio->get_tipo_desvio());?></option>
                                 <option value="1">Desvio Comportamental</option>
                                 <option value="2">Desvio Ergonômico</option>
                                 <option value="3">Desvio de Segurança</option>
@@ -144,7 +166,7 @@ $desvio->fetch_desvio($desvio_id,$mysqli);
                         <div class="col-12 mt-3">
                             <label for="gravidade" class="form-label">Potencial de Gravidade</label>
                             <select class="form-select" id="gravidade" name="gravidade" required="">
-                                <option value=""><?php echo $desvio->get_gravidade();?></option>
+                                <option value="0"><?php echo htmlspecialchars($desvio->get_gravidade());?></option>
                                 <option value="1">Leve</option>
                                 <option value="2">Moderado</option>
                                 <option value="3">Grave</option>
@@ -155,10 +177,11 @@ $desvio->fetch_desvio($desvio_id,$mysqli);
                             </div>
                         </div>
                         <!-- Área Responsável -->
+
                         <div class="col-12 mt-3">
                             <label for="area_responsavel" class="form-label">Área Responsável pela Solução</label>
                             <select class="form-select" id="area_responsavel" name="area_responsavel" required="">
-                                <option value=""><?php echo $desvio->get_area_responsavel();?></option>
+                                <option value="0"><?php echo htmlspecialchars($desvio->get_area_responsavel());?></option>
                                 <option value="1">Manutenção</option>
                                 <option value="2">Engenharia</option>
                                 <option value="3">Produção</option>
@@ -173,17 +196,27 @@ $desvio->fetch_desvio($desvio_id,$mysqli);
                         </div>
                         <!--status do desvio-->
                         <div class="col-12 mt-3">
-                            <!-- Tipo do Desvio -->
                             <label for="status" class="form-label">status</label>
-                            <select class="form-select" id="status_resolucao" name="status_resolucao" required="">
-                                <option value="">escolha...</option>
-                                <option value="1">em analise</option>
-                                <option value="2">resolucao em andamento</option>
-                                <option value="3">desvio resolvido</option>
-                            </select>
-                            <div class="invalid-feedback">
-                                 status é obrigatório.
-                            </div>
+                            <?php if ($resolucao_id == null): ?>
+                                <select class="form-select" id="status_resolucao" name="status_resolucao" required="">
+                                    <option value="">escolha...</option>
+                                    <option value="1">em analise</option>
+                                    <option value="2">resolucao em andamento</option>
+                                    <option value="3">desvio resolvido</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    status é obrigatório.
+                                </div>
+                            <?php endif; ?>
+                            <?php if ($resolucao_id !== null): ?>
+                                <select class="form-select" id="status_resolucao" name="status_resolucao" required="">
+                                    <option value="0"><?php echo htmlspecialchars($resolucao->get_status()); ?></option>
+                                    <option value="1">Em análise</option>
+                                    <option value="2">Resolução em andamento</option>
+                                    <option value="3">Desvio resolvido</option>
+                                </select>
+                            <?php endif; ?>
+
                         </div>
                         <!-- Foto do Desvio -->
                         <div class="col-12 mt-3">
@@ -201,9 +234,8 @@ $desvio->fetch_desvio($desvio_id,$mysqli);
                         </div>
                         <!-- Botão de Envio -->
                         <?php 
-                        $query = "SELECT * from resolucao where id_desvio = $desvio_id";
+                        $query = "SELECT * from resolucao where idresolucao = $resolucao_id";
                         $result = $mysqli->query($query);
-                        //var_dump($result);
                         if($result->num_rows == 0){
                             $b = "abrir resolução do desvio";
                             $new = 1;

@@ -2,6 +2,7 @@
 require '../Model/conexao.php'; // Verifique se o caminho está correto
 require_once '../Controller/desvio.class.php';
 
+session_start();
 if (isset($_GET['id_desvio'])) {
     $id_desvio = $_GET['id_desvio'];
 
@@ -39,17 +40,31 @@ if (isset($_GET['id_desvio'])) {
             echo "<br>Tipo de Desvio: " . $desvio->get_tipo_desvio();
             echo "<br>Gravidade: " . $desvio->get_gravidade();
 
+            $img = $desvio->get_img();
             // Exibir a imagem, se existir
-        /*if ($desvio['foto_desvio']) {
-            $imagem_url = 'http://localhost/safetyflow/Desvio/' . basename($desvio['foto_desvio']);
+        if ($img != null) {
+            $imagem_url = 'http://localhost/safetyflow/Desvio/' . basename($desvio->get_img());
+            var_dump($imagem_url);
             echo "<br>Imagem do Desvio: <br><img src='$imagem_url' alt='Imagem do desvio'>";
         } else {
             echo "<br>Imagem do Desvio: Nenhuma imagem disponível";
         }
-        } else {
-            echo "Nenhum desvio encontrado com o ID fornecido.";
-        }*/
-
+        $query = "SELECT idresolucao,id_desvio from resolucao where id_desvio = $id_desvio ";
+        $result = $mysqli->query($query);
+        if($result->num_rows == 0){
+            echo "<a href = 'resolucao_desvio.php'>";
+            $_SESSION['desvio_selecionado'] = $id_desvio;
+            echo "<br><button>atribuir resolucão</button>";
+            echo "</a>";
+        }else{
+            $data = mysqli_fetch_assoc($result);
+            $resolucao_id = $data['idresolucao'];
+            echo "<a href = 'resolucao_desvio.php'>";
+            $_SESSION['resolucao_selecionada'] = $resolucao_id;
+            $_SESSION['desvio_selecionado'] = $id_desvio;
+            echo "<br><button>editar resolucão</button>";
+            echo "</a>";
+        }
         // Feche o statement
        /* $stmt->close();
     } else {
@@ -57,7 +72,7 @@ if (isset($_GET['id_desvio'])) {
     }*/
 
     $mysqli->close();
-} else {
-    echo "ID do desvio não fornecido.";
+//} else {
+   //echo "ID do desvio não fornecido.";
 }
 ?>
