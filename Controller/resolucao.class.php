@@ -11,14 +11,14 @@ class resolucao{
     private $desvio;//int max 11
     private $area_responsavel;//int max 11
     
-    public function set_resolucao($usuario,$desvio,$area_responsavel,$conexao){
+    public function set_resolucao($status,$acoes,$usuario,$desvio,$area_responsavel,$conexao){
     
-        $query = "SELECT matricula from usuario where matricula = $usuario";
+        /*$query = "SELECT matricula from usuario where matricula = $usuario";
         $result = $conexao->query($query);
         if ($result->num_rows == 0){
     
             exit('usuario não cadastrado');
-        }
+        }*/
         $query = "SELECT id_desvio from desvio where id_desvio = $desvio";
         $result = $conexao->query($query);
         if ($result->num_rows == 0){
@@ -31,18 +31,14 @@ class resolucao{
     
             exit('area responsavel inexistente');
         }
-        $status = 1;
         $query = "SELECT descricao_desvio from desvio where id_desvio = $desvio";
         $result = $conexao->query($query);
         $data = mysqli_fetch_assoc($result);
         $descricao = $data['descricao_desvio'];
-        $acoes = 'a ser decidido';
-        $data_resolucao = '3000-01-01';
-        echo "usuario: $usuario, desvio: $desvio, area_responsavel: $area_responsavel";
     
-        $query = $conexao->prepare("INSERT INTO resolucao(status,descricao,acoes,data_resolucao,usuario_matricula,id_desvio,id_area_r)
+        $query = $conexao->prepare("INSERT INTO resolucao(status,descricao,acoes,usuario_matricula,id_desvio,id_area_r)
         VALUES (?,?,?,?,?,?,?)");
-        $query->bind_param("isssiii",$status,$descricao,$acoes,$data_resolucao,$usuario,$desvio,$area_responsavel);
+        $query->bind_param("isssiii",$status,$descricao,$acoes,$usuario,$desvio,$area_responsavel);
         $query->execute();
     
         /*$query = "INSERT INTO resolucao(status,descricao,acoes,data_resolucao,usuario_matricula,id_desvio,id_area_r)
@@ -111,6 +107,41 @@ class resolucao{
         return $this->area_responsavel;
     }
 
-    //public function update_resolucao($resolucao,$status,$acoes,$conexao);
+    public function update_resolucao($resolucao_id,$usuario,$status,$acoes,$tipo_desvio,$gravidade,$area_responsavel,$data_resolucao,$conexao){
+
+        if($status == 3){
+            
+            $query = "SELECT id_desvio from resolucao where idresolucao = $resolucao_id";
+            $result = $conexao->query($query);
+            $data = mysqli_fetch_assoc($result);
+            $desvio_id = $data['id_desvio'];
+
+            $query = "UPDATE desvio SET tipo_desvio = $tipo_desvio,gravidade = $gravidade,area_responsavel = $area_responsavel 
+            where id_desvio = $desvio_id";
+            $conexao->query($query);
+
+            //$data_resolucao = date('Y-m-d');
+            //exit(var_dump($data_resolucao));
+            $query = "UPDATE resolucao SET usuario_matricula = $usuario,status = $status,acoes = '$acoes',
+            data_resolucao = $data_resolucao, id_area_r = $area_responsavel WHERE idresolucao = $resolucao_id";
+            $result = $conexao->query($query);
+        
+        }else{
+            
+            $query = "SELECT id_desvio from resolucao where idresolucao = $resolucao_id";
+            $result = $conexao->query($query);
+            $data = mysqli_fetch_assoc($result);
+            $desvio_id = $data['id_desvio'];
+
+            $query = "UPDATE desvio SET tipo_desvio = $tipo_desvio,gravidade = $gravidade,area_responsavel = $area_responsavel 
+            where id_desvio = $desvio_id";
+            $conexao->query($query);
+ 
+            $query = "UPDATE resolucao SET usuario_matricula = $usuario,status = $status,acoes = '$acoes',id_area_r = $area_responsavel 
+            WHERE idresolucao = $resolucao_id";
+            $result = $conexao->query($query);
+        }
+      
+    }
 }
 ?>
