@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $desvio = new desvio;
-    $desvio->set_desvio($user_matricula,$data_identificacao,$turno,$setor_id_setor,$local_desvio,$descricao_desvio,
+    $desvio->set_desvio($user_matricula,$turno,$setor_id_setor,$local_desvio,$descricao_desvio,
     $tipo_desvio_idtipo_desvio,$gravidade_idgravidade,$area_responsavel_id_area,$imagem_url,$mysqli);
     // Inserção dos dados em Desvio, incluindo o URL da imagem
     /*$sql = "INSERT INTO safetyflow.desvio (data_identificacao, turno, local_desvio, descricao_desvio, tipo_desvio_idtipo_desvio, gravidade_idgravidade, foto_desvio, area_responsavel_id_area, setor_id_setor, usuario_matricula)
