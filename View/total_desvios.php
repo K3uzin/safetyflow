@@ -3,8 +3,7 @@ require '../Model/conexao.php';
 require_once '../controller/desvio.class.php';
 // Parâmetros de filtragem
 /*$orderBy = isset($_GET['order']) ? $_GET['order'] : 'data_identificacao';
-$page = isset($_GET['page']) ? $_GET['page'] : 1;
-$perPage = 15;
+
 
 // Função que filtra os desvios
 function getDesvios($orderBy, $page, $gravidade, $dataInicial, $dataFinal, $setor) {
@@ -220,17 +219,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             <?php } ?>
         </tbody>
     </table>
-
-   <!-- Navegação entre páginas -->
-    <div class="pagination">
-        <?php
-    $totalPages = ceil($desvio_data / $perPage);
-    if ($totalPages > 1) {
-        for ($i = 1; $i <= $totalPages; $i++) {
-            echo "<a href='javascript:getDesvios(\"$orderBy\", $i)'>$i</a> ";
-        }
-    }
-        ?>
-    </div> 
 </body>
 </html>
