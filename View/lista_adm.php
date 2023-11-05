@@ -31,7 +31,7 @@ if ($result_desvios_setor_administrativa) {
     echo "Erro na consulta de desvios no Setor Administrativa: " . $mysqli->error;
 }*/
 
-$mysqli->close();
+
 ?>
 
 <!DOCTYPE html>
@@ -48,17 +48,56 @@ $mysqli->close();
         <th>Tipo de Desvio</th>
         <th>Gravidade</th>
         <th>Setor</th>
-        <th>Ações</th>
+        <th>status</th>
     </tr>
     <?php foreach ($desvio_data as $desvio) { ?>
     <tr>
-        <td><?php echo $desvio['id_desvio']; ?></td>
-        <td><?php echo $desvio['tipo_desvio']; ?></td>
-        <td><?php echo $desvio['gravidade']; ?></td>
-        <td><?php echo $desvio['setor']; ?></td>
+
+        <td><?php echo htmlspecialchars($desvio['id_desvio']); ?></td>
+        <td><?php echo htmlspecialchars($desvio['tipo_desvio']); ?></td>
+        <td><?php echo htmlspecialchars($desvio['gravidade']); ?></td>
+        <td><?php echo htmlspecialchars($desvio['setor']); ?></td>
+        
+        <?php
+            
+            $desvio_id = $desvio['id_desvio'];
+            $query = "SELECT status from resolucao where id_desvio = $desvio_id";
+            $result = $mysqli->query($query);
+            
+            if ($result->num_rows == 0){
+                $status = "sem resolução aberta";
+            }
+            
+            $data = mysqli_fetch_assoc($result);
+            $status = $data['status'];
+
+            if ($status == 0 or $status == null){
+
+                $status = "sem resolução aberta";
+            }
+
+            if ($status == 1){
+
+                $status = "em analise";
+            }
+
+            if ($status == 2){
+
+                $status = "resolução em andamento";
+            }
+
+            if ($status == 3){
+
+                $status = "Desvio resolvido";
+            }
+
+        ?>
+
+        <td><?php echo htmlspecialchars($status);?></td>
         <td><a href="#" class="ver-detalhes" data-id="<?php echo $desvio['id_desvio']; ?>">Ver Detalhes</a></td>
     </tr>
-    <?php } ?>
+    
+    <?php } $mysqli->close();?>
 </table>
 
 <div id="detalhes-desvio"></div>
