@@ -213,229 +213,33 @@ AUTO_INCREMENT = 3
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
-
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
-caso mariadb
-
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
-
--- -----------------------------------------------------
--- Schema safetyflow
--- -----------------------------------------------------
-drop database safetyflow;
-CREATE SCHEMA IF NOT EXISTS `safetyflow` DEFAULT CHARACTER SET utf8mb4 ;
-USE `safetyflow` ;
-
--- -----------------------------------------------------
--- Table `safetyflow`.`area_responsavel`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `safetyflow`.`area_responsavel` (
-  `id_area` INT NOT NULL,
-  `nome_area` VARCHAR(100) NOT NULL,
-  PRIMARY KEY (`id_area`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_unicode_520_ci;
-
-INSERT INTO area_responsavel(id_area,nome_area) VALUES (1,'manutenção'),(2,'engenharia'),
-(3,'produção'),(4,'qualidade'),(5,'recursos humanos'),(6,'segurança do trabalho'),(7,'meio ambiente');
-
--- -----------------------------------------------------
--- Table `safetyflow`.`gravidade`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `safetyflow`.`gravidade` (
-  `idgravidade` INT NOT NULL,
-  `descricao` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idgravidade`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_unicode_520_ci;
-
-INSERT INTO gravidade(idgravidade,descricao) VALUES (1,'leve'),(2,'moderado'),(3,'grave'),(4,'gravissimo');
-
--- -----------------------------------------------------
--- Table `safetyflow`.`setor`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `safetyflow`.`setor` (
-  `id_setor` INT NOT NULL,
-  `nome_setor` VARCHAR(100) NOT NULL,
-  PRIMARY KEY (`id_setor`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_unicode_520_ci;
-
-
-INSERT INTO setor(id_setor,nome_setor) VALUES (1,'administrarivo'),(2,'hidro'),(3,'creme'),(4,'estojo'),(5,'qualidade'),(6,'logistica');
-
--- -----------------------------------------------------
--- Table `safetyflow`.`tipo_desvio`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `safetyflow`.`tipo_desvio` (
-  `idtipo_desvio` INT NOT NULL,
-  `descricao` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idtipo_desvio`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_unicode_520_ci;
-
-INSERT INTO tipo_desvio(idtipo_desvio,descricao) VALUES (1,'desvio comportamental'),(2,'desvio ergonômico'),
-(3,'Desvio de Segurança'),(4,'Desvio de Qualidade'),(5,'Desvio de Processo'),(6,'Desvio Ambiental'),(7,'Desvio de Manutenção');
-
--- -----------------------------------------------------
--- -----------------------------------------------------
--- Table `safetyflow`.`usuario`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `safetyflow`.`usuario` (
-  `matricula` INT NOT NULL,
-  `nome` VARCHAR(255) NOT NULL,
-  `email` VARCHAR(255) NOT NULL,
-  `senha` VARCHAR(6) NOT NULL,
-  `isAdmin` TINYINT(1) NOT NULL,
-  `setor` INT NOT NULL,
-  `area_responsavel` INT,
-  PRIMARY KEY (`matricula`, `setor`),
-  INDEX `fk_usuario_setor1_idx` (`setor` ASC),
-  CONSTRAINT `fk_usuario_setor1`
-    FOREIGN KEY (`setor`)
-    REFERENCES `safetyflow`.`setor` (`id_setor`)),
-  CONSTRAINT `fk_usuario_area_responsavel1`
-    FOREIGN KEY (`area_responsavel`)
-    REFERENCES `safetyflow`.`area_responsavel` (`id_area`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_unicode_520_ci;
-
 DELIMITER //
-CREATE TRIGGER restricoes admin 
-BEFORE UPDATE ON usuario 
-FOR EACH ROW
-BEGIN
-DECLARE area_limit_check int;
-set area_limit_check = (SELECT count(matricula) from  usuario where area_responsavel = NEW.area_responsavel and area_responsavel != 0);
-    CASE
-        WHEN NEW.isAdmin = 1 AND (NEW.area_responsavel IS NULL OR NEW.area_responsavel = 0) 
-			THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'necessario atribuir area ao administrador';
-        WHEN NEW.isAdmin = 0 AND NEW.area_responsavel != 0 
-			THEN SET NEW.area_responsavel = 0;
-		ELSE
-			if area_limit_check > 0 
-				THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'numero de administradores da area selecionada já esta lotada';
-			end if;
-    END CASE;
-END;
-//
-DELIMITER ;
-
-DELIMITER //
-CREATE TRIGGER restricao_direct_insert_adm
-before insert on usuario
+create trigger set_data_resolucao
+before update on resolucao
 for each row
-begin 
-	if NEW.isAdmin > 0 
-		then SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'não é permitido inserção direta de administradores';
-	end if;
-	if NEW.area_responsavel > 0
-		then SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'não é permitido alocação de reponsabildade de area para não administradores';
+begin
+	if new.status = 3
+		then set new.data_resolucao = curdate();
 	end if;
 end;//
 DELIMITER ;
 
--- -----------------------------------------------------
--- Table `safetyflow`.`desvio`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `safetyflow`.`desvio` (
-  `id_desvio` INT NOT NULL AUTO_INCREMENT,
-  `data_identificacao` DATE NOT NULL,
-  `turno` VARCHAR(20) NOT NULL,
-  `local_desvio` VARCHAR(255) NOT NULL,
-  `descricao_desvio` TEXT NOT NULL,
-  `foto_desvio` VARCHAR(255) NULL DEFAULT NULL,
-  `tipo_desvio` INT NOT NULL,
-  `gravidade` INT NOT NULL,
-  `area_responsavel` INT NOT NULL,
-  `setor` INT NOT NULL,
-  `usuario_matricula` INT NOT NULL,
-  PRIMARY KEY (`id_desvio`, `tipo_desvio`, `gravidade`, `area_responsavel`, `setor`, `usuario_matricula`),
-  INDEX `fk_desvio_tipo_desvio1_idx` (`tipo_desvio` ASC),
-  INDEX `fk_desvio_gravidade1_idx` (`gravidade` ASC) ,
-  INDEX `fk_desvio_area_responsavel1_idx` (`area_responsavel` ASC),
-  INDEX `fk_desvio_setor1_idx` (`setor` ASC),
-  INDEX `fk_desvio_usuario1_idx` (`usuario_matricula` ASC),
-  CONSTRAINT `fk_desvio_area_responsavel1`
-    FOREIGN KEY (`area_responsavel`)
-    REFERENCES `safetyflow`.`area_responsavel` (`id_area`),
-  CONSTRAINT `fk_desvio_gravidade1`
-    FOREIGN KEY (`gravidade`)
-    REFERENCES `safetyflow`.`gravidade` (`idgravidade`),
-  CONSTRAINT `fk_desvio_setor1`
-    FOREIGN KEY (`setor`)
-    REFERENCES `safetyflow`.`setor` (`id_setor`),
-  CONSTRAINT `fk_desvio_tipo_desvio1`
-    FOREIGN KEY (`tipo_desvio`)
-    REFERENCES `safetyflow`.`tipo_desvio` (`idtipo_desvio`),
-  CONSTRAINT `fk_desvio_usuario1`
-    FOREIGN KEY (`usuario_matricula`)
-    REFERENCES `safetyflow`.`usuario` (`matricula`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 1
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_unicode_520_ci;
+DELIMITER // 	
+CREATE trigger anti_duplicaçao_resolucao
+before insert on resolucao
+for each row
+begin
+	declare checkD int;
+    set checkD = (SELECT count(id_desvio) from resolucao where id_desvio = NEW.id_desvio);
+    if checkD <> 0 
+		then SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'não é permitido ter duas resoluçoes para o mesmo desvio';
+    end if;
+end;//
+DELIMITER ;
 
-
--- -----------------------------------------------------
--- Table `safetyflow`.`feedback`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `safetyflow`.`feedback` (
-  `nota` INT NOT NULL,
-  `comentario` LONGTEXT NULL DEFAULT NULL,
-  `usuario_matricula` INT NOT NULL,
-  `data_postagem` DATE NULL DEFAULT NULL,
-  PRIMARY KEY (`usuario_matricula`),
-  CONSTRAINT `fk_feedback_usuario1`
-    FOREIGN KEY (`usuario_matricula`)
-    REFERENCES `safetyflow`.`usuario` (`matricula`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_unicode_520_ci;
-
-
--- -----------------------------------------------------
--- Table `safetyflow`.`resolucao`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `safetyflow`.`resolucao` (
-  `idresolucao` INT NOT NULL AUTO_INCREMENT,
-  `status` INT NOT NULL,
-  `descricao` VARCHAR(255) NULL DEFAULT NULL,
-  `acoes` VARCHAR(255) NULL DEFAULT NULL,
-  `data_resolucao` DATE NOT NULL,
-  `usuario_matricula` INT NOT NULL,
-  `id_desvio` INT NOT NULL,
-  `id_area_r` INT NOT NULL,
-  PRIMARY KEY (`idresolucao`, `usuario_matricula`, `id_desvio`, `id_area_r`),
-  INDEX `fk_resolucao_usuario1_idx` (`usuario_matricula` ASC),
-  INDEX `fk_resolucao_desvio1_idx` (`id_desvio` ASC),
-  INDEX `fk_resolucao_area_responsavel1_idx` (`id_area_r` ASC),
-  CONSTRAINT `fk_resolucao_area_responsavel1`
-    FOREIGN KEY (`id_area_r`)
-    REFERENCES `safetyflow`.`area_responsavel` (`id_area`),
-  CONSTRAINT `fk_resolucao_desvio1`
-    FOREIGN KEY (`id_desvio`)
-    REFERENCES `safetyflow`.`desvio` (`id_desvio`),
-  CONSTRAINT `fk_resolucao_usuario1`
-    FOREIGN KEY (`usuario_matricula`)
-    REFERENCES `safetyflow`.`usuario` (`matricula`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 1
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_unicode_520_ci;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
