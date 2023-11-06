@@ -124,6 +124,32 @@ CREATE TABLE `resolucao` (
   `id_area_r` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
+-- acionadores 'resolucao'
+DELIMITER // 	
+CREATE trigger anti_duplicacao_resolucao
+before insert on resolucao
+for each row
+begin
+	declare checkD int;
+    set checkD = (SELECT count(id_desvio) from resolucao where id_desvio = NEW.id_desvio);
+    if checkD <> 0 
+		then SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'não é permitido ter duas resoluçoes para o mesmo desvio';
+    end if;
+end;//
+DELIMITER ;
+
+DELIMITER //
+create trigger set_data_resolucao
+before update on resolucao
+for each row
+begin
+	if new.status = 3
+		then set new.data_resolucao = curdate();
+	end if;
+end;//
+DELIMITER ;
+
+
 -- --------------------------------------------------------
 
 --
