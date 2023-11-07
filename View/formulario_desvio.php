@@ -64,8 +64,8 @@ if ($stmt_nome) {
                                     required="">
                             </div>
                             <!-- Turno -->
-                            <div class="col-12 mt-3">
-                                <label for="turno" class="form-label">Turno</label>
+                           <div class="col-12">
+                                <label for="turno" class="form-label required-label">Turno</label>
                                 <select class="form-select" id="turno" name="turno" required="">
                                     <option value="">Escolha...</option>
                                     <option value="Manhã">Manhã</option>
@@ -78,7 +78,7 @@ if ($stmt_nome) {
                             </div>
                             <!-- Setor -->
                             <div class="col-12 mt-3">
-                                <label for="setor_desvio" class="form-label">Setor</label>
+                                <label for="setor_desvio" class="form-label required-labe">Setor</label>
                                 <select class="form-select" id="setor" name="setor" required="">
                                     <option value="">Escolha...</option>
                                     <option value="1">Administrativa</option>
@@ -94,7 +94,7 @@ if ($stmt_nome) {
                             </div>
                             <!-- Local Exato -->
                             <div class="col-12 mt-3">
-                                <label for="local_desvio" class="form-label">Local Exato</label>
+                                <label for="local_desvio" class="form-label required-label">Local Exato</label>
                                 <input type="text" class="form-control" id="local_desvio" name="local_desvio"
                                     required="">
                                 <div class="invalid-feedback">
@@ -103,7 +103,7 @@ if ($stmt_nome) {
                             </div>
                             <!-- Descrição do Desvio -->
                             <div class="col-12 mt-3">
-                                <label for="descricao_desvio" class="form-label">Descrição do Desvio</label>
+                                <label for="descricao_desvio" class="form-label required-label">Descrição do Desvio</label>
                                 <textarea class="form-control" id="descricao_desvio" name="descricao_desvio" rows="5"
                                     required=""></textarea>
                                 <div class="invalid-feedback">
@@ -113,7 +113,7 @@ if ($stmt_nome) {
                         </div>
                         <div class="col-12 mt-3">
                             <!-- Tipo do Desvio -->
-                            <label for="tipo_desvio" class="form-label">Tipo do Desvio</label>
+                            <label for="tipo_desvio" class="form-label required-label">Tipo do Desvio</label>
                             <select class="form-select" id="tipo_desvio" name="tipo_desvio" required="">
                                 <option value="">Escolha...</option>
                                 <option value="1">Desvio Comportamental</option>
@@ -130,7 +130,7 @@ if ($stmt_nome) {
                         </div>
                         <!-- Potencial de Gravidade -->
                         <div class="col-12 mt-3">
-                            <label for="gravidade" class="form-label">Potencial de Gravidade</label>
+                            <label for="gravidade" class="form-label required-label">Potencial de Gravidade</label>
                             <select class="form-select" id="gravidade" name="gravidade" required="">
                                 <option value="">Escolha...</option>
                                 <option value="1">Leve</option>
@@ -144,7 +144,7 @@ if ($stmt_nome) {
                         </div>
                         <!-- Área Responsável -->
                         <div class="col-12 mt-3">
-                            <label for="area_responsavel" class="form-label">Área Responsável pela Solução</label>
+                            <label for="area_responsavel" class="form-label required-label">Área Responsável pela Solução</label>
                             <select class="form-select" id="area_responsavel" name="area_responsavel" required="">
                                 <option value="">Escolha...</option>
                                 <option value="1">Manutenção</option>
