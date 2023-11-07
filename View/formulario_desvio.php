@@ -161,8 +161,7 @@ if ($stmt_nome) {
                         </div>
                         <!-- Foto do Desvio -->
                         <div class="col-12 mt-3">
-                            <label for="foto_desvio" class="form-label">Insira uma foto do desvio, caso
-                                necessário</label>
+                            <label for="foto_desvio" class="form-label">Insira uma foto do desvio</label>
                             <input type="file" class="form-control" id="foto_desvio" name="foto_desvio" accept="image/*, video/*">
                         </div>
                         <!-- Botão de Envio -->
