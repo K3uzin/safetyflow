@@ -78,7 +78,7 @@ if ($stmt_nome) {
                             </div>
                             <!-- Setor -->
                             <div class="col-12 mt-3">
-                                <label for="setor_desvio" class="form-label required-labe">Setor</label>
+                                <label for="setor_desvio" class="form-label required-label">Setor</label>
                                 <select class="form-select" id="setor" name="setor" required="">
                                     <option value="">Escolha...</option>
                                     <option value="1">Administrativa</option>
