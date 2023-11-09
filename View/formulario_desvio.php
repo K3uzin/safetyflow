@@ -56,7 +56,7 @@ if ($stmt_nome) {
             <div class="row g-3" style="text-align: left; align-items: center; justify-content: center;">
                 <div class="col-md-7 col-lg-8">
                     <h4 class="mb-3">Faça a diferença!</h4>
-                    <form action="../Controller/recebe_desvio.php" method="POST" style="text-align: left;" enctype="multipart/form-data">
+                     <form action="../Controller/recebe_desvio.php" method="POST" style="text-align: left;" enctype="multipart/form-data" class="needs-validation" novalidate>
                         <div class="row">
                             <!-- Data de identificação do desvio -->
                             <div class="col-12">
@@ -186,6 +186,22 @@ if ($stmt_nome) {
     </footer>
     <script src="../Public/Js/popper.min.js"></script>
     <script src="../Public/Css/bootstrap.min.css"></script>
+    <script>
+        (function () {
+      'use strict';
+
+      var forms = document.getElementsByClassName('needs-validation');
+      var validation = Array.prototype.filter.call(forms, function (form) {
+          form.addEventListener('submit', function (event) {
+              if (form.checkValidity() === false) {
+                  event.preventDefault();
+                  event.stopPropagation();
+               }
+                  form.classList.add('was-validated');
+              }, false);
+         });
+     })();
+    </script>
     <script>
         // Exemplo de JavaScript inicial para desativar o envio do formulário se houver campos inválidos
         (function () {
