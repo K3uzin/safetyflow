@@ -55,3 +55,7 @@ p {
         color: red;
         margin-left: 5px;
 }
+
+.d-none {
+  display: none !important;
+}
