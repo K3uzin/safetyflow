@@ -49,3 +49,9 @@ p {
   -webkit-user-select: none;
   -ms-user-select: none;
 }
+
+.required-label::after {
+        content: "*";
+        color: red;
+        margin-left: 5px;
+}
