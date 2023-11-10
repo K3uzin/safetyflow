@@ -5,14 +5,14 @@
         private $matricula;/* int exat11*/
         private $email;/* varchar max60*/
         private $senha;/* varchar min6-max12*/
-        private $adm;/*int espec(1 or 2)*/
+        private $isAdmin;/*int espec(1 or 2)*/
         private $setor;/*int espec(1...7)*/
 
-        public function set_usuario($nome,$matricula,$email,$senha,$adm,$setor,$conexao){
+        public function set_usuario($nome,$matricula,$email,$senha,$isAdmin,$setor,$conexao){
             
-            if ( $nome == null or $matricula == null or $email == null or $senha == null or $adm == null or $setor == null){
+            if ( $nome == null or $matricula == null or $email == null or $senha == null or $isAdmin == null or $setor == null){
 
-                $usuario_excam = array($nome,$matricula,$email,$senha,$adm,$setor);
+                $usuario_excam = array($nome,$matricula,$email,$senha,$isAdmin,$setor);
                 exit('campo vazio'.var_dump($usuario_excam));
 
             }else if ( strlen($nome) > 60 ){
@@ -23,7 +23,7 @@
 
                 exit('tipo de caracter errado(nome)');
 
-            }else if ( strlen($matricula) != 8){
+            }else if ( strlen($matricula) > 8){
 
                 exit('matricula invalida por numeros de caracteres');
             
@@ -51,15 +51,15 @@
 
                 exit('tipo de caracter errado(senha)');
             
-            }else if (strlen($adm) > 1){
+            }else if (strlen($isAdmin) > 1){
 
                 exit('adm muito grande');
 
-            }else if (!is_int($adm)){
+            }else if (!is_numeric($isAdmin)){
 
                 exit('tipo de caracter errado(adm)');
            
-            }else if (!is_int($setor)){
+            }else if (!is_numeric($setor)){
 
                 exit('tipo de caracter errado(setor)');
             
@@ -94,7 +94,7 @@
                 $this->matricula = $matricula;
                 $this->email = $email;
                 $this->senha = $senha;
-                $this->adm = $adm;
+                $this->adm = $isAdmin;
                 $this->setor= $setor;
                 $query = "INSERT INTO usuario
                 (nome,
@@ -107,7 +107,7 @@
                 $matricula,
                 '$email',
                 '$senha',
-                $adm,
+                $isAdmin,
                 $setor)";
                 $conexao->query($query);
                 
