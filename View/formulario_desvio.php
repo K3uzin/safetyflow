@@ -48,7 +48,7 @@ if ($stmt_nome) {
     <div class="container">
         <main>
             <div class="py-5 text-center">
-                <img class="d-block mx-auto mb-4" src="../Public/Img/logo.png" alt="" width="150" height="150">
+                  <img class="d-block mx-auto mb-4" src="../Public/Img/logo.png" alt="" width="150" height="150" style="user-select: none;">
                 <h2>Desvios Corporativos</h2>
                 <p class="lead">Abrir um desvio é como ter um superpoder empresarial: você aponta riscos e melhorias
                     essenciais. Seja parte da mudança para um ambiente mais seguro e eficiente!</p>
