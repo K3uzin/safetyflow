@@ -1,26 +1,26 @@
 <?php
-require 'Model/conexao.php'; // Verifique se o caminho está correto
+require '../Model/conexao.php';
+require_once 'usuario.class.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nome = $_POST["nome"];
-    $email = $_POST["email"];
-    $senha = $_POST["senha"];
-    $setor = $_POST["setor"];
+// Verifica se o formulário foi enviado
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $nome = $_POST['nome'];
+    $matricula = $_POST['matricula'];
+    $email = $_POST['email'];
+    $senha = $_POST['senha'];
+    $isAdmin = $_POST['isAdmin'];
+    $setor = $_POST['setor'];
 
-    // Realize as validações necessárias aqui
+    // Cria uma instância da classe Usuario
+    $novoUsuario = new Usuario();
 
-    // Inserção dos dados na tabela usuario
-    $sql = "INSERT INTO usuario (nome, email, senha, setor_id) VALUES ('$nome', '$email', '$senha', '$setor')";
+    // Chama o método setUsuario para cadastrar o usuário
+    $novoUsuario->set_usuario($nome, $matricula, $email, $senha, $isAdmin, $setor, $mysqli);
 
-    if ($mysqli->query($sql) === TRUE) {
-        echo "Cadastro realizado com sucesso!";
-    } else {
-        echo "Erro ao cadastrar: " . $mysqli->error;
-    }
-
-    // Fechamento da conexão com o banco de dados
+    // Fecha a conexão com o banco de dados
     $mysqli->close();
-} else {
-    echo "O formulário não foi submetido corretamente.";
+    header("Location: ../cadastrar_usuario.php"); // Redireciona para a página de sucesso após o cadastro
+    exit(); // Encerra o script
 }
 ?>
+
