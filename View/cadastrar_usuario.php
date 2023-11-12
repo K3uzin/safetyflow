@@ -29,9 +29,19 @@
             <option value="0">Não</option>
             <option value="1">Sim</option>
         </select><br><br>
-        
-        <label for="setor_desvio" class="form-label required-label">Setor</label>
-        <select class="form-select" id="setor" name="setor" required="">
+        <label for="area_responsavel" class="form-label required-label">Área Responsável: </label>
+        <select id="area_responsavel" name="area_responsavel" required="">
+                                <option value="">Escolha...</option>
+                                <option value="1">Manutenção</option>
+                                <option value="2">Engenharia</option>
+                                <option value="3">Produção</option>
+                                <option value="4">Qualidade</option>
+                                <option value="5">Recursos Humanos</option>
+                                <option value="6">Segurança do Trabalho</option>
+                                <option value="7">Meio Ambiente</option>
+                            </select>
+        <label for="setor_desvio" required-label">Setor</label>
+        <select id="setor" name="setor" required="">
             <option value="">Escolha...</option>
             <option value="1">Administrativa</option>
             <option value="2">Hidro</option>
