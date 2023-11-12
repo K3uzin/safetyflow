@@ -1,7 +1,12 @@
 <?php
 require '../Model/conexao.php';
 require_once 'usuario.class.php';
+session_start();
 
+if (!Autenticacao::verificarPermissaoAdmin($mysqli)) {
+    echo "Você não tem permissão para cadastrar novos usuários.";
+    exit();
+}
 // Verifica se o formulário foi enviado
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nome = $_POST['nome'];
