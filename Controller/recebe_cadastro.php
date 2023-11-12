@@ -1,5 +1,6 @@
 <?php
 require '../Model/conexao.php';
+require_once 'autenticacao.class.php';
 require_once 'usuario.class.php';
 session_start();
 
