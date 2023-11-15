@@ -10,7 +10,7 @@
             $comentario  = $_POST["comentario"];
             $usuario = 1;
             $query = "SELECT * from feedback where usuario_matricula = $usuario";
-            $result = $conexao->query($query);
+            $result = $mysqli->query($query);
             if ($result->num_rows > 0){
                 
                 $feedback = new feedback;
@@ -45,7 +45,7 @@
     <?php
     if ($feedback_check){
         
-        $feedback->fetch_feedback_usuario($usuario,$conexao);
+        $feedback->fetch_feedback_usuario($usuario,$mysqli);
         echo "seu ultimo feedback: <br>";
         echo "nota: ".$feedback->get_nota()."<br>";
         echo "comentario: ".$feedback->get_comentario()."<br>";
