@@ -61,22 +61,15 @@ if (isset($_POST)){
             $area_responsavel = $data['area_responsavel'];
         }
     }
-    if ($status == 3){
-
-        $data_resolucao = '2023-11-03';
-    }else{
-        $data_resolucao = null;
-    }
     $acoes = $_POST['acoes'];
     $new = $_SESSION['new'];
     $resolucao = new resolucao;
     if($new == 1){
-        $resolucao->set_resolucao($status,$data_resolucao,$acoes,$usuario_id,$desvio_id,$area_responsavel,$mysqli);
+        $resolucao->set_resolucao($status,$acoes,$usuario_id,$desvio_id,$area_responsavel,$mysqli);
     }
     if($new == 0){
         $resolucao_id = $_SESSION['resolucao_selecionada']; 
-        $resolucao->update_resolucao($resolucao_id,$usuario_id,$status,$acoes,$tipo_desvio,$gravidade,$area_responsavel,$data_resolucao,$mysqli);
-        exit('sucesso');
+        $resolucao->update_resolucao($resolucao_id,$usuario_id,$status,$acoes,$tipo_desvio,$gravidade,$area_responsavel,$mysqli);
     }
 
     

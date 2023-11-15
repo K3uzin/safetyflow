@@ -13,12 +13,6 @@ class resolucao{
     
     public function set_resolucao($status,$acoes,$usuario,$desvio,$area_responsavel,$conexao){
     
-        /*$query = "SELECT matricula from usuario where matricula = $usuario";
-        $result = $conexao->query($query);
-        if ($result->num_rows == 0){
-    
-            exit('usuario não cadastrado');
-        }*/
         $query = "SELECT id_desvio from desvio where id_desvio = $desvio";
         $result = $conexao->query($query);
         if ($result->num_rows == 0){
@@ -35,15 +29,12 @@ class resolucao{
         $result = $conexao->query($query);
         $data = mysqli_fetch_assoc($result);
         $descricao = $data['descricao_desvio'];
+        $data_resolucao = null;
     
-        $query = $conexao->prepare("INSERT INTO resolucao(status,descricao,acoes,usuario_matricula,id_desvio,id_area_r)
+        $query = $conexao->prepare("INSERT INTO resolucao(status,descricao,acoes,data_resolucao,usuario_matricula,id_desvio,id_area_r)
         VALUES (?,?,?,?,?,?,?)");
-        $query->bind_param("isssiii",$status,$descricao,$acoes,$usuario,$desvio,$area_responsavel);
+        $query->bind_param("isssiii",$status,$descricao,$acoes,$data_resolucao,$usuario,$desvio,$area_responsavel);
         $query->execute();
-    
-        /*$query = "INSERT INTO resolucao(status,descricao,acoes,data_resolucao,usuario_matricula,id_desvio,id_area_r)
-        VALUES ($status,'$descricao','$acoes','$data_resolucao',$usuario,$desvio,$area_responsavel)";
-        $conexao->query($query);*/
     
         }
     public function get_all_resolucao($conexao){
@@ -107,7 +98,7 @@ class resolucao{
         return $this->area_responsavel;
     }
 
-    public function update_resolucao($resolucao_id,$usuario,$status,$acoes,$tipo_desvio,$gravidade,$area_responsavel,$data_resolucao,$conexao){
+    public function update_resolucao($resolucao_id,$usuario,$status,$acoes,$tipo_desvio,$gravidade,$area_responsavel,$conexao){
 
         if($status == 3){
             
@@ -120,10 +111,8 @@ class resolucao{
             where id_desvio = $desvio_id";
             $conexao->query($query);
 
-            //$data_resolucao = date('Y-m-d');
-            //exit(var_dump($data_resolucao));
             $query = "UPDATE resolucao SET usuario_matricula = $usuario,status = $status,acoes = '$acoes',
-            data_resolucao = $data_resolucao, id_area_r = $area_responsavel WHERE idresolucao = $resolucao_id";
+            id_area_r = $area_responsavel WHERE idresolucao = $resolucao_id";
             $result = $conexao->query($query);
         
         }else{
