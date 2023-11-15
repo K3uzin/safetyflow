@@ -234,7 +234,7 @@ if(isset($_SESSION['resolucao_selecionada'])){
                         </div>
                         <!-- Botão de Envio -->
                         <?php 
-                        $query = "SELECT * from resolucao where idresolucao = $resolucao_id";
+                        $query = "SELECT * from resolucao where id_desvio = $desvio_id";
                         $result = $mysqli->query($query);
                         if($result->num_rows == 0){
                             $b = "abrir resolução do desvio";
