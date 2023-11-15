@@ -5,14 +5,14 @@ class Autenticacao {
     public static function verificarPermissaoAdmin($conexao) {
         session_start();
 
-        if (!isset($_SESSION["user_matricula"])) {
+        if (!isset($_SESSION["matricula"])) {
             header("Location: login.php");
             exit();
         }
 
-        $user_matricula = $_SESSION["user_matricula"];
+        $user_matricula = $_SESSION["matricula"];
 
-        $query = "SELECT isAdmin FROM usuario WHERE matricula = $user_matricula";
+        $query = "SELECT isAdmin FROM usuario WHERE matricula = $matricula";
         $result = $conexao->query($query);
 
         if ($result->num_rows == 1) {
