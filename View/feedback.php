@@ -1,5 +1,5 @@
 <?php
-    require_once "../controller/conexao.php";
+    require_once "../Model/conexao.php";
     require_once "../controller/feedback.class.php";
     
     $feedback_check = false;
@@ -14,12 +14,12 @@
             if ($result->num_rows > 0){
                 
                 $feedback = new feedback;
-                $feedback->update_feedback($usuario,$nota,$comentario,$conexao);
+                $feedback->update_feedback($usuario,$nota,$comentario,$mysqli);
                 $feedback_check = true;
             }else{
                 
                 $feedback = new feedback;
-                $feedback->set_feedback($nota,$comentario,$usuario,$conexao);
+                $feedback->set_feedback($nota,$comentario,$usuario,$mysqli);
             }
            
         }
