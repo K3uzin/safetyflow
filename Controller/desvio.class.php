@@ -79,6 +79,31 @@ class desvio{
         '$gravidade',
         '$area_responsavel',
         '$img')");
+
+        
+        $query = "SELECT nome,email from usuario where area_responsavel = '$area_responsavel'";
+        $result = $conexao->query($query);
+        if ($result->num_rows == 0){
+            exit('não a responsavel na area selecionada');
+        }else{
+            $R_email = array();
+            while($data = mysqli_fetch_assoc($result)){
+                $R_data = $data;
+            }
+            $query = "SELECT nome_area from area_responsavel where id_responsavel = $area_responsavel";
+            $result = $conexao->query($query);
+            $data = mysqli_fetch_assoc($result);
+            $nome_area = $data['nome_area'];
+
+            foreach($R_data as $responaveis){
+                $email = $responsaveis['email'];
+                $nome = $responaveis['nome'];
+                $assunto = "novo desvio na area".$nome_area;
+                $mensagem = 'olá gestor'.$nome.'novo desvio criado na area '.$nome_area;
+                $headers = 'from: safetyflow@gmail.com '."\r\n".'no-reply';
+                mail($email,$assunto,$mensagem,$headers);
+            }
+        }
     }
     //função responsavel por extrair o conteudo do atributo usuario_matricula da classe de desvio.
     public function get_usuario_matricula(){
@@ -261,7 +286,7 @@ class desvio{
             $this->setor = $setor_nome;
 
             $tipo_desvio_id = $data['tipo_desvio'];
-            $query ="SELECT descricao from tipo_desvio where idtipo_desvio = $tipo_desvio_id";
+            $query ="SELECT nome_setor from tipo_desvio where idtipo_desvio = $tipo_desvio_id";
             $result = $conexao->query($query);
             $tipo_desvio = mysqli_fetch_assoc($result);
             $this->tipo_desvio = $tipo_desvio;
