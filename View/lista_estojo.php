@@ -1,27 +1,18 @@
 <?php
 require '../Model/conexao.php'; // Verifique se o caminho está correto
+require_once '../Controller/desvio.class.php';
 
-// Consulta para obter todos os desvios no Setor "Estojo"
-$sql_desvios_setor_estojo = "SELECT d.id_desvio, td.descricao AS tipo_desvio, g.descricao AS gravidade, s.nome_setor AS setor 
-FROM desvio d
-INNER JOIN tipo_desvio td ON d.tipo_desvio_idtipo_desvio = td.idtipo_desvio
-INNER JOIN gravidade g ON d.gravidade_idgravidade = g.idgravidade
-INNER JOIN setor s ON d.setor_id_setor = s.id_setor
-WHERE d.setor_id_setor = 4";
-
-$result_desvios_setor_estojo = $mysqli->query($sql_desvios_setor_estojo);
-
-$desvios_setor_estojo = [];
-if ($result_desvios_setor_estojo) {
-    while ($row_desvio = $result_desvios_setor_estojo->fetch_assoc()) {
-        $desvios_setor_estojo[] = $row_desvio;
-    }
-} else {
-    echo "Erro na consulta de desvios no Setor Estojo: " . $mysqli->error;
-}
-
-$mysqli->close();
+$desvio = new desvio;
+$turno = null;
+$setor = 4;
+$tipo_desvio = null;
+$gravidade = null;
+$data_i = null;
+$data_f = null;
+$order = 1;
+$desvio_data = $desvio->fetch_desvio_by_filter($turno,$setor,$tipo_desvio,$gravidade,$data_i,$data_f,$order,$mysqli);
 ?>
+
 
 <!DOCTYPE html>
 <html>
@@ -31,23 +22,154 @@ $mysqli->close();
 <body>
     <h2>Lista de Desvios - Setor Estojo</h2>
     
+    <form action="" method="POST">
+        <select class="form-select" id="filter" name="filter">
+            <option value="0">todos os devio</option>
+            <option value="1">somente desvios abertos</option>
+        </select>
+        <button  type="submit">filtra</button>
+    </form>
     <table border="1">
     <tr>
-        <th>ID Desvio</th>
+        <th>numero do desvio</th>
         <th>Tipo de Desvio</th>
         <th>Gravidade</th>
         <th>Setor</th>
-        <th>Ações</th>
+        <th>data de abertura</th>
+        <th>data de resolução</th>
+        <th>status</th>
     </tr>
-    <?php foreach ($desvios_setor_estojo as $desvio) { ?>
-    <tr>
-        <td><?php echo $desvio['id_desvio']; ?></td>
-        <td><?php echo $desvio['tipo_desvio']; ?></td>
-        <td><?php echo $desvio['gravidade']; ?></td>
-        <td><?php echo $desvio['setor']; ?></td>
-        <td><a href="#" class="ver-detalhes" data-id="<?php echo $desvio['id_desvio']; ?>">Ver Detalhes</a></td>
-    </tr>
-    <?php } ?>
+    <?php 
+    if (isset($_POST)){
+        if ($_POST['filter']  == 0){
+            foreach ($desvio_data as $desvio){ 
+    ?>
+                <tr>
+                    
+                    <td><?php echo htmlspecialchars($desvio['id_desvio']); ?></td>
+                    <td><?php echo htmlspecialchars($desvio['tipo_desvio']); ?></td>
+                    <td><?php echo htmlspecialchars($desvio['gravidade']); ?></td>
+                    <td><?php echo htmlspecialchars($desvio['setor']); ?></td>
+                    <td><?php echo htmlspecialchars($desvio['data_identificacao']);?></td>
+                    <td>
+                        <?php 
+                        $id_desvio = $desvio['id_desvio'];
+                        $query = "SELECT data_resolucao from resolucao where id_desvio = $id_desvio";
+                        $result = $mysqli->query($query);
+                        if ($result->num_rows == 0 ){
+                            echo htmlspecialchars('não concluido');
+                        }else{
+                            
+                            $data = mysqli_fetch_assoc($result);
+                            if ($data['data_resolucao'] == null){
+                                echo htmlspecialchars('não concluido');
+                            }else{
+                                echo htmlspecialchars ($data['data_resolucao']);
+                            }
+                        }
+                        ?>
+                    <td>
+                    <?php
+                        
+                        $desvio_id = $desvio['id_desvio'];
+                        $query = "SELECT status from resolucao where id_desvio = $desvio_id";
+                        $result = $mysqli->query($query);
+                        
+                        if ($result->num_rows == 0){
+                            $status = "sem resolução aberta";
+                        }
+                        
+                        $data = mysqli_fetch_assoc($result);
+                        $status = $data['status'];
+
+                        if ($status == 0 or $status == null){
+
+                            $status = "sem resolução aberta";
+                        }
+
+                        if ($status == 1){
+
+                            $status = "em analise";
+                        }
+
+                        if ($status == 2){
+
+                            $status = "resolução em andamento";
+                        }
+
+                        if ($status == 3){
+
+                            $status = "Desvio resolvido";
+                        }
+
+                    ?>
+
+                    <td><?php echo htmlspecialchars($status);?></td>
+                    <td><a href="#" class="ver-detalhes" data-id="<?php echo $desvio['id_desvio']; ?>">Ver Detalhes</a></td>
+                </tr>
+                
+    <?php 
+            }
+        }
+        if ($_POST['filter'] == 1){
+            foreach ($desvio_data as $desvio){
+                $id_desvio = $desvio['id_desvio'];
+                $query = "SELECT * FROM resolucao where id_desvio = $id_desvio";
+                $result = $mysqli->query($query);
+                $data = mysqli_fetch_assoc($result);
+                $status = $data['status'];
+                if ($status != 3){
+                ?>
+                    <tr>
+                        
+                        <td><?php echo htmlspecialchars($desvio['id_desvio']); ?></td>
+                        <td><?php echo htmlspecialchars($desvio['tipo_desvio']); ?></td>
+                        <td><?php echo htmlspecialchars($desvio['gravidade']); ?></td>
+                        <td><?php echo htmlspecialchars($desvio['setor']); ?></td>
+                        <td><?php echo htmlspecialchars($desvio['data_identificacao']);?></td>
+                        <?php
+                            
+                            $desvio_id = $desvio['id_desvio'];
+                            $query = "SELECT status from resolucao where id_desvio = $desvio_id";
+                            $result = $mysqli->query($query);
+                            
+                            if ($result->num_rows == 0){
+                                $status = "sem resolução aberta";
+                            }
+                            
+                            $data = mysqli_fetch_assoc($result);
+                            $status = $data['status'];
+
+                            if ($status == 0 or $status == null){
+
+                                $status = "sem resolução aberta";
+                            }
+
+                            if ($status == 1){
+
+                                $status = "em analise";
+                            }
+
+                            if ($status == 2){
+
+                                $status = "resolução em andamento";
+                            }
+
+                            if ($status == 3){
+
+                                $status = "Desvio resolvido";
+                            }
+
+                        ?>
+
+                        <td><?php echo htmlspecialchars($status);?></td>
+                        <td><a href="#" class="ver-detalhes" data-id="<?php echo $desvio['id_desvio']; ?>">Ver Detalhes</a></td>
+                    </tr>
+        <?php
+                }
+            }
+        }
+    } $mysqli->close();?>
 </table>
 
 <div id="detalhes-desvio"></div>
