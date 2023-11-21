@@ -35,7 +35,7 @@ class resolucao{
         VALUES (?,?,?,?,?,?,?)");
         $query->bind_param("isssiii",$status,$descricao,$acoes,$data_resolucao,$usuario,$desvio,$area_responsavel);
         $query->execute();
-    
+        
         }
     public function get_all_resolucao($conexao){
 
@@ -114,6 +114,20 @@ class resolucao{
             $query = "UPDATE resolucao SET usuario_matricula = $usuario,status = $status,acoes = '$acoes',
             id_area_r = $area_responsavel WHERE idresolucao = $resolucao_id";
             $result = $conexao->query($query);
+
+            $query = "SELECT nome_area from area_responsavel  where id_area = $area_responsavel"
+            $result = $conexao->query($query);
+            $data = mysqli_fetch_assoc($result);
+            $nome_area = $data['nome_area'];
+
+            $query = "SELECT u.nome,u.email,d.data_identificacao from desvio d inner join usuario u on u.matricula = d.usuario_matricula where id_desvio = $desvio_id";
+            $result = $conexao->query($query);
+            $data = mysqli_fetch_assoc($result);
+            $usuario_nome = $data['u.nome'];
+            $usuario_email = $data['u.email'];
+            $data_identificacao = $data['d.data_identificacao'];
+            $memsagem = 'olá '.$usuario_nome.' gostariamos de lhe informara que o desvio aberto por você no dia '.$data_identificacao. ' 
+            foi resolvido com sucesso, agradecemos sua colaboração por identificar e reportar o desvio, ' 
         
         }else{
             
