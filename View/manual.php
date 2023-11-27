@@ -111,11 +111,11 @@
 
                 <ul>
                     <li>
-                        <b>Usuários Padrão</b> Funcionários que podem registrar desvios, visualizar seu próprio
+                        <b>Usuários Padrão:</b> Funcionários que podem registrar desvios, visualizar seu próprio
                         histórico e atualizar informações de perfil.
                         <br>
                     <li>
-                        <b>Administradores</b> Funcionários com permissões adicionais para visualizar todos os desvios,
+                        <b>Administradores:</b> Funcionários com permissões adicionais para visualizar todos os desvios,
                         encerrá-los ou marcá-los como concluídos.
                     </li>
                 </ul>
