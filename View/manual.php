@@ -26,7 +26,7 @@
 
     <div class="navbar clear nav-top">
         <div class="row content">
-            <a href="#"><img class="logo" src="img/Security (700 x 350 px) (370 x 135 px).png"></a>
+            <a href="#"><img class="logo" src="../Public/Img/logo-lateral.png"></a>
             <a class="right" style="text-decoration: underline;"
                 href="https://docs.google.com/document/d/1ltjkUqQCCrbnJEPiQ8xQmgusvjAtWtMROCyYqeePFIM/edit"><i
                     class="fas fa-book"></i>&nbsp; Documentação</a>
