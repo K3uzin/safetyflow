@@ -30,9 +30,9 @@
             <a class="right" style="text-decoration: underline;"
                 href="https://docs.google.com/document/d/1ltjkUqQCCrbnJEPiQ8xQmgusvjAtWtMROCyYqeePFIM/edit"><i
                     class="fas fa-book"></i>&nbsp; Documentação</a>
-            <a class="right" href="mailto:senai@ba.estudante.br" target="_blank"><i
+            <a class="right" href="mailto:safetyflow1@gmail.com" target="_blank"><i
                     class="fas fa-paper-plane"></i>&nbsp;
-                senai@ba.estudante.br</a>
+                safetyflow1@gmail.com</a>
         </div>
     </div>
 
