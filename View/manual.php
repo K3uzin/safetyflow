@@ -45,22 +45,22 @@
 
                 <a class="section" href="#">Versões Compatíveis</a>
                 <a class="section" href="#">Perfil do Usuário</a>
-                <a class="section" href="#technology">Feedback do Usuário</a>
+                <a class="section" href="#feedback">Feedback do Usuário</a>
 
                 <div class="divider left"></div>
 
-                <a class="title" href="#gettingstarted">Login</a>
+                <a class="title" href="#login">Login</a>
 
-                <a class="section" href="#installingapp">Acesso ao Sistema</a>
+                <a class="section" href="#acessoaosistema">Acesso ao Sistema</a>
                 <div class="divider left"></div>
 
-                <a class="title" href="#basicfeatures">Registro de Desvios</a>
+                <a class="title" href="#registrodedesvios">Registro de Desvios</a>
 
-                <a class="section" href="#basicfeatures">Formulário</a>
-                <a class="section" href="#basicfeatures">Campos Obrigatórios</a>
-                <a class="section" href="#feature3">Anexar Imagem</a>
-                <a class="section" href="#feature3">Área Responsável</a>
-                <a class="section" href="#feature3">Notificação de Progresso</a>
+                <a class="section" href="#registrodedesvios">Formulário</a>
+                <a class="section" href="#registrodedesvios">Campos Obrigatórios</a>
+                <a class="section" href="#anexarimagem">Anexar Imagem</a>
+                <a class="section" href="#arearesponsavel">Área Responsável</a>
+                <a class="section" href="#notificacaodeprogresso">Notificação de Progresso</a>
 
                 <div class="divider left"></div>
 
@@ -105,7 +105,7 @@
 
                 <h2>Perfil do Usuário</h2>
 
-                <p id="technology">
+                <p id="feedback">
                     O software é destinado a dois tipos de usuários:
                 </p>
 
@@ -143,7 +143,7 @@
 
                     <br>
 
-                    <b>Cinco Estrelas:</b> Excelente<br>
+                    <b id="login">Cinco Estrelas:</b> Excelente<br id="acessoaosistema">
 
                 </p>
                 <div class="divider" style="width:24%; margin:30px 0;"></div>
@@ -152,10 +152,10 @@
 
                 <h2>Acesso ao Sistema</h2>
 
-                <p>Para acessar o sistema, insira sua matrícula e senha na página de login. Se você esqueceu sua senha,
+                <p id="registrodedesvios">Para acessar o sistema, insira sua matrícula e senha na página de login. Se você esqueceu sua senha,
                     siga as instruções na seção "Esqueci senha".</p>
 
-                <div class="divider" style="width:24%; margin:30px 0;"></div>
+                <div class="divider" style="width:24%; margin:30px 0; id="anexarimagem"></div>
 
 
                 <h1>Registro de Desvio de Segurança</h1>
@@ -166,9 +166,9 @@
                     preencher os desvios e informações. Preencha o formulário com as informações solicitadas, incluindo
                     a data de identificação, turno, setor, local do desvio, descrição e outros campos relevantes.</p>
 
-                <h2>Campos Obrigatórios</h2>
+                <h2 id="arearesponsavel">Campos Obrigatórios</h2>
 
-                <p>
+                <p id="notificacaodeprogresso">
                     Certos campos são obrigatórios (indicados por asteriscos). Certifique-se de preenchê-los para enviar
                     com êxito o registro.
                 </p>
