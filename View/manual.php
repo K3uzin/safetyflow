@@ -64,25 +64,25 @@
 
                 <div class="divider left"></div>
 
-                <a class="title" href="#advanced">Gerenciamento de Desvios</a>
+                <a class="title" href="#gerenciamentodedesvios">Gerenciamento de Desvios</a>
 
-                <a class="section" href="#advanced">Lista de Desvios Abertos</a>
-                <a class="section" href="#featureb">Detalhes do Desvio</a>
-                <a class="section" href="#featurec">Encerrar ou Concluir</a>
-                <a class="section" href="#featurec1">Histórico de Desvios</a>
-                <a class="section" href="#featurec2">Notificação Imediata</a>
-                <a class="section" href="#featured">Estatísticas</a>
-
-                <div class="divider left"></div>
-
-                <a class="title" href="#accesibility">Perfil de Usuário</a>
-                <a class="section" href="">Alteração de Senha</a>
-                <a class="section" href="">Logout</a>
+                <a class="section" href="#listadedesviosabertos">Lista de Desvios Abertos</a>
+                <a class="section" href="#detalhesdodesvio">Detalhes do Desvio</a>
+                <a class="section" href="#encerrarouconcluir">Encerrar ou Concluir</a>
+                <a class="section" href="#historicodedesvios">Histórico de Desvios</a>
+                <a class="section" href="#notificacaoimediata">Notificação Imediata</a>
+                <a class="section" href="#estatisticas">Estatísticas</a>
 
                 <div class="divider left"></div>
 
-                <a class="title" href="#moreinfo">Perguntas Frequentes</a>
-                <a class="section" href="">Como Recuperar a Senha</a>
+                <a class="title" href="#perfildousuario">Perfil de Usuário</a>
+                <a class="section" href="#alteracaodesenha">Alteração de Senha</a>
+                <a class="section" href="#logout">Logout</a>
+
+                <div class="divider left"></div>
+
+                <a class="title" href="#perguntasfrequentes">Perguntas Frequentes</a>
+                <a class="section" href="#comorecuperarsenha">Como Recuperar a Senha</a>
 
                 <div class="space double"></div>
 
@@ -155,14 +155,14 @@
                 <p id="registrodedesvios">Para acessar o sistema, insira sua matrícula e senha na página de login. Se você esqueceu sua senha,
                     siga as instruções na seção "Esqueci senha".</p>
 
-                <div class="divider" style="width:24%; margin:30px 0; id="anexarimagem"></div>
+                <div class="divider" style="width:24%; margin:30px 0;"></div>
 
 
                 <h1>Registro de Desvio de Segurança</h1>
 
                 <h2>Formulário</h2>
 
-                <p id="basicfeatures">Ao acessar o sistema, você é redirecionado automaticamente para o formulário para
+                <p id="anexarimagem">Ao acessar o sistema, você é redirecionado automaticamente para o formulário para
                     preencher os desvios e informações. Preencha o formulário com as informações solicitadas, incluindo
                     a data de identificação, turno, setor, local do desvio, descrição e outros campos relevantes.</p>
 
@@ -188,9 +188,9 @@
                 </p>
 
 
-                <h2>Notificação de Progresso</h2>
+                <h2 id="gerenciamentodedesvios">Notificação de Progresso</h2>
 
-                <p>
+                <p id="listadedesviosabertos">
                     Por meio de notificação via e-mail, o usuário será informado quando seu desvio for aberto, concluído
                     ou alterado por um administrador.
                 </p>
@@ -198,7 +198,7 @@
 
                 <div class="divider" style="width:24%; margin:30px 0;"></div>
 
-                <h1>Gerenciamento de Desvios</h1>
+                <h1 id="detalhesdodesvio">Gerenciamento de Desvios</h1>
 
                 <h2>Lista de Desvios Abertos</h2>
 
@@ -208,7 +208,7 @@
                 </p>
 
 
-                <h2>Detalhes do Desvio</h2>
+                <h2 id="encerrarouconcluir">Detalhes do Desvio</h2>
 
                 <p>Clique em um desvio para ver detalhes, incluindo informações do usuário que relatou o desvio, data de
                     identificação, gravidade, setor, local entre outras informações (somente os administradores tem
@@ -218,18 +218,18 @@
 
                 <h2>Encerrar ou Concluir Desvios</h2>
 
-                <p>Os administradores têm permissão para encerrar, e editar desvios de segurança atribuídos a sua área
+                <p id="historicodedesvios">Os administradores têm permissão para encerrar, e editar desvios de segurança atribuídos a sua área
                     responsável. Isso indicará que o desvio foi corrigido com sucesso ou não é mais relevante.</p>
 
 
-                <h2>Histórico de Desvios</h2>
+                <h2 id="notificacaoimediata">Histórico de Desvios</h2>
 
                 <p>
                     Mantenha o controle do histórico de todos os desvios registrados. Isso ajudará a acompanhar os
                     desvios ao longo do tempo.
                 </p>
 
-                <h2>Notificação Imediata</h2>
+                <h2 id="estatisticas">Notificação Imediata</h2>
 
                 <p>Imediatamente após o registro, o administrador da área responsável a qual foi atribuído o desvio de
                     segurança, é notificado a respeito da ocorrência aberta em sua área.
@@ -245,17 +245,17 @@
 
                 <div class="divider" style="width:24%; margin:30px 0;"></div>
 
-                <h1>Perfil de Usuário</h1>
+                <h1 id="perfildousuario">Perfil de Usuário</h1>
 
-                <h2>Alteração de Senha</h2>
+                <h2 id="alteracaodesenha">Alteração de Senha</h2>
 
-                <p>Você pode alterar sua senha a qualquer momento na seção "Perfil de Usuário" que será aberta ao clicar
+                <p id="logout">Você pode alterar sua senha a qualquer momento na seção "Perfil de Usuário" que será aberta ao clicar
                     no ícone de usuário. Isso garante a segurança da sua conta.
                 </p>
 
-                <h2>Logout</h2>
+                <h2 id="perguntasfrequentes">Logout</h2>
 
-                <p>Sempre faça logout quando terminar de usar o sistema para garantir a segurança da sua conta. Ao
+                <p id="comorecuperarsenha">Sempre faça logout quando terminar de usar o sistema para garantir a segurança da sua conta. Ao
                     clicar no ícone do usuário, entre as opções será disponibilizada a opção “Sair”.
                 </p>
 
