@@ -17,7 +17,7 @@ class usuario_teste{
             inserção dos dados do usuario no banco de dados e durante o processo não ocorra nenhum erro ou warning";
             $usuario = new usuario;
             $nome = 'guilherme';
-            $matricula = '22222223';
+            $matricula = '2';
             $senha = '123456';
             $email = 'gui@gmail.com';
             $adm = 1;
@@ -31,27 +31,33 @@ class usuario_teste{
                 $this->status_banco = "inserção bem sucedida"
             }
         }
-        //cenario de fracasso (matricula repetido)
-
-            /*$usuario = new usuario;
+         //cenario de fracasso (matricula repetido)
+        if ($cenario == 1){
+            $this->funcao = "set_usuario";
+            $this->cenario = $cenario;
+            echo "cenario de fracasso da função set_usuario, este cenario sera considerado caso haja a a interrupção<br>
+            da função caso o usuario que está sendo setado já esteja presente no banco";
+            $usuario = new usuario;
             $nome = 'guilherme';
-            $matricula = '22222222';
+            $matricula = '2';
             $senha = '123456';
             $email = 'guimas@gmail.com';
             $adm = 1;
             $setor = 3;
-            $usuario->set_usuario($nome,$matricula,$email,$senha,$adm,$setor,$conexao);*/
-            
+            $usuario->set_usuario($nome,$matricula,$email,$senha,$adm,$setor,$conexao);
+            $this->status_banco = "não relevante";
+        }   
         //cenario de fracasso (email repetido)
-
-            /*$usuario = new usuario;
+        if ($cenario == 2)
+        
+            $usuario = new usuario;
             $nome = 'guilherme';
             $matricula = '22222224';
             $senha = '123456';
             $email = 'gui@gmail.com';
             $adm = 1;
             $setor = 2;
-            $usuario->set_usuario($nome,$matricula,$email,$senha,$adm,$setor,$conexao);*/
+            $usuario->set_usuario($nome,$matricula,$email,$senha,$adm,$setor,$conexao);
 
         //cenario de fracasso (setor inexistente)
 
