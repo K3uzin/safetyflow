@@ -1,7 +1,7 @@
 <!-- Possível caminho View/form.php -->
 <?php
 require '../Model/conexao.php'; // Verifique se o caminho está correto
-require '../view/navbar.php'; // caminho para barra de navegação
+
 session_start();
 
 if (!isset($_SESSION["user_matricula"])) {
