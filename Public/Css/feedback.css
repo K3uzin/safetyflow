@@ -1,0 +1,113 @@
+
+    <style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .container {
+        padding: 20px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 80vh;
+        margin: 50px auto;
+
+        /* Use uma media query para estilizar o container em dispositivos menores */
+        @media (max-width: 768px) {
+            width: 100%;
+            max-width: 100%;
+            margin: 0; /* Remova a margem nas laterais em dispositivos menores */
+        }
+    }
+
+        /* Estiliza todos os botões */
+        button {
+            background-color: #003884;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Estiliza o formulário */
+        form {
+            margin: 20px;
+        }
+
+        /* Estiliza as divs com classe feedback-info e logo-container */
+        .feedback-info, .logo-container {
+            margin: 20px;
+            text-align: center;
+        }
+
+        .img-fluid {
+            max-width: 100%;
+        }
+
+        /* Adicione margem superior ao contêiner que envolve "nota" e "comentário" */
+        .feedback-container {
+            margin-top: 95px;
+        }
+
+        /* Estiliza os elementos "Nota" e "Comentário" */
+        label {
+            display: block;
+            font-weight: bold;
+            font-size: 20px; /* Tamanho da fonte */
+        }
+
+        /* Estiliza as estrelas */
+        .rating {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            margin-top: -12px;
+        }
+
+        .rating input {
+            display: none;
+        }
+
+        .rating label {
+            font-size: 60px; /* Tamanho maior para as estrelas */
+            color: #ccc;
+            cursor: pointer;
+        }
+
+        /* Corrige o erro de seleção das estrelas */
+        .rating input:checked ~ label {
+            color: #f39c12;
+        }
+
+        /* Classe personalizada para posicionar o "Comentário" */
+        .comentario-group {
+            margin-top: -20px;
+        }
+
+        .rating input:checked ~ label {
+    color: #ccc;
+}
+
+.rating input:checked + label {
+    color: #f39c12;
+}
+
+.star {
+    font-size: 60px;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.star.filled {
+    color: #f39c12;
+}
+
+    </style>
