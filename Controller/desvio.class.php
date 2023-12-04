@@ -286,7 +286,7 @@ class desvio{
             $this->setor = $setor_nome;
 
             $tipo_desvio_id = $data['tipo_desvio'];
-            $query ="SELECT nome_setor from tipo_desvio where idtipo_desvio = $tipo_desvio_id";
+            $query ="SELECT descricao from tipo_desvio where idtipo_desvio = $tipo_desvio_id";
             $result = $conexao->query($query);
             $tipo_desvio = mysqli_fetch_assoc($result);
             $this->tipo_desvio = $tipo_desvio;
