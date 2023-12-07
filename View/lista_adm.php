@@ -123,7 +123,7 @@ $desvio_data = $desvio->fetch_desvio_by_filter($turno,$setor,$tipo_desvio,$gravi
                 $query = "SELECT * FROM resolucao where id_desvio = $id_desvio";
                 $result = $mysqli->query($query);
                 $data = mysqli_fetch_assoc($result);
-                $status = $data['status'];
+                $status = $data;
                 if ($result->num_rows != 0 && $status != 3){
                 ?>
                     <tr>
