@@ -48,8 +48,11 @@ class usuario_teste{
             $this->status_banco = "não relevante";
         }   
         //cenario de fracasso (email repetido)
-        if ($cenario == 2)
-        
+        if ($cenario == 2){
+            $this->funcao = "set_usuario";
+            $this->cenario = $cenario;
+            echo "cenario de fracasso da função set_usuario, este cenario sera considerado caso haja a a interrupção<br>
+            da função caso o email que está sendo utilizado já esteja presente no banco ou seja invalido";
             $usuario = new usuario;
             $nome = 'guilherme';
             $matricula = '22222224';
@@ -58,18 +61,23 @@ class usuario_teste{
             $adm = 1;
             $setor = 2;
             $usuario->set_usuario($nome,$matricula,$email,$senha,$adm,$setor,$conexao);
-
+            $this->status_banco = "não relevante";
+        }
         //cenario de fracasso (setor inexistente)
-
-            /*$usuario = new usuario;
+        if ($cenario == 3){
+            $this->funcao = "set_usuario";
+            $this->cenario = $cenario;
+            echo "cenario de fracasso da função set_usuario, este cenario sera considerado caso haja a a interrupção<br>
+            da função caso o setor que está sendo utilizado já esteja presente no banco ou seja invalido";
+            $usuario = new usuario;
             $nome = 'guilherme';
             $matricula = '333333333';
             $senha = '123456';
             $email = 'guibmx@gmail.com';
             $adm = 1;
             $setor = 10;
-            $usuario->set_usuario($nome,$matricula,$email,$senha,$adm,$setor,$conexao);*/
-
+            $usuario->set_usuario($nome,$matricula,$email,$senha,$adm,$setor,$conexao);
+        }
     }
 }
 ?>
