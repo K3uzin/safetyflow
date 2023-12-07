@@ -78,34 +78,39 @@ $desvio_data = $desvio->fetch_desvio_by_filter($turno,$setor,$tipo_desvio,$gravi
                         
                         if ($result->num_rows == 0){
                             $status = "sem resolução aberta";
+                            echo htmlspecialchars($status);
+                        }else{
+                            $data = mysqli_fetch_assoc($result);
+                            $status = $data['status'];
                         }
-                        
-                        $data = mysqli_fetch_assoc($result);
-                        $status = $data['status'];
 
                         if ($status == 0 or $status == null){
 
                             $status = "sem resolução aberta";
+                            echo htmlspecialchars($status);                           
                         }
 
                         if ($status == 1){
 
                             $status = "em analise";
+                            echo htmlspecialchars($status);
                         }
 
                         if ($status == 2){
 
                             $status = "resolução em andamento";
+                            echo htmlspecialchars($status);
                         }
 
                         if ($status == 3){
 
                             $status = "Desvio resolvido";
+                            echo htmlspecialchars($status);
                         }
 
                     ?>
 
-                    <td><?php echo htmlspecialchars($status);?></td>
+                    </td>
                     <td><a href="#" class="ver-detalhes" data-id="<?php echo $desvio['id_desvio']; ?>">Ver Detalhes</a></td>
                 </tr>
                 
@@ -119,7 +124,7 @@ $desvio_data = $desvio->fetch_desvio_by_filter($turno,$setor,$tipo_desvio,$gravi
                 $result = $mysqli->query($query);
                 $data = mysqli_fetch_assoc($result);
                 $status = $data['status'];
-                if ($status != 3){
+                if ($result->num_rows != 0 && $status != 3){
                 ?>
                     <tr>
                         
@@ -136,10 +141,10 @@ $desvio_data = $desvio->fetch_desvio_by_filter($turno,$setor,$tipo_desvio,$gravi
                             
                             if ($result->num_rows == 0){
                                 $status = "sem resolução aberta";
-                            }
-                            
+                            }else{
                             $data = mysqli_fetch_assoc($result);
                             $status = $data['status'];
+                            }
 
                             if ($status == 0 or $status == null){
 
