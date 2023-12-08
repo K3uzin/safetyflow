@@ -4,24 +4,30 @@ class Autenticacao {
     
     public static function verificarPermissaoAdmin($conexao) {
         session_start();
-
-        if (!isset($_SESSION["matricula"])) {
-            header("Location: login.php");
+        //exit(var_dump($_SESSION));
+        if (!isset($_SESSION["user_matricula"])) {
+            header("Location: ../View/login.php");
             exit();
         }
 
-        $user_matricula = $_SESSION["matricula"];
+        $user_matricula = $_SESSION["user_matricula"];
 
-        $query = "SELECT isAdmin FROM usuario WHERE matricula = $matricula";
-        $result = $conexao->query($query);
+        // Utilizando prepared statement para evitar injeção de SQL
+        $query = "SELECT isAdmin FROM usuario WHERE matricula = ?";
+        $stmt = $conexao->prepare($query);
+        $stmt->bind_param("s", $user_matricula);
+        $stmt->execute();
+        $stmt->bind_result($isAdmin);
 
-        if ($result->num_rows == 1) {
-            $data = mysqli_fetch_assoc($result);
-            return $data['isAdmin'] == 1; // Verifica se o usuário é um administrador (isAdmin = 1)
+        if ($stmt->fetch()) {
+            return $isAdmin == 1; // Verifica se o usuário é um administrador (isAdmin = 1)
         }
+
+        $stmt->close();
 
         return false;
     }
 }
+
 
 ?>
