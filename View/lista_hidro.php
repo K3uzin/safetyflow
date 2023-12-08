@@ -27,7 +27,7 @@ $desvio_data = $desvio->fetch_desvio_by_filter($turno,$setor,$tipo_desvio,$gravi
             <option value="1">somente desvios abertos</option>
         </select>
         <button  type="submit">filtra</button>
-    <form action="" method="POST">
+ <form action="" method="POST">
         <select class="form-select" id="filter" name="filter">
             <option value="0">todos os devio</option>
             <option value="1">somente desvios abertos</option>
