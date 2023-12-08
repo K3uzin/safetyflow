@@ -133,6 +133,23 @@ $desvio_data = $desvio->fetch_desvio_by_filter($turno,$setor,$tipo_desvio,$gravi
                         <td><?php echo htmlspecialchars($desvio['gravidade']); ?></td>
                         <td><?php echo htmlspecialchars($desvio['setor']); ?></td>
                         <td><?php echo htmlspecialchars($desvio['data_identificacao']);?></td>
+                        <td>
+                        <?php 
+                        $id_desvio = $desvio['id_desvio'];
+                        $query = "SELECT data_resolucao from resolucao where id_desvio = $id_desvio";
+                        $result = $mysqli->query($query);
+                        if ($result->num_rows == 0 ){
+                            echo htmlspecialchars('a ser decidido');
+                        }else{
+                            
+                            $data = mysqli_fetch_assoc($result);
+                            if ($data['data_resolucao'] == null){
+                                echo htmlspecialchars('a ser decido');
+                            }else{
+                                echo htmlspecialchars ($data['data_resolucao']);
+                            }
+                        }
+                        ?>
                         <?php
                             
                             $desvio_id = $desvio['id_desvio'];
