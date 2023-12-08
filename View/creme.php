@@ -14,9 +14,9 @@ $sql_nome_usuario = "SELECT nome FROM usuario WHERE matricula = $ultimo_matricul
 //consulta o nome
 $result_nome_usuario = $mysqli->query($sql_nome_usuario);
 $row_nome_usuario = $result_nome_usuario->fetch_assoc();
-$ultimo_nome_creme = $row_nome_usuario['nome'];
+$ultimo_nome_cremes = $row_nome_usuario['nome'];
 // Consulta para contar os desvios no Setor "Cremes"
-$total_desvios_creme = $desvio->count_desvio_from_setor(3,$mysqli);
+$total_desvios_cremes = $desvio->count_desvio_from_setor(3,$mysqli);
 
 $mysqli->close();
 ?>
