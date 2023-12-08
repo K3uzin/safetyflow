@@ -7,8 +7,9 @@
         private $senha;/* varchar min6-max12*/
         private $isAdmin;/*int espec(1 or 2)*/
         private $setor;/*int espec(1...7)*/
+        private $area_responsavel;
 
-        public function set_usuario($nome,$matricula,$email,$senha,$isAdmin,$setor,$conexao){
+        public function set_usuario($nome,$matricula,$email,$senha,$isAdmin,$setor, $area_responsavel,$conexao){
             
             if ( $nome == null or $matricula == null or $email == null or $senha == null or $isAdmin == null or $setor == null){
 
@@ -64,7 +65,10 @@
                 exit('tipo de caracter errado(setor)');
             
             }
-            
+
+            // Verifica se a variável $area_responsavel está definida antes de usá-la
+            $area_responsavel = isset($area_responsavel) ? $area_responsavel : null;
+
             $result = $conexao->query("SELECT id_setor from setor where id_setor = '$setor'");
             $row = $result->num_rows;
 
@@ -97,18 +101,20 @@
                 $this->adm = $isAdmin;
                 $this->setor= $setor;
                 $query = "INSERT INTO usuario
-                (nome,
-                matricula,
-                email,
-                senha,
-                isAdmin,
-                setor) 
-                VALUES ('$nome',
-                $matricula,
-                '$email',
-                '$senha',
-                $isAdmin,
-                $setor)";
+    (nome,
+    matricula,
+    email,
+    senha,
+    isAdmin,
+    setor,
+    area_responsavel) 
+    VALUES ('$nome',
+    $matricula,
+    '$email',
+    '$senha',
+    $isAdmin,
+    $setor,
+    '$area_responsavel')";
                 $conexao->query($query);
                 
             }
