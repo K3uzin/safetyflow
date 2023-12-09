@@ -6,10 +6,7 @@ require_once '../controller/usuario.class.php';
 session_start();
 
 // Verifica se o usuário logado é administrador
-if (!Autenticacao::verificarPermissaoAdmin($mysqli)) {
-    echo "Você não tem permissão para gerenciar usuários.";
-    exit();
-}
+$isAdmin = Autenticacao::verificarPermissaoAdmin($mysqli);
 
 // Realiza a consulta para obter os usuários com informações de setor e área
 $query = "SELECT u.matricula, u.nome, u.email, u.isAdmin, s.nome_setor as setor_nome, a.nome_area as area_nome
@@ -28,8 +25,14 @@ if ($result && $result->num_rows > 0) {
                 <th>Email</th>
                 <th>isAdmin</th>
                 <th>Setor</th>
-                <th>Área Responsável</th>
-            </tr>";
+                <th>Área Responsável</th>";
+
+    // Exibe as colunas adicionais para usuários administradores
+    if ($isAdmin) {
+        echo "<th>Ações</th>";
+    }
+
+    echo "</tr>";
 
     while ($row = $result->fetch_assoc()) {
         echo "<tr>
@@ -45,8 +48,17 @@ if ($result && $result->num_rows > 0) {
 
         echo "</td>
                 <td>{$row['setor_nome']}</td>
-                <td>{$row['area_nome']}</td>
-            </tr>";
+                <td>{$row['area_nome']}</td>";
+
+        // Exibe as ações apenas para usuários administradores
+        if ($isAdmin) {
+            echo "<td>
+                      <a href='editar_usuario.php?matricula={$row['matricula']}'>Editar</a> | 
+                      <a href='excluir_usuario.php?matricula={$row['matricula']}'>Excluir</a>
+                  </td>";
+        }
+
+        echo "</tr>";
     }
 
     echo "</table>";
