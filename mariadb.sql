@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 05-Nov-2023 às 19:56
--- Versão do servidor: 10.4.27-MariaDB
--- versão do PHP: 8.2.0
+-- Tempo de geração: 13/12/2023 às 23:46
+-- Versão do servidor: 11.3.0-MariaDB
+-- Versão do PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `area_responsavel`
+-- Estrutura para tabela `area_responsavel`
 --
 
 CREATE TABLE `area_responsavel` (
@@ -33,7 +33,7 @@ CREATE TABLE `area_responsavel` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 --
--- Extraindo dados da tabela `area_responsavel`
+-- Despejando dados para a tabela `area_responsavel`
 --
 
 INSERT INTO `area_responsavel` (`id_area`, `nome_area`) VALUES
@@ -49,7 +49,7 @@ INSERT INTO `area_responsavel` (`id_area`, `nome_area`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `desvio`
+-- Estrutura para tabela `desvio`
 --
 
 CREATE TABLE `desvio` (
@@ -67,16 +67,29 @@ CREATE TABLE `desvio` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 --
--- Extraindo dados da tabela `desvio`
+-- Despejando dados para a tabela `desvio`
 --
 
 INSERT INTO `desvio` (`id_desvio`, `data_identificacao`, `turno`, `local_desvio`, `descricao_desvio`, `foto_desvio`, `tipo_desvio`, `gravidade`, `area_responsavel`, `setor`, `usuario_matricula`) VALUES
-(1, '2023-11-05', 'Manhã', 'a', 'a', '../Desvio/1699210136.jpg', 3, 2, 1, 1, 1);
+(1, '2023-11-05', 'Manhã', 'a', 'a', '../Desvio/1699210136.jpg', 3, 2, 1, 1, 1),
+(2, '2023-12-04', 'Noite', 'AFA', 'AGAG', '', 2, 2, 1, 1, 1),
+(3, '2023-12-04', 'Noite', 'AFA', 'AGAG', '', 2, 2, 4, 1, 1),
+(4, '2023-12-05', 'Noite', 'AFA', 'AGAG', '', 2, 2, 4, 1, 1),
+(5, '2023-12-07', 'Manhã', 'qafqaf', 'afafaf', '../Desvio/1701987574.jpeg', 2, 1, 6, 3, 1),
+(6, '2023-12-07', 'Manhã', 'qafqaf', 'afafaf', '../Desvio/1701987726.jpeg', 2, 1, 6, 3, 1),
+(7, '2023-12-07', 'Manhã', 'qafqaf', 'afafaf', '../Desvio/1701987770.jpeg', 2, 2, 6, 1, 1),
+(8, '2023-12-08', 'Tarde', 'adaf', 'afaf', '', 2, 2, 6, 6, 1),
+(9, '2023-12-08', 'Manhã', 'afafa', 'afag', '../Desvio/1702073462.jpeg', 2, 2, 1, 3, 1),
+(10, '2023-12-08', 'Tarde', 'ijI RPOI', 'gsw]~çgç', '../Desvio/1702073983.jpeg', 4, 2, 2, 1, 1),
+(11, '2023-12-08', 'Tarde', 'ijI RPOI', 'gsw]~çgç', '../Desvio/1702073993.jpeg', 4, 2, 2, 4, 1),
+(12, '2023-12-08', 'Tarde', 'ijI RPOI', 'gsw]~çgç', '../Desvio/1702074005.jpeg', 4, 2, 2, 5, 1),
+(13, '2023-12-08', 'Tarde', 'ijI RPOI', 'gsw]~çgç', '../Desvio/1702074020.jpeg', 4, 2, 2, 6, 1),
+(14, '2023-12-08', 'Tarde', 'ijI RPOI', 'gsw]~çgç', '../Desvio/1702074220.jpeg', 4, 2, 2, 2, 1);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `feedback`
+-- Estrutura para tabela `feedback`
 --
 
 CREATE TABLE `feedback` (
@@ -89,7 +102,7 @@ CREATE TABLE `feedback` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `gravidade`
+-- Estrutura para tabela `gravidade`
 --
 
 CREATE TABLE `gravidade` (
@@ -98,7 +111,7 @@ CREATE TABLE `gravidade` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 --
--- Extraindo dados da tabela `gravidade`
+-- Despejando dados para a tabela `gravidade`
 --
 
 INSERT INTO `gravidade` (`idgravidade`, `descricao`) VALUES
@@ -110,7 +123,7 @@ INSERT INTO `gravidade` (`idgravidade`, `descricao`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `resolucao`
+-- Estrutura para tabela `resolucao`
 --
 
 CREATE TABLE `resolucao` (
@@ -118,42 +131,48 @@ CREATE TABLE `resolucao` (
   `status` int(11) NOT NULL,
   `descricao` varchar(255) DEFAULT NULL,
   `acoes` varchar(255) DEFAULT NULL,
-  `data_resolucao` date NOT NULL,
+  `data_resolucao` date DEFAULT NULL,
   `usuario_matricula` int(11) NOT NULL,
   `id_desvio` int(11) NOT NULL,
   `id_area_r` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
--- acionadores 'resolucao'
-DELIMITER // 	
-CREATE trigger anti_duplicacao_resolucao
-before insert on resolucao
-for each row
-begin
+--
+-- Despejando dados para a tabela `resolucao`
+--
+
+INSERT INTO `resolucao` (`idresolucao`, `status`, `descricao`, `acoes`, `data_resolucao`, `usuario_matricula`, `id_desvio`, `id_area_r`) VALUES
+(1, 3, 'afafaf', 'a ser decido', '2023-12-07', 1, 7, 6),
+(2, 1, 'a', 'a ser decido', NULL, 1, 1, 1),
+(3, 0, 'afaf', 'a ser decido', NULL, 1, 8, 6),
+(4, 2, 'gsw]~çgç', 'óikól´pl', NULL, 1, 14, 2);
+
+--
+-- Acionadores `resolucao`
+--
+DELIMITER $$
+CREATE TRIGGER `anti_duplicacao_resolucao` BEFORE INSERT ON `resolucao` FOR EACH ROW begin
 	declare checkD int;
     set checkD = (SELECT count(id_desvio) from resolucao where id_desvio = NEW.id_desvio);
     if checkD <> 0 
 		then SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'não é permitido ter duas resoluçoes para o mesmo desvio';
     end if;
-end;//
+end
+$$
 DELIMITER ;
-
-DELIMITER //
-create trigger set_data_resolucao
-before update on resolucao
-for each row
-begin
+DELIMITER $$
+CREATE TRIGGER `set_data_resolucao` BEFORE UPDATE ON `resolucao` FOR EACH ROW begin
 	if new.status = 3
 		then set new.data_resolucao = curdate();
 	end if;
-end;//
+end
+$$
 DELIMITER ;
-
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `setor`
+-- Estrutura para tabela `setor`
 --
 
 CREATE TABLE `setor` (
@@ -162,7 +181,7 @@ CREATE TABLE `setor` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 --
--- Extraindo dados da tabela `setor`
+-- Despejando dados para a tabela `setor`
 --
 
 INSERT INTO `setor` (`id_setor`, `nome_setor`) VALUES
@@ -176,7 +195,7 @@ INSERT INTO `setor` (`id_setor`, `nome_setor`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `tipo_desvio`
+-- Estrutura para tabela `tipo_desvio`
 --
 
 CREATE TABLE `tipo_desvio` (
@@ -185,7 +204,7 @@ CREATE TABLE `tipo_desvio` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 --
--- Extraindo dados da tabela `tipo_desvio`
+-- Despejando dados para a tabela `tipo_desvio`
 --
 
 INSERT INTO `tipo_desvio` (`idtipo_desvio`, `descricao`) VALUES
@@ -200,7 +219,7 @@ INSERT INTO `tipo_desvio` (`idtipo_desvio`, `descricao`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `usuario`
+-- Estrutura para tabela `usuario`
 --
 
 CREATE TABLE `usuario` (
@@ -210,30 +229,24 @@ CREATE TABLE `usuario` (
   `senha` varchar(6) NOT NULL,
   `isAdmin` tinyint(1) NOT NULL,
   `setor` int(11) NOT NULL,
-  `area_responsavel` int(11) DEFAULT NULL
+  `area_responsavel` int(11) DEFAULT NULL,
+  `status` enum('ativo','inativo') DEFAULT 'ativo'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 --
--- Extraindo dados da tabela `usuario`
+-- Despejando dados para a tabela `usuario`
 --
 
-INSERT INTO `usuario` (`matricula`, `nome`, `email`, `senha`, `isAdmin`, `setor`, `area_responsavel`) VALUES
-(1, 'Natan', 'santosnatan085@gmail.com', '123456', 0, 1, 0);
+INSERT INTO `usuario` (`matricula`, `nome`, `email`, `senha`, `isAdmin`, `setor`, `area_responsavel`, `status`) VALUES
+(1, 'Natan', 'santosaanatan085@gmail.com', '123456', 1, 1, 5, 'ativo'),
+(2, 'Luan', 'luan@gmail.com', '111111', 1, 1, 1, 'ativo'),
+(3, 'Luan', 'luan@gmail.com', '123456', 1, 1, 3, 'ativo'),
+(4, 'Luan', 'luan3@gmail.com', '123456', 1, 1, 6, 'ativo'),
+(9, 'LUYDU', 'lua2222n@gmail.com', '123456', 1, 1, 2, 'ativo');
 
 --
 -- Acionadores `usuario`
 --
-DELIMITER $$
-CREATE TRIGGER `restricao_direct_insert_adm` BEFORE INSERT ON `usuario` FOR EACH ROW begin 
-	if NEW.isAdmin > 0 
-		then SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'não é permitido inserção direta de administradores';
-	end if;
-	if NEW.area_responsavel > 0
-		then SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'não é permitido alocação de reponsabildade de area para não administradores';
-	end if;
-end
-$$
-DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `restricoes_admin` BEFORE UPDATE ON `usuario` FOR EACH ROW BEGIN
 DECLARE area_limit_check int;
@@ -257,13 +270,13 @@ DELIMITER ;
 --
 
 --
--- Índices para tabela `area_responsavel`
+-- Índices de tabela `area_responsavel`
 --
 ALTER TABLE `area_responsavel`
   ADD PRIMARY KEY (`id_area`);
 
 --
--- Índices para tabela `desvio`
+-- Índices de tabela `desvio`
 --
 ALTER TABLE `desvio`
   ADD PRIMARY KEY (`id_desvio`,`tipo_desvio`,`gravidade`,`area_responsavel`,`setor`,`usuario_matricula`),
@@ -274,19 +287,19 @@ ALTER TABLE `desvio`
   ADD KEY `fk_desvio_usuario1_idx` (`usuario_matricula`);
 
 --
--- Índices para tabela `feedback`
+-- Índices de tabela `feedback`
 --
 ALTER TABLE `feedback`
   ADD PRIMARY KEY (`usuario_matricula`);
 
 --
--- Índices para tabela `gravidade`
+-- Índices de tabela `gravidade`
 --
 ALTER TABLE `gravidade`
   ADD PRIMARY KEY (`idgravidade`);
 
 --
--- Índices para tabela `resolucao`
+-- Índices de tabela `resolucao`
 --
 ALTER TABLE `resolucao`
   ADD PRIMARY KEY (`idresolucao`,`usuario_matricula`,`id_desvio`,`id_area_r`),
@@ -295,19 +308,19 @@ ALTER TABLE `resolucao`
   ADD KEY `fk_resolucao_area_responsavel1_idx` (`id_area_r`);
 
 --
--- Índices para tabela `setor`
+-- Índices de tabela `setor`
 --
 ALTER TABLE `setor`
   ADD PRIMARY KEY (`id_setor`);
 
 --
--- Índices para tabela `tipo_desvio`
+-- Índices de tabela `tipo_desvio`
 --
 ALTER TABLE `tipo_desvio`
   ADD PRIMARY KEY (`idtipo_desvio`);
 
 --
--- Índices para tabela `usuario`
+-- Índices de tabela `usuario`
 --
 ALTER TABLE `usuario`
   ADD PRIMARY KEY (`matricula`,`setor`),
@@ -315,27 +328,27 @@ ALTER TABLE `usuario`
   ADD KEY `fk_usuario_area_responsavel1` (`area_responsavel`);
 
 --
--- AUTO_INCREMENT de tabelas despejadas
+-- AUTO_INCREMENT para tabelas despejadas
 --
 
 --
 -- AUTO_INCREMENT de tabela `desvio`
 --
 ALTER TABLE `desvio`
-  MODIFY `id_desvio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_desvio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de tabela `resolucao`
 --
 ALTER TABLE `resolucao`
-  MODIFY `idresolucao` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idresolucao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- Restrições para despejos de tabelas
+-- Restrições para tabelas despejadas
 --
 
 --
--- Limitadores para a tabela `desvio`
+-- Restrições para tabelas `desvio`
 --
 ALTER TABLE `desvio`
   ADD CONSTRAINT `fk_desvio_area_responsavel1` FOREIGN KEY (`area_responsavel`) REFERENCES `area_responsavel` (`id_area`),
@@ -345,13 +358,13 @@ ALTER TABLE `desvio`
   ADD CONSTRAINT `fk_desvio_usuario1` FOREIGN KEY (`usuario_matricula`) REFERENCES `usuario` (`matricula`);
 
 --
--- Limitadores para a tabela `feedback`
+-- Restrições para tabelas `feedback`
 --
 ALTER TABLE `feedback`
   ADD CONSTRAINT `fk_feedback_usuario1` FOREIGN KEY (`usuario_matricula`) REFERENCES `usuario` (`matricula`);
 
 --
--- Limitadores para a tabela `resolucao`
+-- Restrições para tabelas `resolucao`
 --
 ALTER TABLE `resolucao`
   ADD CONSTRAINT `fk_resolucao_area_responsavel1` FOREIGN KEY (`id_area_r`) REFERENCES `area_responsavel` (`id_area`),
@@ -359,7 +372,7 @@ ALTER TABLE `resolucao`
   ADD CONSTRAINT `fk_resolucao_usuario1` FOREIGN KEY (`usuario_matricula`) REFERENCES `usuario` (`matricula`);
 
 --
--- Limitadores para a tabela `usuario`
+-- Restrições para tabelas `usuario`
 --
 ALTER TABLE `usuario`
   ADD CONSTRAINT `fk_usuario_area_responsavel1` FOREIGN KEY (`area_responsavel`) REFERENCES `area_responsavel` (`id_area`) ON DELETE NO ACTION ON UPDATE NO ACTION,
