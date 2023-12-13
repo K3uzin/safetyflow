@@ -8,7 +8,6 @@
 
     <title>Manual de Uso</title>
     <meta name="description" content="A simple HTML/CSS DocumentationTemplate">
-    <meta name="author" content="Carlos Yllobre">
 
     <link rel="stylesheet" href="../Public/Css/manual.css">
     <link
