@@ -54,7 +54,7 @@ if ($result && $result->num_rows > 0) {
         if ($isAdmin) {
             echo "<td>
                       <a href='editar_usuario.php?matricula={$row['matricula']}'>Editar</a> | 
-                      <a href='excluir_usuario.php?matricula={$row['matricula']}'>Excluir</a>
+                      <a href='atualizar_usuario.php?matricula={$row['matricula']}'>Excluir</a>
                   </td>";
         }
 
