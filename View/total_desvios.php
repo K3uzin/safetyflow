@@ -203,23 +203,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             <?php
             
             $desvio_data = $desvio->fetch_desvio_by_filter($turno,$setor,$tipo_desvio,$gravidade,$data_i,$data_f,$order,$mysqli);
-            //var_dump($desvio_data);
-             foreach ($desvio_data as $data)    
-            {?>
-            <tr>
-                <td><?php echo $data['id_desvio']; ?></td>
-                <?php 
-                    $data_Am = $data['data_identificacao'];
-                    $datetime = new DateTime($data_Am);
-                    $data_Br = $datetime->format('d/m/Y');
+            if ($desvio_data == null){
+                echo htmlspecialchars ("nenhum desvio encontrado");
+            }else{
+                //var_dump($desvio_data);
+                foreach ($desvio_data as $data){?>
+                <tr>
+                    <td><?php echo $data['id_desvio']; ?></td>
+                    <?php 
+                        $data_Am = $data['data_identificacao'];
+                        $datetime = new DateTime($data_Am);
+                        $data_Br = $datetime->format('d/m/Y');
 
-                ?>
-                <td><?php echo $data_Br; ?></td>
-                <td><?php echo $data['tipo_desvio']; ?></td>
-                <td><?php echo $data['gravidade']; ?></td>
-                <td><?php echo $data['setor']; ?></td>
-            </tr>
-            <?php } ?>
+                    ?>
+                    <td><?php echo $data_Br; ?></td>
+                    <td><?php echo $data['tipo_desvio']; ?></td>
+                    <td><?php echo $data['gravidade']; ?></td>
+                    <td><?php echo $data['setor']; ?></td>
+                </tr>
+                <?php } 
+                }?>
         </tbody>
     </table>
     <script>
