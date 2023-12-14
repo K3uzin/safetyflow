@@ -15,31 +15,42 @@ if (isset($_GET['matricula'])) {
         // Processa o formulário de atualização
         $nome = $_POST['nome'];
         $email = $_POST['email'];
+        $senha = $_POST['senha'];
+        $isAdminPost = isset($_POST['isAdmin']) ? $_POST['isAdmin'] : 0;
+        $setor = $_POST['setor'];
         $area_responsavel = isset($_POST['area_responsavel']) ? $_POST['area_responsavel'] : null;
+        $status = $_POST['status'];
 
-        // Define automaticamente isAdmin com base na presença de uma área responsável
-        $isAdminPost = ($area_responsavel !== null) ? 1 : 0;
+        // Verifica se a opção "não especificada" foi selecionada
+        if ($area_responsavel === '') {
+            // Se "não especificada" foi selecionada, define isAdminPost para 0
+            $isAdminPost = 0;
+        }
 
         // Verifica se a área já está atribuída a outro usuário apenas se o usuário for admin
         if ($isAdminPost == 1 && $area_responsavel !== null) {
-            $queryVerificarArea = "SELECT COUNT(*) FROM usuario WHERE area_responsavel = ? AND matricula <> ?";
-            $stmtVerificarArea = $mysqli->prepare($queryVerificarArea);
-            $stmtVerificarArea->bind_param('is', $area_responsavel, $matricula);
-            $stmtVerificarArea->execute();
-            $stmtVerificarArea->bind_result($count);
-            $stmtVerificarArea->fetch();
-            $stmtVerificarArea->close();
+            // Evita verificar a área se o valor for 0 (Não especificado)
+            if ($area_responsavel != 0) {
+                $queryVerificarArea = "SELECT COUNT(*) FROM usuario WHERE area_responsavel = ? AND matricula <> ?";
+                $stmtVerificarArea = $mysqli->prepare($queryVerificarArea);
+                $stmtVerificarArea->bind_param('is', $area_responsavel, $matricula);
+                $stmtVerificarArea->execute();
+                $stmtVerificarArea->bind_result($count);
+                $stmtVerificarArea->fetch();
+                $stmtVerificarArea->close();
 
-            if ($count > 0) {
-                echo "Erro: Área já atribuída a outro usuário.";
-                exit();
+                if ($count > 0) {
+                    echo "Erro: Área já atribuída a outro usuário.";
+                    exit();
+                }
             }
         }
 
         // Atualiza as informações no banco de dados
-        $queryAtualizacao = "UPDATE usuario SET nome=?, email=?, isAdmin=?, area_responsavel=? WHERE matricula=?";
+        $queryAtualizacao = "UPDATE usuario SET nome=?, email=?, senha=?, isAdmin=?, setor=?, area_responsavel=?, status=? WHERE matricula=?";
         $stmtAtualizacao = $mysqli->prepare($queryAtualizacao);
-        $stmtAtualizacao->bind_param('ssisi', $nome, $email, $isAdminPost, $area_responsavel, $matricula);
+        $stmtAtualizacao->bind_param('sssiisss', $nome, $email, $senha, $isAdminPost, $setor, $area_responsavel, $status, $matricula);
+        
 
         if ($stmtAtualizacao->execute()) {
             echo "Usuário atualizado com sucesso!";
@@ -53,7 +64,7 @@ if (isset($_GET['matricula'])) {
     }
 
     // Consulta as informações do usuário específico
-    $query = "SELECT matricula, nome, email, isAdmin, area_responsavel FROM usuario WHERE matricula = ?";
+    $query = "SELECT matricula, nome, email, senha, isAdmin, setor, area_responsavel, status FROM usuario WHERE matricula = ?";
     $stmt = $mysqli->prepare($query);
 
     // Altere 's' para 'i' se a matrícula for um número inteiro
@@ -69,37 +80,54 @@ if (isset($_GET['matricula'])) {
         echo "<form id='editarForm' action='' method='post'>"; // Deixe o action vazio para enviar para a mesma página
         echo "<input type='hidden' name='matricula' value='{$usuario['matricula']}'>
                 Nome: <input type='text' name='nome' value='{$usuario['nome']}' required><br>
-                Email: <input type='email' name='email' value='{$usuario['email']}' required><br>";
+                Email: <input type='email' name='email' value='{$usuario['email']}' required><br>
+                Senha: <input type='password' name='senha' value='{$usuario['senha']}' required><br>";
 
-        // Adiciona campo oculto para isAdmin
-        echo "<input type='hidden' name='isAdmin' value='{$usuario['isAdmin']}'>";
+        // Exibe o campo de seleção para isAdmin
+        echo "Admin: 
+                <select name='isAdmin'>
+                    <option value='1' " . ($usuario['isAdmin'] == 1 ? 'selected' : '') . ">Sim</option>
+                    <option value='0' " . ($usuario['isAdmin'] == 0 ? 'selected' : '') . ">Não</option>
+                </select><br>";
+        // Exibe o campo de seleção para a área responsável
+echo "Área Responsável: 
+<select name='area_responsavel'>
+    <option value='' " . ($usuario['area_responsavel'] === null ? 'selected' : '') . ">Escolha...</option>";
 
-        // Exibe o select para a área responsável apenas se o usuário for admin
-        echo "<div id='areaResponsavelDiv' style='display: " . ($usuario['isAdmin'] == 1 ? 'block' : 'none') . ";'>
-                Área Responsável: 
-                <select name='area_responsavel'>";
-        echo "<option value='' " . ($usuario['area_responsavel'] === null ? 'selected' : '') . ">Nenhuma</option>";
-        $queryAreas = "SELECT id_area, nome_area FROM area_responsavel";
-        $resultAreas = $mysqli->query($queryAreas);
-        
-        while ($rowArea = $resultAreas->fetch_assoc()) {
-            echo "<option value='{$rowArea['id_area']}'";
-            if ($usuario['area_responsavel'] == $rowArea['id_area']) {
-                echo " selected";
-            }
-            echo ">{$rowArea['nome_area']}</option>";
-        }
-        echo "</select><br></div>";
+$queryAreas = "SELECT id_area, nome_area FROM area_responsavel";
+$resultAreas = $mysqli->query($queryAreas);
+
+while ($rowArea = $resultAreas->fetch_assoc()) {
+echo "<option value='{$rowArea['id_area']}'";
+if ($usuario['area_responsavel'] == $rowArea['id_area']) {
+echo " selected";
+}
+echo ">{$rowArea['nome_area']}</option>";
+}
+
+echo "</select><br><br>";
+
+        // Exibe o campo para setor
+        echo "Setor: 
+                <select name='setor'>
+                    <option value='1' " . ($usuario['setor'] == 1 ? 'selected' : '') . ">Administrativa</option>
+                    <option value='2' " . ($usuario['setor'] == 2 ? 'selected' : '') . ">Hidro</option>
+                    <option value='3' " . ($usuario['setor'] == 3 ? 'selected' : '') . ">Cremes</option>
+                    <option value='4' " . ($usuario['setor'] == 4 ? 'selected' : '') . ">Estojo</option>
+                    <option value='5' " . ($usuario['setor'] == 5 ? 'selected' : '') . ">Qualidade</option>
+                    <option value='6' " . ($usuario['setor'] == 6 ? 'selected' : '') . ">Logística</option>
+                </select><br>";
+
+        // Exibe o campo de seleção para status
+        echo "Status: 
+                <select name='status'>
+                    <option value='ativo' " . ($usuario['status'] == 'ativo' ? 'selected' : '') . ">Ativo</option>
+                    <option value='inativo' " . ($usuario['status'] == 'inativo' ? 'selected' : '') . ">Inativo</option>
+                </select><br>";
 
         echo "<input type='submit' value='";
         echo ($usuario['area_responsavel'] !== null) ? 'Atualizar' : 'Salvar';
-        echo "'>
-            </form>";
-
-        // Adiciona script JavaScript para alternar a visibilidade do select de área responsável
-        echo "<script>
-                document.getElementById('areaResponsavelDiv').style.display = ({$usuario['isAdmin']} === 1) ? 'block' : 'none';
-              </script>";
+        echo "'></form>";
     } else {
         echo "Usuário não encontrado.";
     }
