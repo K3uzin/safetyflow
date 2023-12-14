@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 13/12/2023 às 23:46
+-- Tempo de geração: 14/12/2023 às 23:26
 -- Versão do servidor: 11.3.0-MariaDB
 -- Versão do PHP: 8.2.4
 
@@ -37,7 +37,7 @@ CREATE TABLE `area_responsavel` (
 --
 
 INSERT INTO `area_responsavel` (`id_area`, `nome_area`) VALUES
-(0, 'Não especificado]'),
+(0, 'Não especificado'),
 (1, 'manutenção'),
 (2, 'engenharia'),
 (3, 'produção'),
@@ -238,10 +238,10 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`matricula`, `nome`, `email`, `senha`, `isAdmin`, `setor`, `area_responsavel`, `status`) VALUES
-(1, 'Natan', 'santosaanatan085@gmail.com', '123456', 1, 1, 5, 'ativo'),
-(2, 'Luan', 'luan@gmail.com', '111111', 1, 1, 1, 'ativo'),
-(3, 'Luan', 'luan@gmail.com', '123456', 1, 1, 3, 'ativo'),
-(4, 'Luan', 'luan3@gmail.com', '123456', 1, 1, 6, 'ativo'),
+(1, 'Natan', 'santosaanatan085@gmail.com', '123456', 1, 1, 0, 'ativo'),
+(2, 'Luan', 'luan@gmail.com', '111111', 0, 1, 1, 'ativo'),
+(3, 'Luan', 'luan@gmail.com', '123456', 0, 1, 0, 'ativo'),
+(4, 'Luan', 'luan3@gmail.com', '123456', 0, 1, 1, 'ativo'),
 (9, 'LUYDU', 'lua2222n@gmail.com', '123456', 1, 1, 2, 'ativo');
 
 --
@@ -249,18 +249,23 @@ INSERT INTO `usuario` (`matricula`, `nome`, `email`, `senha`, `isAdmin`, `setor`
 --
 DELIMITER $$
 CREATE TRIGGER `restricoes_admin` BEFORE UPDATE ON `usuario` FOR EACH ROW BEGIN
-DECLARE area_limit_check int;
-set area_limit_check = (SELECT count(matricula) from  usuario where area_responsavel = NEW.area_responsavel and area_responsavel != 0);
-    CASE
-        WHEN NEW.isAdmin = 1 AND (NEW.area_responsavel IS NULL OR NEW.area_responsavel = 0) 
-			THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'necessario atribuir area ao administrador';
-        WHEN NEW.isAdmin = 0 AND NEW.area_responsavel != 0 
-			THEN SET NEW.area_responsavel = 0;
-		ELSE
-			if area_limit_check > 0 
-				THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'numero de administradores da area selecionada já esta lotada';
-			end if;
-    END CASE;
+    DECLARE area_limit_check INT;
+    
+    SET area_limit_check = (
+        SELECT COUNT(matricula)
+        FROM usuario
+        WHERE area_responsavel = NEW.area_responsavel AND area_responsavel IS NOT NULL AND area_responsavel != 0 AND isAdmin = 1
+    );
+
+    IF NEW.isAdmin = 1 AND (NEW.area_responsavel IS NULL) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'necessario atribuir area ao administrador';
+    ELSEIF NEW.isAdmin = 0 AND NEW.area_responsavel IS NOT NULL AND NEW.area_responsavel != 0 THEN
+        SET NEW.area_responsavel = NULL;
+    ELSE
+        IF area_limit_check > 10 THEN
+            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'numero de administradores da area selecionada já esta lotada';
+        END IF;
+    END IF;
 END
 $$
 DELIMITER ;
