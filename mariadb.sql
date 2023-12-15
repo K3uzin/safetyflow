@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 14/12/2023 às 23:26
+-- Tempo de geração: 15/12/2023 às 01:18
 -- Versão do servidor: 11.3.0-MariaDB
 -- Versão do PHP: 8.2.4
 
@@ -38,13 +38,13 @@ CREATE TABLE `area_responsavel` (
 
 INSERT INTO `area_responsavel` (`id_area`, `nome_area`) VALUES
 (0, 'Não especificado'),
-(1, 'manutenção'),
-(2, 'engenharia'),
-(3, 'produção'),
-(4, 'qualidade'),
-(5, 'recursos humanos'),
-(6, 'segurança do trabalho'),
-(7, 'meio ambiente');
+(1, 'Manutenção'),
+(2, 'Engenharia'),
+(3, 'Produção'),
+(4, 'Qualidade'),
+(5, 'Recursos Humanos'),
+(6, 'Segurança do Trabalho'),
+(7, 'Meio Ambiente');
 
 -- --------------------------------------------------------
 
@@ -99,6 +99,13 @@ CREATE TABLE `feedback` (
   `data_postagem` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
+--
+-- Despejando dados para a tabela `feedback`
+--
+
+INSERT INTO `feedback` (`nota`, `comentario`, `usuario_matricula`, `data_postagem`) VALUES
+(3, 'MASSA', 1, '2023-12-14');
+
 -- --------------------------------------------------------
 
 --
@@ -115,10 +122,10 @@ CREATE TABLE `gravidade` (
 --
 
 INSERT INTO `gravidade` (`idgravidade`, `descricao`) VALUES
-(1, 'leve'),
-(2, 'moderado'),
-(3, 'grave'),
-(4, 'gravissimo');
+(1, 'Leve'),
+(2, 'Moderado'),
+(3, 'Grave'),
+(4, 'Gravissímo');
 
 -- --------------------------------------------------------
 
@@ -185,12 +192,12 @@ CREATE TABLE `setor` (
 --
 
 INSERT INTO `setor` (`id_setor`, `nome_setor`) VALUES
-(1, 'administrarivo'),
-(2, 'hidro'),
-(3, 'creme'),
-(4, 'estojo'),
-(5, 'qualidade'),
-(6, 'logistica');
+(1, 'Administrativo'),
+(2, 'Hidro'),
+(3, 'Creme'),
+(4, 'Estojo'),
+(5, 'Qualidade'),
+(6, 'Logistica');
 
 -- --------------------------------------------------------
 
@@ -208,8 +215,8 @@ CREATE TABLE `tipo_desvio` (
 --
 
 INSERT INTO `tipo_desvio` (`idtipo_desvio`, `descricao`) VALUES
-(1, 'desvio comportamental'),
-(2, 'desvio ergonômico'),
+(1, 'Desvio comportamental'),
+(2, 'Desvio ergonômico'),
 (3, 'Desvio de Segurança'),
 (4, 'Desvio de Qualidade'),
 (5, 'Desvio de Processo'),
@@ -238,11 +245,12 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`matricula`, `nome`, `email`, `senha`, `isAdmin`, `setor`, `area_responsavel`, `status`) VALUES
-(1, 'Natan', 'santosaanatan085@gmail.com', '123456', 1, 1, 0, 'ativo'),
+(1, 'Natan', 'santosaanatan085@gmail.com', '123456', 1, 2, 2, 'ativo'),
 (2, 'Luan', 'luan@gmail.com', '111111', 0, 1, 1, 'ativo'),
 (3, 'Luan', 'luan@gmail.com', '123456', 0, 1, 0, 'ativo'),
 (4, 'Luan', 'luan3@gmail.com', '123456', 0, 1, 1, 'ativo'),
-(9, 'LUYDU', 'lua2222n@gmail.com', '123456', 1, 1, 2, 'ativo');
+(9, 'LUYDU', 'lua2222n@gmail.com', '123456', 1, 1, 2, 'ativo'),
+(415, 'Jobson', 'santos@gggg.com', '123456', 0, 3, 2, 'ativo');
 
 --
 -- Acionadores `usuario`
