@@ -215,8 +215,8 @@ CREATE TABLE `tipo_desvio` (
 --
 
 INSERT INTO `tipo_desvio` (`idtipo_desvio`, `descricao`) VALUES
-(1, 'Desvio comportamental'),
-(2, 'Desvio ergonômico'),
+(1, 'Desvio Comportamental'),
+(2, 'Desvio Ergonômico'),
 (3, 'Desvio de Segurança'),
 (4, 'Desvio de Qualidade'),
 (5, 'Desvio de Processo'),
