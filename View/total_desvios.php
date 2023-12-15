@@ -104,12 +104,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     if( isset($_POST['order'])){
         $order = (int)$_POST['order'];  
     }
-    
-    echo "data final: ".var_dump($data_f)."<br>";
-    echo "data inicial: ".var_dump($data_i)."<br>";
-    echo "gravidade: ".var_dump($gravidade)."<br>";
-    echo "setor: ".var_dump($setor)."<br>";
-    
 }
 
 ?>
@@ -153,7 +147,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
          //   filterAndSort();
         //};
     </script>
-*/
 </head>
 <body>
     <h2>Lista de Desvios Abertos</h2>
@@ -204,7 +197,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             
             $desvio_data = $desvio->fetch_desvio_by_filter($turno,$setor,$tipo_desvio,$gravidade,$data_i,$data_f,$order,$mysqli);
             if ($desvio_data == null){
-                echo htmlspecialchars ("nenhum desvio encontrado");
+                echo htmlspecialchars ("Nenhum desvio encontrado");
             }else{
                 //var_dump($desvio_data);
                 foreach ($desvio_data as $data){?>
