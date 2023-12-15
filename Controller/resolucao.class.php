@@ -115,19 +115,19 @@ class resolucao{
             id_area_r = $area_responsavel WHERE idresolucao = $resolucao_id";
             $result = $conexao->query($query);
 
-            $query = "SELECT nome_area from area_responsavel  where id_area = $area_responsavel"
+            $query = "SELECT nome_area from area_responsavel  where id_area = $area_responsavel";
             $result = $conexao->query($query);
             $data = mysqli_fetch_assoc($result);
-            $nome_area = $data['nome_area'];
+            $nome_area = $data['nome'];
 
-            $query = "SELECT u.nome,u.email,d.data_identificacao from desvio d inner join usuario u on u.matricula = d.usuario_matricula where id_desvio = $desvio_id";
+            $query = "SELECT u.nome, u.email, d.data_identificacao from desvio d inner join usuario u on u.matricula = d.usuario_matricula where id_desvio = $desvio_id";
             $result = $conexao->query($query);
             $data = mysqli_fetch_assoc($result);
-            $usuario_nome = $data['u.nome'];
-            $usuario_email = $data['u.email'];
-            $data_identificacao = $data['d.data_identificacao'];
-            $memsagem = 'olá '.$usuario_nome.' gostariamos de lhe informara que o desvio aberto por você no dia '.$data_identificacao. ' 
-            foi resolvido com sucesso, agradecemos sua colaboração por identificar e reportar o desvio, ' 
+            $usuario_nome = $data['nome'];
+            $usuario_email = $data['email'];
+            $data_identificacao = $data['data_identificacao'];
+            $mensagem = 'olá ' . $usuario_nome . ' gostaríamos de lhe informar que o desvio aberto por você no dia ' . $data_identificacao . ' foi resolvido com sucesso, agradecemos sua colaboração por identificar e relatar o desvio.';
+
         
         }else{
             
