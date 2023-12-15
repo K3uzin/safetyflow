@@ -27,16 +27,38 @@ $mysqli->close();
 <html>
 <head>
     <title>Contador de Desvios - Setor Administrativa</title>
+    <link rel="stylesheet" href="../Public/Css/areas.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 <body>
-    <h2>Contador de Desvios - Setor Administrativa</h2>
-    
-    <h3>Último Desvio no Setor Administrativa:</h3>
-    <p>Nome: <?php echo $ultimo_nome_administrativa; ?></p>
-    <p>Data: <?php echo $ultimo_data; ?></p>
-    <p>Local: <?php echo $ultimo_local; ?></p>
-    
-    <h3>Estatísticas de Desvios:</h3>
-    <p>Total de desvios abertos no Setor Administrativa: <?php echo $total_desvios_administrativa; ?></p>
+    <div class="container">
+        <img class="logo" src="../Public/Img/logo.png" alt="Logo do aplicativo">
+       
+        <h1>Contador de Desvios</h1>
+       
+        <h2>Setor Administrativo</h2>
+       
+        <div class="section-title">
+            <h3>Informações do Último Desvio:</h3>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <p class="card-text"><strong>Nome:</strong> <span id="ultimo-nome"></span></p>
+                <p class="card-text"><strong>Data:</strong> <span id="ultimo-data"></span></p>
+                <p class="card-text"><strong>Local:</strong> <span id="ultimo-local"></span></p>
+            </div>
+        </div>
+       
+        <div class="section-title">
+            <h3>Estatísticas de Desvios:</h3>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <p class="card-text"><strong>Total de desvios abertos:</strong> <span id="total-desvios"></span></p>
+            </div>
+        </div>
+    </div>
+   
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
