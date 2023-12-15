@@ -118,7 +118,7 @@ class resolucao{
             $query = "SELECT nome_area from area_responsavel  where id_area = $area_responsavel";
             $result = $conexao->query($query);
             $data = mysqli_fetch_assoc($result);
-            $nome_area = $data['nome'];
+            $nome_area = $data['nome_area'];
 
             $query = "SELECT u.nome, u.email, d.data_identificacao from desvio d inner join usuario u on u.matricula = d.usuario_matricula where id_desvio = $desvio_id";
             $result = $conexao->query($query);
