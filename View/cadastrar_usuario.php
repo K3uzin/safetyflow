@@ -27,13 +27,13 @@
         <input type="password" id="senha" name="senha" required><br><br>
         
         <label for="isAdmin">Administrador:</label>
-        <select id="isAdmin" name="isAdmin" required onchange="toggleAreaResponsavel()">
+        <select id="isAdmin" name="isAdmin">
             <option value="0">Não</option>
             <option value="1">Sim</option>
         </select><br><br>
 
-        <label for="area_responsavel" id="area_responsavel_label" style="display: none;">Área Responsável: </label>
-        <select id="area_responsavel" name="area_responsavel" required="" style="display: none;">
+        <label for="area_responsavel" id="area_responsavel_label">Área:</label>
+        <select id="area_responsavel" name="area_responsavel" required="">
             <option value="">Escolha...</option>
             <option value="1">Manutenção</option>
             <option value="2">Engenharia</option>
@@ -44,10 +44,10 @@
             <option value="7">Meio Ambiente</option>
         </select><br><br>
 
-        <label for="setor_desvio" class="form-label required-label">Setor</label>
+        <label for="setor_desvio" class="form-label required-label">Setor:</label>
         <select id="setor" name="setor" required="">
             <option value="">Escolha...</option>
-            <option value="1">Administrativa</option>
+            <option value="1">Administrativo</option>
             <option value="2">Hidro</option>
             <option value="3">Cremes</option>
             <option value="4">Estojo</option>
@@ -57,17 +57,5 @@
         
         <input type="submit" value="Cadastrar">
     </form>
-    <script>
-        function toggleAreaResponsavel() {
-            var isAdminSelect = document.getElementById('isAdmin');
-            var areaResponsavelLabel = document.getElementById('area_responsavel_label');
-            var areaResponsavelSelect = document.getElementById('area_responsavel');
-
-            // Se a opção "Sim" estiver selecionada, mostra o label e campo de "Área Responsável", caso contrário, oculta.
-            var displayStyle = (isAdminSelect.value === '1') ? 'block' : 'none';
-            areaResponsavelLabel.style.display = displayStyle;
-            areaResponsavelSelect.style.display = displayStyle;
-        }
-    </script>
 </body>
 </html>
